@@ -1704,6 +1704,7 @@ This value can only be changed to a non-empty value. If changed, the new number 
 | slack_name | [string](#string) |  | If set, contains Slack name of this user in the arangodb-community slack. |
 | last_login_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of the last login of the user. This is a read-only value. |
 | last_ip | [string](#string) |  | If set, contains IP address from which the user last logged in. |
+| mobile_phone_needs_verification | [bool](#bool) |  | Defines if a user&#39;s mobile phone number needs verification based on email root domain address. |
 
 
 
