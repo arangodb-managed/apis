@@ -493,6 +493,10 @@ export interface Deployment_Status {
   // string
   endpoint_self_signed?: string;
   
+  // Set if the deployment is up-to-date and has no pending upgrade.
+  // boolean
+  is_up_to_date?: boolean;
+  
   // The status of backup restore (if applicable).
   // This field will be set to empty if a new revision of the spec is available
   // Deployment_BackupRestoreStatus

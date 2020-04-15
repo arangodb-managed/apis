@@ -411,6 +411,8 @@ message Deployment {
         // the self-signed certificate.
         // This endpoint is recommended for machine-to-database connections.
         string endpoint_self_signed = 10;
+        // Set if the deployment is up-to-date and has no pending upgrade. 
+        bool is_up_to_date = 11;
         // The status of backup restore (if applicable).
         // This field will be set to empty if a new revision of the spec is available
         BackupRestoreStatus backup_restore_status = 100;
