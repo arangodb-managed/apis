@@ -394,6 +394,8 @@ message Organization {
     bool is_allowed_to_use_custom_images = 11;
     // If set, this organization is allowed to use IAMProviders on their deployments.
     bool is_allowed_to_use_iamproviders = 12;
+    // If set, this is used to filter the custom image tag for correctness. This filter is defined as a Regex.
+    string custom_image_filter = 13;
 }
 
 // List of organizations.

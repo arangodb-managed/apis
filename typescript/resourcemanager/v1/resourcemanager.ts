@@ -238,6 +238,10 @@ export interface Organization {
   // If set, this organization is allowed to use IAMProviders on their deployments.
   // boolean
   is_allowed_to_use_iamproviders?: boolean;
+  
+  // If set, this is used to filter the custom image tag for correctness. This filter is defined as a Regex.
+  // string
+  custom_image_filter?: string;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string
