@@ -9,7 +9,7 @@ import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
-// File: metrics/v1/metrics.proto
+// File: metrics/v1/oasis_metrics.proto
 // Package: arangodb.cloud.metrics.v1
 
 // Request arguments for GetMetricsEndpoint
