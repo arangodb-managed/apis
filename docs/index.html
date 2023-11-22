@@ -19284,6 +19284,17 @@ If this field is not set the terms and conditions of the source deployment will 
 This is an optional field </p></td>
                 </tr>
               
+                <tr>
+                  <td>disk_performance_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of disk performance to use for the cloned deployment.
+This field is required if the deployment is cloned to a cloud provider
+different from the source deployment.
+This field is ignored if the Deployment is cloned within the same cloud provider,
+i.e, the same disk performance setting is used. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 

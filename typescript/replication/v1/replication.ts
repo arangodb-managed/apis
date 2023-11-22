@@ -35,6 +35,14 @@ export interface CloneDeploymentFromBackupRequest {
   // This is an optional field
   // string
   project_id?: string;
+  
+  // Identifier of disk performance to use for the cloned deployment.
+  // This field is required if the deployment is cloned to a cloud provider
+  // different from the source deployment.
+  // This field is ignored if the Deployment is cloned within the same cloud provider,
+  // i.e, the same disk performance setting is used.
+  // string
+  disk_performance_id?: string;
 }
 
 // DeploymentMigration defines a request for performing the migration of a deployment.
