@@ -798,6 +798,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.Deployment.NotificationsEntry"><span class="badge">M</span>Deployment.NotificationsEntry</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.Deployment.ServerStatus"><span class="badge">M</span>Deployment.ServerStatus</a>
                 </li>
               
@@ -922,6 +926,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.Notification"><span class="badge">M</span>Notification</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.RebalanceDeploymentShardsRequest"><span class="badge">M</span>RebalanceDeploymentShardsRequest</a>
                 </li>
               
@@ -961,6 +969,10 @@ title: "ArangoGraph Insights Platform API"
                   <a href="#arangodb.cloud.data.v1.VersionList"><span class="badge">M</span>VersionList</a>
                 </li>
               
+              
+                <li>
+                  <a href="#arangodb.cloud.data.v1.NotificationSeverity"><span class="badge">E</span>NotificationSeverity</a>
+                </li>
               
               
               
@@ -1621,7 +1633,15 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.Notification"><span class="badge">M</span>Notification</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.resourcemanager.v1.Organization"><span class="badge">M</span>Organization</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.Organization.NotificationsEntry"><span class="badge">M</span>Organization.NotificationsEntry</a>
                 </li>
               
                 <li>
@@ -1676,6 +1696,10 @@ title: "ArangoGraph Insights Platform API"
                   <a href="#arangodb.cloud.resourcemanager.v1.Tier"><span class="badge">M</span>Tier</a>
                 </li>
               
+              
+                <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.NotificationSeverity"><span class="badge">E</span>NotificationSeverity</a>
+                </li>
               
               
               
@@ -9622,6 +9646,13 @@ After creation, this value cannot be changed. </p></td>
 Defaults to false. </p></td>
                 </tr>
               
+                <tr>
+                  <td>notifications</td>
+                  <td><a href="#arangodb.cloud.data.v1.Deployment.NotificationsEntry">Deployment.NotificationsEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>Defines notifications attached to the Deployment </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -9898,6 +9929,37 @@ This field is ignored set in case the flexible model is used. </p></td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p>Email addresses that notifications related to this deployment should be sent to. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.Deployment.NotificationsEntry">Deployment.NotificationsEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#arangodb.cloud.data.v1.Notification">Notification</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -11783,6 +11845,51 @@ Ignored when project_id is &#34;all&#34; and organization_id is not provided. </
 
         
       
+        <h3 id="arangodb.cloud.data.v1.Notification">Notification</h3>
+        <p>Define the Notification details</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>notification</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>String representation of the Notification </p></td>
+                </tr>
+              
+                <tr>
+                  <td>severity</td>
+                  <td><a href="#arangodb.cloud.data.v1.NotificationSeverity">NotificationSeverity</a></td>
+                  <td></td>
+                  <td><p>Notification Severity </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp of when the notification has been created. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp of when the notification has been updated. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.RebalanceDeploymentShardsRequest">RebalanceDeploymentShardsRequest</h3>
         <p>RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment</p>
 
@@ -12171,6 +12278,35 @@ version as listed in this message. </p></td>
         
       
 
+      
+        <h3 id="arangodb.cloud.data.v1.NotificationSeverity">NotificationSeverity</h3>
+        <p>NotificationSeverity keeps possible severities for notifications</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>NOTIFICATION_SEVERITY_INFO</td>
+                <td>0</td>
+                <td><p>Defines Info level Notification Severity</p></td>
+              </tr>
+            
+              <tr>
+                <td>NOTIFICATION_SEVERITY_WARNING</td>
+                <td>1</td>
+                <td><p>Defines Warning level Notification Severity</p></td>
+              </tr>
+            
+              <tr>
+                <td>NOTIFICATION_SEVERITY_CRITICAL</td>
+                <td>2</td>
+                <td><p>Defines Critical level Notification Severity</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
 
       
@@ -17846,14 +17982,14 @@ This is a read-only value. </p></td>
                   <td><p>GPU units allocated to the notebook.
 1 GPU unit equals 1 physical / virtual GPU. </p></td>
                 </tr>
-
+              
                 <tr>
-                    <td>initial_disk_size</td>
-                    <td><a href="#int32">int32</a></td>
-                    <td></td>
-                    <td><p>Initial amount of disk space (in GiB) available to the notebook. </p></td>
+                  <td>initial_disk_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Initial amount of disk space (in GiB) available to the notebook. </p></td>
                 </tr>
-
+              
             </tbody>
           </table>
 
@@ -20644,6 +20780,51 @@ This is a read-only value that can be empty. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.resourcemanager.v1.Notification">Notification</h3>
+        <p>Define the Notification details</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>notification</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>String representation of the Notification </p></td>
+                </tr>
+              
+                <tr>
+                  <td>severity</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.NotificationSeverity">NotificationSeverity</a></td>
+                  <td></td>
+                  <td><p>Notification Severity </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp of when the notification has been created. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp of when the notification has been updated. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.resourcemanager.v1.Organization">Organization</h3>
         <p>An Organization is represents a real world organization such as a company.</p>
 
@@ -20786,6 +20967,44 @@ If not set, there is no restriction of domains for user accounts. </p></td>
                   <td></td>
                   <td><p>If set, this organization is allowed to manage IAM identities (like users) via SCIM 
 This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>notifications</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.Organization.NotificationsEntry">Organization.NotificationsEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>Defines notifications attached to the Organization </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.resourcemanager.v1.Organization.NotificationsEntry">Organization.NotificationsEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.Notification">Notification</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -21442,6 +21661,35 @@ This is a read-only value and cannot be initialized. </p></td>
         
       
 
+      
+        <h3 id="arangodb.cloud.resourcemanager.v1.NotificationSeverity">NotificationSeverity</h3>
+        <p>NotificationSeverity keeps possible severities for notifications</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>NOTIFICATION_SEVERITY_INFO</td>
+                <td>0</td>
+                <td><p>Defines Info level Notification Severity</p></td>
+              </tr>
+            
+              <tr>
+                <td>NOTIFICATION_SEVERITY_WARNING</td>
+                <td>1</td>
+                <td><p>Defines Warning level Notification Severity</p></td>
+              </tr>
+            
+              <tr>
+                <td>NOTIFICATION_SEVERITY_CRITICAL</td>
+                <td>2</td>
+                <td><p>Defines Critical level Notification Severity</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
 
       

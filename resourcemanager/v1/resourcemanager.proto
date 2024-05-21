@@ -411,6 +411,8 @@ message Organization {
     // If set, this organization is allowed to manage IAM identities (like users) via SCIM 
     // This is a read-only value.
     bool is_allowed_to_use_scim = 17;
+    // Defines notifications attached to the Organization
+    map<string, Notification> notifications = 18;
 }
 
 // List of organizations.
@@ -740,4 +742,31 @@ message DataProcessingAddendum {
     string content = 2;
     // Creation date of this version of the DPA.
     google.protobuf.Timestamp created_at = 3;
+}
+
+// NotificationSeverity keeps possible severities for notifications
+enum NotificationSeverity {
+    // Defines Info level Notification Severity
+    NOTIFICATION_SEVERITY_INFO = 0;
+
+    // Defines Warning level Notification Severity
+    NOTIFICATION_SEVERITY_WARNING = 1;
+
+    // Defines Critical level Notification Severity
+    NOTIFICATION_SEVERITY_CRITICAL = 2;
+}
+
+// Define the Notification details
+message Notification {
+    // String representation of the Notification
+    string notification = 1;
+
+    // Notification Severity
+    NotificationSeverity severity = 2;
+
+    // The timestamp of when the notification has been created.
+    google.protobuf.Timestamp created_at = 3;
+
+    // The timestamp of when the notification has been updated.
+    google.protobuf.Timestamp updated_at = 4;
 }
