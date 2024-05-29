@@ -1483,6 +1483,10 @@ export interface Notification {
   // The timestamp of when the notification has been updated.
   // googleTypes.Timestamp
   updated_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification expires.
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
 }
 
 // RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment

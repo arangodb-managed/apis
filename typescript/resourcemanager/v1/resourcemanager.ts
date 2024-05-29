@@ -247,6 +247,10 @@ export interface Notification {
   // The timestamp of when the notification has been updated.
   // googleTypes.Timestamp
   updated_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification expires.
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
 }
 
 // An Organization is represents a real world organization such as a company.

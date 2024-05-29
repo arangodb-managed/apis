@@ -769,4 +769,7 @@ message Notification {
 
     // The timestamp of when the notification has been updated.
     google.protobuf.Timestamp updated_at = 4;
+
+    // The timestamp of when the notification expires.
+    google.protobuf.Timestamp expires_at = 5;
 }
