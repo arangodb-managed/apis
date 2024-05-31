@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,13 +20,24 @@
 
 package v1
 
-const (
-	// APIID contains identifier of this API
-	APIID = "resourcemanager/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 6
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 0
-)
+func (d *Deployment) Notification(id string) (*Notification, bool) {
+	v, ok := d.GetNotifications()[id]
+	return v, ok
+}
+
+func (d *Deployment) NotificationEquals(id string, notification string, severity NotificationSeverity) bool {
+	v, ok := d.GetNotifications()[id]
+	if !ok {
+		return false
+	}
+
+	return v.Equals(notification, severity)
+}
+
+func (n *Notification) Equals(notification string, severity NotificationSeverity) bool {
+	if n == nil {
+		return false
+	}
+
+	return n.Severity == severity && n.Notification == notification
+}

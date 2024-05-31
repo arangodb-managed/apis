@@ -440,6 +440,10 @@ export interface Deployment {
   // Defaults to false.
   // boolean
   drop_vst_support?: boolean;
+  
+  // Defines notifications attached to the Deployment
+  // Deployment_NotificationsEntry
+  notifications?: Deployment_NotificationsEntry[];
 }
 
 // Information about a backup restore.
@@ -556,6 +560,13 @@ export interface Deployment_NotificationSettings {
   // Email addresses that notifications related to this deployment should be sent to.
   // string
   email_addresses?: string[];
+}
+export interface Deployment_NotificationsEntry {
+  // string
+  key?: string;
+  
+  // Notification
+  value?: Notification;
 }
 
 // Status of a single server (of the ArangoDB cluster)
@@ -1455,6 +1466,29 @@ export interface NodeSizesRequest {
   include_restricted?: boolean;
 }
 
+// Define the Notification details
+export interface Notification {
+  // String representation of the Notification
+  // string
+  notification?: string;
+  
+  // Notification Severity
+  // NotificationSeverity
+  severity?: NotificationSeverity;
+  
+  // The timestamp of when the notification has been created.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification has been updated.
+  // googleTypes.Timestamp
+  updated_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification expires.
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
+}
+
 // RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment
 export interface RebalanceDeploymentShardsRequest {
   // The id of the deployment
@@ -1611,6 +1645,8 @@ export interface VersionList {
   // Version
   items?: Version[];
 }
+
+// Enum arangodb.cloud.data.v1.NotificationSeverity: Not implemented
 
 // DataService is the API used to configure data objects.
 export interface IDataService {

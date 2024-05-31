@@ -230,6 +230,29 @@ export interface MemberList {
   items?: Member[];
 }
 
+// Define the Notification details
+export interface Notification {
+  // String representation of the Notification
+  // string
+  notification?: string;
+  
+  // Notification Severity
+  // NotificationSeverity
+  severity?: NotificationSeverity;
+  
+  // The timestamp of when the notification has been created.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification has been updated.
+  // googleTypes.Timestamp
+  updated_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification expires.
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
+}
+
 // An Organization is represents a real world organization such as a company.
 export interface Organization {
   // System identifier of the organization.
@@ -314,6 +337,17 @@ export interface Organization {
   // This is a read-only value.
   // boolean
   is_allowed_to_use_scim?: boolean;
+  
+  // Defines notifications attached to the Organization
+  // Organization_NotificationsEntry
+  notifications?: Organization_NotificationsEntry[];
+}
+export interface Organization_NotificationsEntry {
+  // string
+  key?: string;
+  
+  // Notification
+  value?: Notification;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string
@@ -603,6 +637,8 @@ export interface Tier {
   // boolean
   has_multi_region_backup_uploads?: boolean;
 }
+
+// Enum arangodb.cloud.resourcemanager.v1.NotificationSeverity: Not implemented
 
 // ResourceManagerService is the API used to configure basic resource objects.
 export interface IResourceManagerService {
