@@ -638,7 +638,17 @@ export interface Tier {
   has_multi_region_backup_uploads?: boolean;
 }
 
-// Enum arangodb.cloud.resourcemanager.v1.NotificationSeverity: Not implemented
+// NotificationSeverity keeps possible severities for notifications
+export enum NotificationSeverity {
+  // Defines Info level Notification Severity
+  NOTIFICATION_SEVERITY_INFO = 0,
+  
+  // Defines Warning level Notification Severity
+  NOTIFICATION_SEVERITY_WARNING = 1,
+  
+  // Defines Critical level Notification Severity
+  NOTIFICATION_SEVERITY_CRITICAL = 2,
+}
 
 // ResourceManagerService is the API used to configure basic resource objects.
 export interface IResourceManagerService {
