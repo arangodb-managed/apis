@@ -443,7 +443,7 @@ export interface Deployment {
   
   // Defines notifications attached to the Deployment
   // Deployment_NotificationsEntry
-  notifications?: Deployment_NotificationsEntry[];
+  notifications?: { [key: string]: Notification };
 }
 
 // Information about a backup restore.
