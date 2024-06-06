@@ -96,7 +96,7 @@ export interface Event {
   // The fields used in the payload are specific
   // to the type of event.
   // Event_PayloadEntry
-  payload?: Event_PayloadEntry[];
+  payload?: { [key: string]: string };
   
   // The creation timestamp of the event
   // googleTypes.Timestamp
@@ -296,7 +296,7 @@ export interface Organization {
   // map: tier-id -> count
   // This is a read-only value.
   // Organization_TotalDeploymentsEntry
-  total_deployments?: Organization_TotalDeploymentsEntry[];
+  total_deployments?: { [key: string]: number };
   
   // If set, all projects in this organization are allowed to use deployments using the flexible model.
   // This is a read-only value.
@@ -340,7 +340,7 @@ export interface Organization {
   
   // Defines notifications attached to the Organization
   // Organization_NotificationsEntry
-  notifications?: Organization_NotificationsEntry[];
+  notifications?: { [key: string]: Notification };
 }
 export interface Organization_NotificationsEntry {
   // string
