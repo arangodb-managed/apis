@@ -124,6 +124,8 @@ message Region {
     bool prerelease = 7;
     // If set, this region support ML services.
     bool ml_supported = 8;
+    // sets the sales priority of this region higher number is higher priority
+    int32 priority = 9;
 }
 
 // List of regions.

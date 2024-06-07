@@ -104,6 +104,10 @@ export interface Region {
   // If set, this region support ML services.
   // boolean
   ml_supported?: boolean;
+  
+  // sets the sales priority of this region higher number is higher proirity
+  // number
+  priority?: number;
 }
 
 // List of regions.
