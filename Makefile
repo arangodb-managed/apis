@@ -134,12 +134,9 @@ check-version:
 
 .PHONY: update-modules
 update-modules:
-#	zutano update-check --quiet --fail
-#	test -f go.mod || go mod init
-#	go mod edit \
-#		$(shell zutano go mod replacements)
 	go get \
 		github.com/grpc-ecosystem/grpc-gateway@v1.16.0 \
 		github.com/golang/protobuf@v1.5.4 \
-		google.golang.org/grpc@v1.64.1
+		google.golang.org/grpc@v1.64.1 \
+		google.golang.org/genproto/googleapis/api@v0.0.0-20240318140521-94a12d6c2237
 	go mod tidy
