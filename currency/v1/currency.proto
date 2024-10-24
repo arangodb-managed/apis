@@ -16,9 +16,9 @@
 // limitations under the License.
 // 
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-// 
+//
 // Author Ewout Prangsma
-// 
+//
 
 syntax = "proto3";
 

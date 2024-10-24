@@ -1,7 +1,7 @@
 SHELL = bash
 SCRIPTDIR := $(shell pwd)
 ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
-BUILDIMAGE := arangodboasis/golang-ci:latest
+BUILDIMAGE := wierzbiks/golang-custom
 CACHEVOL := arangodb-cloud-apis-gocache
 MODVOL := arangodb-cloud-apis-pkg-mod
 HOMEVOL := arangodb-cloud-apis-home
@@ -81,6 +81,7 @@ ifndef CIRCLECI
 endif
 
 # Generate go code for proto files
+# //go:generate ../../generate.sh audit/v1 audit.proto
 .PHONY: generate
 generate: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 	$(DOCKERENV) \
@@ -89,7 +90,6 @@ generate: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 # Build go code 
 .PHONY: build
 build: generate
-	cat go.mod
 	go build ./...
 
 # Check go code 
@@ -125,9 +125,18 @@ test:
 	go tool cover -html=bin/test/coverage.out -o bin/test/coverage.html
 
 bootstrap:
-	go get github.com/arangodb-managed/zutano
+	#go get github.com/arangodb-managed/zutano
 	go get github.com/jstemmer/go-junit-report
 	go get github.com/stretchr/testify
 
 check-version:
 	zutano check api branch
+
+.PHONY: update-modules
+update-modules:
+	go get \
+		github.com/grpc-ecosystem/grpc-gateway@v1.16.0 \
+		github.com/golang/protobuf@v1.5.4 \
+		google.golang.org/grpc@v1.64.1 \
+		google.golang.org/genproto/googleapis/api@v0.0.0-20240318140521-94a12d6c2237
+	go mod tidy
