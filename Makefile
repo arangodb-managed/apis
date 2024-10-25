@@ -24,6 +24,7 @@ DOCKERARGS := run -t --rm \
 	-e GOMODCACHE=/go/pkg/mod \
 	-e GOSUMDB=off \
 	-e CGO_ENABLED=0 \
+	-e GO111MODULE=on \
 	-e HOME=/home/gopher \
 	-w /usr/src \
 	$(BUILDIMAGE)
@@ -35,7 +36,7 @@ else
 endif
 
 .PHONY: all
-all: vendor generate build check ts docs
+all: generate build check ts docs
 
 .PHONY: pull-build-image
 pull-build-image: 
