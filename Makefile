@@ -35,7 +35,7 @@ else
 endif
 
 .PHONY: all
-all: generate build check ts docs
+all: vendor generate build check ts docs
 
 .PHONY: pull-build-image
 pull-build-image: 
@@ -130,6 +130,10 @@ bootstrap:
 
 check-version:
 	zutano check api branch
+
+.PHONY: vendor
+vendor:
+	go mod vendor
 
 .PHONY: update-modules
 update-modules:
