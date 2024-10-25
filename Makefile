@@ -5,7 +5,7 @@ BUILDIMAGE := arangodboasis/golang-ci:latest
 CACHEVOL := arangodb-cloud-apis-gocache
 MODVOL := arangodb-cloud-apis-pkg-mod
 HOMEVOL := arangodb-cloud-apis-home
-PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*' | sort)
+PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*' -not -path './vendor-proto/*' | sort)
 
 ifndef CIRCLECI
 	GITHUB_TOKEN := $(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token)
@@ -89,7 +89,6 @@ generate: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 # Build go code 
 .PHONY: build
 build: generate
-	cat go.mod
 	go build ./...
 
 # Check go code 
@@ -131,3 +130,15 @@ bootstrap:
 
 check-version:
 	zutano check api branch
+
+.PHONY: update-modules
+update-modules:
+	go get \
+		github.com/golang/protobuf@v1.3.5
+
+	go mod tidy
+	go mod vendor
+
+    # add .proto files manually
+	cp -r vendor-proto/googleapis vendor/
+	cp -r vendor-proto/github.com/gogo/protobuf/protobuf vendor/github.com/gogo/protobuf/
