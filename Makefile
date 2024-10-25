@@ -2,9 +2,7 @@ SHELL = bash
 SCRIPTDIR := $(shell pwd)
 ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
 BUILDIMAGE := arangodboasis/golang-ci:latest
-CACHEVOL := arangodb-cloud-apis-gocache
-MODVOL := arangodb-cloud-apis-pkg-mod
-HOMEVOL := arangodb-cloud-apis-home
+
 PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*' -not -path './vendor-proto/*' | sort)
 
 ifndef CIRCLECI
@@ -15,17 +13,11 @@ endif
 
 DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \
-	-v $(ROOTDIR)/vendor:/go/src \
 	-v $(ROOTDIR):/usr/src \
-	-v $(CACHEVOL):/usr/gocache \
-	-v $(MODVOL):/go/pkg/mod \
-	-v $(HOMEVOL):/home/gopher \
-	-e GOCACHE=/usr/gocache \
-	-e GOMODCACHE=/go/pkg/mod \
 	-e GOSUMDB=off \
+	-e GOCACHE=/tmp/gocache \
 	-e CGO_ENABLED=0 \
 	-e GO111MODULE=on \
-	-e HOME=/home/gopher \
 	-w /usr/src \
 	$(BUILDIMAGE)
 
@@ -44,41 +36,6 @@ ifndef CIRCLECI
 ifndef OFFLINE
 	@docker pull $(BUILDIMAGE)
 endif
-endif
-
-.PHONY: $(CACHEVOL)
-$(CACHEVOL): pull-build-image Makefile
-ifndef CIRCLECI
-	@docker volume create $(CACHEVOL)
-	@docker run -it --rm -v $(CACHEVOL):/usr/gocache \
-		$(BUILDIMAGE) \
-		sudo chown -R $(shell id -u):$(shell id -g) /usr/gocache
-endif
-
-.PHONY: $(MODVOL)
-$(MODVOL): pull-build-image Makefile
-ifndef CIRCLECI
-	@docker volume create $(MODVOL)
-	@docker run -it --rm -v $(MODVOL):/go/pkg/mod \
-		$(BUILDIMAGE) \
-		sudo chown -R $(shell id -u):$(shell id -g) /go/pkg/mod
-endif
-
-.PHONY: $(HOMEVOL)
-$(HOMEVOL): pull-build-image Makefile
-ifndef CIRCLECI
-	@docker volume create $(HOMEVOL)
-	@docker run -it 	--rm -v $(HOMEVOL):/home/gopher \
-		-e GITHUB_TOKEN=$(GITHUB_TOKEN) \
-		-e HOME=/home/gopher \
-		$(BUILDIMAGE) \
-		sudo chown -R $(shell id -u):$(shell id -g) /home/gopher
-	@docker run -it --rm -v $(HOMEVOL):/home/gopher \
-		-u $(shell id -u):$(shell id -g) \
-		-e GITHUB_TOKEN=$(GITHUB_TOKEN) \
-		-e HOME=/home/gopher \
-		$(BUILDIMAGE) \
-		configure-git
 endif
 
 # Generate go code for proto files
