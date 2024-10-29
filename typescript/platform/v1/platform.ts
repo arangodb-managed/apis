@@ -105,7 +105,7 @@ export interface Region {
   // boolean
   ml_supported?: boolean;
   
-  // sets the sales priority of this region higher number is higher proirity
+  // sets the sales priority of this region higher number is higher priority
   // number
   priority?: number;
 }

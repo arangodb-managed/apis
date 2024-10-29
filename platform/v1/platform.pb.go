@@ -223,7 +223,7 @@ type Region struct {
 	Prerelease bool `protobuf:"varint,7,opt,name=prerelease,proto3" json:"prerelease,omitempty"`
 	// If set, this region support ML services.
 	MlSupported bool `protobuf:"varint,8,opt,name=ml_supported,json=mlSupported,proto3" json:"ml_supported,omitempty"`
-	// sets the sales priority of this region higher number is higher proirity
+	// sets the sales priority of this region higher number is higher priority
 	Priority             int32    `protobuf:"varint,9,opt,name=priority,proto3" json:"priority,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
