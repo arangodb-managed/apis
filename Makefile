@@ -4,6 +4,9 @@ ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
 BUILDIMAGE := arangodboasis/golang-ci:latest
 
 PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*' -not -path './vendor-proto/*' | sort)
+PROTO_DIRS := $(shell find . -name '*.proto' -not -path './vendor/*' -not -path './vendor-proto/*' -exec dirname {} \; | sort -u)
+
+
 
 ifndef CIRCLECI
 	GITHUB_TOKEN := $(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token)
@@ -28,7 +31,11 @@ else
 endif
 
 .PHONY: all
-all: generate build check ts docs
+
+all:
+	echo $(PROTO_DIRS)
+
+# all: generate build check ts docs
 
 .PHONY: pull-build-image
 pull-build-image: 
@@ -95,9 +102,6 @@ vendor:
 
 .PHONY: update-modules
 update-modules:
-	go get \
-		github.com/golang/protobuf@v1.3.5
-
 	go mod tidy
 	go mod vendor
 

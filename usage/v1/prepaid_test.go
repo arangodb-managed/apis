@@ -26,7 +26,7 @@ import (
 	"testing"
 	"time"
 
-	types "github.com/gogo/protobuf/types"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func TestIsActivePrepaidDeployment(t *testing.T) {
@@ -200,10 +200,6 @@ func TestIsActivePrepaidDeployment(t *testing.T) {
 	}
 }
 
-func TimestampMust(t time.Time) *types.Timestamp {
-	val, err := types.TimestampProto(t)
-	if err != nil {
-		panic(err)
-	}
-	return val
+func TimestampMust(t time.Time) *timestamppb.Timestamp {
+	return timestamppb.New(t)
 }

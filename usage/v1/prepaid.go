@@ -33,11 +33,11 @@ func (u *UsageItem) IsActivePrepaidDeployment() bool {
 	}
 	// there are only 2 cases when they do not overlap:
 	// When usage item ends before prepaid deployment start
-	if u.GetEndsAt().Compare(res.GetPrepaidDeploymentStartsAt()) <= 0 {
+	if u.GetEndsAt().AsTime().Compare(res.GetPrepaidDeploymentStartsAt().AsTime()) <= 0 {
 		return false
 	}
 	// When usage item starts after prepaid deployment end
-	if u.GetStartsAt().Compare(res.GetPrepaidDeploymentEndsAt()) >= 0 {
+	if u.GetStartsAt().AsTime().Compare(res.GetPrepaidDeploymentEndsAt().AsTime()) >= 0 {
 		return false
 	}
 

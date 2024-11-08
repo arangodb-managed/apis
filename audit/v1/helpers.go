@@ -34,8 +34,8 @@ func (source *AuditLog) Equals(other *AuditLog, includeStatuses bool) bool {
 		source.GetUrl() == other.GetUrl() &&
 		source.GetName() == other.GetName() &&
 		source.GetDescription() == other.GetDescription() &&
-		source.GetCreatedAt().Equal(other.GetCreatedAt()) &&
-		source.GetDeletedAt().Equal(other.GetDeletedAt()) &&
+		source.GetCreatedAt().AsTime().Equal(other.GetCreatedAt().AsTime()) &&
+		source.GetDeletedAt().AsTime().Equal(other.GetDeletedAt().AsTime()) &&
 		source.GetCreatedById() == other.GetCreatedById() &&
 		source.GetOrganizationId() == other.GetOrganizationId() &&
 		source.GetCreatedById() == other.GetCreatedById() &&
@@ -96,7 +96,7 @@ func (source *AuditLog_DestinationStatus) Equals(other *AuditLog_DestinationStat
 		source.GetErrorDetails() == other.GetErrorDetails() &&
 		source.GetCountersSinceMidnight().Equals(other.GetCountersSinceMidnight()) &&
 		source.GetCountersYesterday().Equals(other.GetCountersYesterday()) &&
-		source.GetUpdatedAt().Equal(other.GetUpdatedAt())
+		source.GetUpdatedAt().AsTime().Equal(other.GetUpdatedAt().AsTime())
 }
 
 // Equals returns true when source & other have the same values.

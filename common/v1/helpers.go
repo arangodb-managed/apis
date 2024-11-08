@@ -23,7 +23,8 @@
 package v1
 
 import (
-	types "github.com/gogo/protobuf/types"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 )
 
 const (
@@ -32,7 +33,7 @@ const (
 )
 
 // CloneTimestamp creates a deep clone of the given timestamp
-func CloneTimestamp(s *types.Timestamp) *types.Timestamp {
+func CloneTimestamp(s *timestamppb.Timestamp) *timestamppb.Timestamp {
 	if s == nil {
 		return nil
 	}
@@ -41,7 +42,7 @@ func CloneTimestamp(s *types.Timestamp) *types.Timestamp {
 }
 
 // CloneDuration creates a deep copy of the given duration
-func CloneDuration(s *types.Duration) *types.Duration {
+func CloneDuration(s *durationpb.Duration) *durationpb.Duration {
 	if s == nil {
 		return nil
 	}
