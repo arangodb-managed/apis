@@ -626,6 +626,9 @@ message Deployment {
         int64 last_memory_limit = 33;
         // Last known CPU limit in vCPU units
         float last_cpu_limit = 34;
+        // If set, this server is in a state where it needs to be replaced.
+        // If set, this server is in a state where it needs to be replaced.
+        bool replacement_required = 35;
     }
 
     // Status of the deployment
