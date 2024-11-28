@@ -24,14 +24,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gogo/protobuf/types"
+	"google.golang.org/protobuf/types/known/timestamppb"
+
 	"github.com/stretchr/testify/assert"
 )
 
 func TestIsExpired(t *testing.T) {
 	t.Run("expired", func(t *testing.T) {
 		year := time.Now().Year() - 2
-		validUntil, _ := types.TimestampProto(time.Date(year, 7, 16, 0, 0, 0, 0, time.UTC))
+		validUntil := timestamppb.New(time.Date(year, 7, 16, 0, 0, 0, 0, time.UTC))
 		b := &CreditBundle{
 			ValidUntil: validUntil,
 		}
@@ -39,7 +40,7 @@ func TestIsExpired(t *testing.T) {
 	})
 	t.Run("not expired", func(t *testing.T) {
 		year := time.Now().Year() + 2
-		validUntil, _ := types.TimestampProto(time.Date(year, 7, 16, 0, 0, 0, 0, time.UTC))
+		validUntil := timestamppb.New(time.Date(year, 7, 16, 0, 0, 0, 0, time.UTC))
 		expiredBundle := &CreditBundle{
 			ValidUntil: validUntil,
 		}

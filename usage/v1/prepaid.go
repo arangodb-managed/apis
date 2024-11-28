@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2021-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Marcin Swiderski
-//
 
 package v1
+
+import common "github.com/arangodb-managed/apis/common/v1"
 
 // IsActivePrepaidDeployment return true if usage item's range overlaps prepaid deployment range
 func (u *UsageItem) IsActivePrepaidDeployment() bool {
@@ -33,11 +33,12 @@ func (u *UsageItem) IsActivePrepaidDeployment() bool {
 	}
 	// there are only 2 cases when they do not overlap:
 	// When usage item ends before prepaid deployment start
-	if u.GetEndsAt().Compare(res.GetPrepaidDeploymentStartsAt()) <= 0 {
+
+	if common.CompareTimestamps(u.GetEndsAt(), res.GetPrepaidDeploymentStartsAt()) <= 0 {
 		return false
 	}
 	// When usage item starts after prepaid deployment end
-	if u.GetStartsAt().Compare(res.GetPrepaidDeploymentEndsAt()) >= 0 {
+	if common.CompareTimestamps(u.GetStartsAt(), res.GetPrepaidDeploymentEndsAt()) >= 0 {
 		return false
 	}
 

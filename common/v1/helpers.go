@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,13 +17,12 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Ewout Prangsma
-//
 
 package v1
 
 import (
-	types "github.com/gogo/protobuf/types"
+	"google.golang.org/protobuf/types/known/durationpb"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 const (
@@ -32,7 +31,7 @@ const (
 )
 
 // CloneTimestamp creates a deep clone of the given timestamp
-func CloneTimestamp(s *types.Timestamp) *types.Timestamp {
+func CloneTimestamp(s *timestamppb.Timestamp) *timestamppb.Timestamp {
 	if s == nil {
 		return nil
 	}
@@ -41,7 +40,7 @@ func CloneTimestamp(s *types.Timestamp) *types.Timestamp {
 }
 
 // CloneDuration creates a deep copy of the given duration
-func CloneDuration(s *types.Duration) *types.Duration {
+func CloneDuration(s *durationpb.Duration) *durationpb.Duration {
 	if s == nil {
 		return nil
 	}
@@ -68,4 +67,55 @@ func (opts *ListOptions) CloneOrDefault(defaultPageSize ...int32) *ListOptions {
 		}
 	}
 	return opts
+}
+
+// TimestampsEqual compares two *timestamppb.Timestamp instances.
+func TimestampsEqual(ts1, ts2 *timestamppb.Timestamp) bool {
+	if ts1 == nil && ts2 == nil {
+		return true
+	}
+	if ts1 == nil || ts2 == nil {
+		return false
+	}
+	return ts1.Seconds == ts2.Seconds && ts1.Nanos == ts2.Nanos
+}
+
+// CompareTimestamps compares two *timestamppb.Timestamp instances.
+// Returns -1 if ts1 < ts2, 1 if ts1 > ts2, and 0 if they are equal.
+func CompareTimestamps(ts1, ts2 *timestamppb.Timestamp) int {
+	if ts1 == nil && ts2 == nil {
+		return 0
+	}
+	if ts1 == nil {
+		return -1
+	}
+	if ts2 == nil {
+		return 1
+	}
+
+	if ts1.Seconds < ts2.Seconds {
+		return -1
+	}
+	if ts1.Seconds > ts2.Seconds {
+		return 1
+	}
+	// Seconds are equal; compare nanoseconds.
+	if ts1.Nanos < ts2.Nanos {
+		return -1
+	}
+	if ts1.Nanos > ts2.Nanos {
+		return 1
+	}
+	return 0
+}
+
+// DurationsEqual compares two *durationpb.Duration instances for equality.
+func DurationsEqual(d1, d2 *durationpb.Duration) bool {
+	if d1 == nil && d2 == nil {
+		return true
+	}
+	if d1 == nil || d2 == nil {
+		return false
+	}
+	return d1.Seconds == d2.Seconds && d1.Nanos == d2.Nanos
 }

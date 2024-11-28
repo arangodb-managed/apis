@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,15 +17,14 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Gergely Brautigam
-// Author Robert Stam
-//
 
 package v1
 
 import (
 	"sort"
 	"strings"
+
+	common "github.com/arangodb-managed/apis/common/v1"
 )
 
 // Equals returns true when source & other have the same values, the destination statuses are compared depending of the provided bool.
@@ -34,8 +33,8 @@ func (source *AuditLog) Equals(other *AuditLog, includeStatuses bool) bool {
 		source.GetUrl() == other.GetUrl() &&
 		source.GetName() == other.GetName() &&
 		source.GetDescription() == other.GetDescription() &&
-		source.GetCreatedAt().Equal(other.GetCreatedAt()) &&
-		source.GetDeletedAt().Equal(other.GetDeletedAt()) &&
+		common.TimestampsEqual(source.GetCreatedAt(), other.GetCreatedAt()) &&
+		common.TimestampsEqual(source.GetDeletedAt(), other.GetDeletedAt()) &&
 		source.GetCreatedById() == other.GetCreatedById() &&
 		source.GetOrganizationId() == other.GetOrganizationId() &&
 		source.GetCreatedById() == other.GetCreatedById() &&
@@ -96,7 +95,7 @@ func (source *AuditLog_DestinationStatus) Equals(other *AuditLog_DestinationStat
 		source.GetErrorDetails() == other.GetErrorDetails() &&
 		source.GetCountersSinceMidnight().Equals(other.GetCountersSinceMidnight()) &&
 		source.GetCountersYesterday().Equals(other.GetCountersYesterday()) &&
-		source.GetUpdatedAt().Equal(other.GetUpdatedAt())
+		common.TimestampsEqual(source.GetUpdatedAt(), other.GetUpdatedAt())
 }
 
 // Equals returns true when source & other have the same values.

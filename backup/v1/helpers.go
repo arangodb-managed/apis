@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Robert Stam
-//
 
 package v1
+
+import common "github.com/arangodb-managed/apis/common/v1"
 
 // SpecEquals returns true when source & other have the same specification values
 // Note that several fields, like ID, Name and Description are not checked
@@ -30,7 +30,7 @@ func (source *BackupPolicy) SpecEquals(other *BackupPolicy) bool {
 		source.GetIsPaused() == other.GetIsPaused() &&
 		source.GetUpload() == other.GetUpload() &&
 		source.GetSchedule().Equals(other.GetSchedule()) &&
-		source.GetRetentionPeriod().Equal(other.GetRetentionPeriod()) &&
+		common.DurationsEqual(source.GetRetentionPeriod(), other.GetRetentionPeriod()) &&
 		source.GetLocked() == other.GetLocked()
 }
 
@@ -69,7 +69,7 @@ func (source *BackupPolicy_MonthlySchedule) Equals(other *BackupPolicy_MonthlySc
 // Equals returns true when source & other have the same values
 func (source *BackupPolicy_Status) Equals(other *BackupPolicy_Status) bool {
 	return source.GetMessage() == other.GetMessage() &&
-		source.GetNextBackup().Equal(other.GetNextBackup())
+		common.TimestampsEqual(source.GetNextBackup(), other.GetNextBackup())
 }
 
 // Equals returns true when source & other have the same values
@@ -82,7 +82,7 @@ func (source *TimeOfDay) Equals(other *TimeOfDay) bool {
 // SpecEquals returns true when source & other have the same specification values
 // Note that several fields, like ID, Name and Description are not checked
 func (source *Backup) SpecEquals(other *Backup) bool {
-	return source.GetAutoDeletedAt().Equal(other.GetAutoDeletedAt()) &&
+	return common.TimestampsEqual(source.GetAutoDeletedAt(), other.GetAutoDeletedAt()) &&
 		source.GetIsDeleted() == other.GetIsDeleted() &&
 		source.GetUpload() == other.GetUpload() &&
 		source.GetDownload().Equals(other.GetDownload())
@@ -91,7 +91,7 @@ func (source *Backup) SpecEquals(other *Backup) bool {
 // Equals returns true when source & other have the same values
 func (source *Backup_DownloadSpec) Equals(other *Backup_DownloadSpec) bool {
 	return source.GetRevision() == other.GetRevision() &&
-		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt())
+		common.TimestampsEqual(source.GetLastUpdatedAt(), other.GetLastUpdatedAt())
 }
 
 // Equals returns true when source & other have the same values
@@ -99,7 +99,7 @@ func (source *Backup_Status) Equals(other *Backup_Status) bool {
 	return source.GetMessage() == other.GetMessage() &&
 		source.GetAvailable() == other.GetAvailable() &&
 		source.GetIsFailed() == other.GetIsFailed() &&
-		source.GetCreatedAt().Equal(other.GetCreatedAt()) &&
+		common.TimestampsEqual(source.GetCreatedAt(), other.GetCreatedAt()) &&
 		source.GetProgress() == other.GetProgress() &&
 		source.GetState() == other.GetState() &&
 		source.GetVersion() == other.GetVersion() &&
@@ -113,13 +113,13 @@ func (source *Backup_Status) Equals(other *Backup_Status) bool {
 // Equals returns true when source & other have the same values
 func (source *Backup_UploadStatus) Equals(other *Backup_UploadStatus) bool {
 	return source.GetUploaded() == other.GetUploaded() &&
-		source.GetUploadedAt().Equal(other.GetUploadedAt()) &&
+		common.TimestampsEqual(source.GetUploadedAt(), other.GetUploadedAt()) &&
 		source.GetSizeBytes() == other.GetSizeBytes()
 }
 
 // Equals returns true when source & other have the same values
 func (source *Backup_DownloadStatus) Equals(other *Backup_DownloadStatus) bool {
 	return source.GetDownloaded() == other.GetDownloaded() &&
-		source.GetDownloadedAt().Equal(other.GetDownloadedAt()) &&
+		common.TimestampsEqual(source.GetDownloadedAt(), other.GetDownloadedAt()) &&
 		source.GetRevision() == other.GetRevision()
 }

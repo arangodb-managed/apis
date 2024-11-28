@@ -1,10 +1,12 @@
 //
 // DISCLAIMER
 //
-// Copyright 2022-2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022-2024 ArangoDB GmbH, Cologne, Germany
 //
 
 package v1
+
+import common "github.com/arangodb-managed/apis/common/v1"
 
 // Equals returns true when source and other have the same values.
 func (source *DeploymentReplication_Status) Equals(other *DeploymentReplication_Status) bool {
@@ -21,5 +23,5 @@ func (source *DeploymentMigration_Status) Equals(other *DeploymentMigration_Stat
 		source.GetDescription() == other.GetDescription() &&
 		source.GetBackupId() == other.GetBackupId() &&
 		source.GetTargetDeploymentId() == other.GetTargetDeploymentId() &&
-		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt())
+		common.TimestampsEqual(source.GetLastUpdatedAt(), other.GetLastUpdatedAt())
 }

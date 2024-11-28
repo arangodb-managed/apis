@@ -20,7 +20,11 @@
 
 package v1
 
-import "github.com/gogo/protobuf/types"
+import (
+	"google.golang.org/protobuf/types/known/timestamppb"
+
+	common "github.com/arangodb-managed/apis/common/v1"
+)
 
 // IsExpired returns true if the MLServices has expired.
 func (ml *MLServices) IsExpired() bool {
@@ -30,9 +34,9 @@ func (ml *MLServices) IsExpired() bool {
 		sts.GetHoursAllowed(); hoursAllowed > 0 && hoursUsed > hoursAllowed {
 		return true
 	}
-	// Check if we have exceeded to specified expiry deadline?
-	now := types.TimestampNow()
-	if expiresAt := sts.GetExpiresAt(); expiresAt != nil && now.Compare(expiresAt) > 0 {
+	// Check if we have exceeded the specified expiry deadline?
+	now := timestamppb.Now()
+	if expiresAt := sts.GetExpiresAt(); expiresAt != nil && common.CompareTimestamps(now, expiresAt) > 0 {
 		return true
 	}
 	return false

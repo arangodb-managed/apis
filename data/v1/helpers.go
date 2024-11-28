@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 // limitations under the License.
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-//
-// Author Ewout Prangsma
 //
 
 package v1
@@ -119,7 +117,7 @@ func (source *Deployment) SpecEquals(other *Deployment) bool {
 func (source *Deployment_BackupRestoreSpec) Equals(other *Deployment_BackupRestoreSpec) bool {
 	return source.GetRevision() == other.GetRevision() &&
 		source.GetRestoredById() == other.GetRestoredById() &&
-		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
+		common.TimestampsEqual(source.GetLastUpdatedAt(), other.GetLastUpdatedAt()) &&
 		source.GetBackupId() == other.GetBackupId()
 }
 
@@ -170,7 +168,7 @@ func (source *Deployment_BackupRestoreStatus) Equals(other *Deployment_BackupRes
 	return source.GetRevision() == other.GetRevision() &&
 		source.GetRestoring() == other.GetRestoring() &&
 		source.GetStatus() == other.GetStatus() &&
-		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
+		common.TimestampsEqual(source.GetLastUpdatedAt(), other.GetLastUpdatedAt()) &&
 		source.GetFailureReason() == other.GetFailureReason()
 }
 
@@ -196,7 +194,7 @@ func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus, ignoreTimestamps
 		a.GetMemberOfCluster() == b.GetMemberOfCluster() &&
 		a.GetFailed() == b.GetFailed() &&
 		a.GetVersion() == b.GetVersion() &&
-		a.GetLastStartedAt().Equal(b.GetLastStartedAt()) &&
+		common.TimestampsEqual(a.GetLastStartedAt(), b.GetLastStartedAt()) &&
 		a.GetRotationPending() == b.GetRotationPending() &&
 		(ignoreVolatile || DataVolumeInfoEqual(a.GetDataVolumeInfo(), b.GetDataVolumeInfo(), ignoreTimestamps)) &&
 		a.GetRecentRestarts() == b.GetRecentRestarts() &&
@@ -213,7 +211,7 @@ func DataVolumeInfoEqual(a, b *DataVolumeInfo, ignoreTimestamps bool) bool {
 		a.GetAvailableInodes() == b.GetAvailableInodes() &&
 		a.GetTotalInodes() == b.GetTotalInodes() &&
 		a.GetUsedInodes() == b.GetUsedInodes() &&
-		(ignoreTimestamps || (a.GetMeasuredAt().Equal(b.GetMeasuredAt())))
+		(ignoreTimestamps || common.TimestampsEqual(a.GetMeasuredAt(), b.GetMeasuredAt()))
 
 }
 
