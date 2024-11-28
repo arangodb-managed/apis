@@ -3,7 +3,6 @@ module github.com/arangodb-managed/apis
 go 1.22
 
 require (
-	github.com/gogo/protobuf v1.3.2
 	github.com/golang/protobuf v1.5.4
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/stretchr/testify v1.3.0
