@@ -34,10 +34,10 @@ type (
 // ForEachPlan iterates over all support plans that match given given filter,
 // invoking the given callback for each plan.
 func ForEachPlan(ctx context.Context, listFunc func(ctx context.Context, req *ListPlansRequest) (*PlanList, error),
-	req ListPlansRequest, cb PlanCallback) error {
+	req *ListPlansRequest, cb PlanCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}

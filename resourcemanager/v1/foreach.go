@@ -183,10 +183,10 @@ func ForEachProject(ctx context.Context, listFunc func(ctx context.Context, req 
 // ForEachOrganizationQuota iterates over all organization related
 // quotas specified by the given request.
 func ForEachOrganizationQuota(ctx context.Context, listFunc func(ctx context.Context, req *ListQuotasRequest) (*QuotaList, error),
-	req ListQuotasRequest, cb QuotaCallback) error {
+	req *ListQuotasRequest, cb QuotaCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -209,10 +209,10 @@ func ForEachOrganizationQuota(ctx context.Context, listFunc func(ctx context.Con
 // ForEachProjectQuota iterates over all project related quotas
 // specified by the given request.
 func ForEachProjectQuota(ctx context.Context, listFunc func(ctx context.Context, req *ListQuotasRequest) (*QuotaList, error),
-	req ListQuotasRequest, cb QuotaCallback) error {
+	req *ListQuotasRequest, cb QuotaCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -234,10 +234,10 @@ func ForEachProjectQuota(ctx context.Context, listFunc func(ctx context.Context,
 
 // ForEachEvent iterates over all events specified by the given request.
 func ForEachEvent(ctx context.Context, listFunc func(ctx context.Context, req *ListEventOptions) (*EventList, error),
-	req ListEventOptions, cb EventCallback) error {
+	req *ListEventOptions, cb EventCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}

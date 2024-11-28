@@ -34,10 +34,10 @@ type (
 // ForEachUsageItem iterates over all usage items that match given given filter,
 // invoking the given callback for each usage item.
 func ForEachUsageItem(ctx context.Context, listFunc func(ctx context.Context, req *ListUsageItemsRequest) (*UsageItemList, error),
-	req ListUsageItemsRequest, cb UsageItemCallback) error {
+	req *ListUsageItemsRequest, cb UsageItemCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}

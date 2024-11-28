@@ -67,10 +67,10 @@ func ForEachDeployment(ctx context.Context, listFunc func(ctx context.Context, r
 // invoking the given callback for each version.
 func ForEachVersion(ctx context.Context,
 	listFunc func(ctx context.Context, req *ListVersionsRequest) (*VersionList, error),
-	req ListVersionsRequest, cb VersionCallback) error {
+	req *ListVersionsRequest, cb VersionCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}

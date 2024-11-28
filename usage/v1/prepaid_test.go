@@ -188,7 +188,8 @@ func TestIsActivePrepaidDeployment(t *testing.T) {
 		},
 	}
 
-	for _, data := range tests {
+	for i := range tests {
+		data := &tests[i]
 		t.Run(data.name, func(t *testing.T) {
 			actual := data.item.IsActivePrepaidDeployment()
 			if actual != data.expected {

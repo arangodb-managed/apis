@@ -35,10 +35,10 @@ type (
 // identified by the given context ID,
 // invoking the given callback for each certificate.
 func ForEachToken(ctx context.Context, listFunc func(ctx context.Context, req *ListTokensRequest) (*TokenList, error),
-	opts ListTokensRequest, cb TokenCallback) error {
+	opts *ListTokensRequest, cb TokenCallback) error {
 	opts.Options = opts.Options.CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}

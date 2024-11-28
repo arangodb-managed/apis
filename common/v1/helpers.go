@@ -35,8 +35,11 @@ func CloneTimestamp(s *timestamppb.Timestamp) *timestamppb.Timestamp {
 	if s == nil {
 		return nil
 	}
-	clone := *s
-	return &clone
+	clone := &timestamppb.Timestamp{
+		Seconds: s.Seconds,
+		Nanos:   s.Nanos,
+	}
+	return clone
 }
 
 // CloneDuration creates a deep copy of the given duration
@@ -44,8 +47,11 @@ func CloneDuration(s *durationpb.Duration) *durationpb.Duration {
 	if s == nil {
 		return nil
 	}
-	clone := *s
-	return &clone
+	clone := &durationpb.Duration{
+		Seconds: s.Seconds,
+		Nanos:   s.Nanos,
+	}
+	return clone
 }
 
 // CloneOrDefault creates a clone of the given options if not nil,
@@ -56,8 +62,11 @@ func (opts *ListOptions) CloneOrDefault(defaultPageSize ...int32) *ListOptions {
 	if opts == nil {
 		opts = &ListOptions{}
 	} else {
-		clone := *opts
-		opts = &clone
+		opts = &ListOptions{
+			PageSize:  opts.PageSize,
+			Page:      opts.Page,
+			ContextId: opts.ContextId,
+		}
 	}
 	if opts.PageSize == 0 {
 		if len(defaultPageSize) > 0 {

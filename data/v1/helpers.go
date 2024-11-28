@@ -23,6 +23,8 @@ package v1
 import (
 	"strings"
 
+	"google.golang.org/protobuf/proto"
+
 	common "github.com/arangodb-managed/apis/common/v1"
 	rm "github.com/arangodb-managed/apis/resourcemanager/v1"
 )
@@ -46,14 +48,17 @@ func (s *Deployment_Status) Clone() *Deployment_Status {
 	if s == nil {
 		return nil
 	}
-	clone := *s
+	clone, ok := proto.Clone(s).(*Deployment_Status)
+	if !ok {
+		return nil
+	}
 	clone.ServerVersions = append([]string{}, s.GetServerVersions()...)
 	clone.BootstrappedAt = common.CloneTimestamp(s.GetBootstrappedAt())
 	clone.Servers = make([]*Deployment_ServerStatus, 0, len(s.GetServers()))
 	for _, x := range s.GetServers() {
 		clone.Servers = append(clone.Servers, x.Clone())
 	}
-	return &clone
+	return clone
 }
 
 // Clone creates a deep clone of the given source
@@ -61,10 +66,13 @@ func (s *Deployment_ServerStatus) Clone() *Deployment_ServerStatus {
 	if s == nil {
 		return nil
 	}
-	clone := *s
+	clone, ok := proto.Clone(s).(*Deployment_ServerStatus)
+	if !ok {
+		return nil
+	}
 	clone.CreatedAt = common.CloneTimestamp(s.GetCreatedAt())
 	clone.DataVolumeInfo = s.GetDataVolumeInfo().Clone()
-	return &clone
+	return clone
 }
 
 // Clone creates a deep clone of the given source
@@ -72,9 +80,12 @@ func (s *DataVolumeInfo) Clone() *DataVolumeInfo {
 	if s == nil {
 		return nil
 	}
-	clone := *s
+	clone, ok := proto.Clone(s).(*DataVolumeInfo)
+	if !ok {
+		return nil
+	}
 	clone.MeasuredAt = common.CloneTimestamp(s.GetMeasuredAt())
-	return &clone
+	return clone
 }
 
 // Clone creates a deep copy of the given source
@@ -82,7 +93,12 @@ func (s *ServersSpecLimits) Clone() *ServersSpecLimits {
 	if s == nil {
 		return nil
 	}
-	clone := *s
+
+	clone, ok := proto.Clone(s).(*ServersSpecLimits)
+	if !ok {
+		return nil
+	}
+
 	clone.Coordinators = s.Coordinators.Clone()
 	clone.CoordinatorMemorySize = s.CoordinatorMemorySize.Clone()
 	clone.Dbservers = s.Dbservers.Clone()
@@ -90,7 +106,7 @@ func (s *ServersSpecLimits) Clone() *ServersSpecLimits {
 	clone.DbserverDiskSize = s.DbserverDiskSize.Clone()
 	clone.NodeMemorySize = s.NodeMemorySize.Clone()
 	clone.NodeCount = s.NodeCount.Clone()
-	return &clone
+	return clone
 }
 
 // Clone creates a deep copy of the given source
@@ -98,8 +114,11 @@ func (s *ServersSpecLimits_Limits) Clone() *ServersSpecLimits_Limits {
 	if s == nil {
 		return nil
 	}
-	clone := *s
-	return &clone
+	clone, ok := proto.Clone(s).(*ServersSpecLimits_Limits)
+	if !ok {
+		return nil
+	}
+	return clone
 }
 
 // SpecEquals returns true when source & other have the same specification values
