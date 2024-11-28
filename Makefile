@@ -96,11 +96,8 @@ vendor:
 .PHONY: update-modules
 update-modules:
 	go get \
-		github.com/golang/protobuf@v1.3.5
+		github.com/golang/protobuf@v1.5.4 \
+		github.com/grpc-ecosystem/grpc-gateway@v1.16.0
 
 	go mod tidy
 	go mod vendor
-
-    # add .proto files manually
-	cp -r vendor-proto/googleapis vendor/
-	cp -r vendor-proto/github.com/gogo/protobuf/protobuf vendor/github.com/gogo/protobuf/
