@@ -58,7 +58,7 @@ check:
 .PHONY: docs
 docs: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 	$(DOCKERENV) \
-		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
+		protoc -I.:vendor-proto/ \
 			--doc_out=docs $(PROTOSOURCES) \
 			--doc_opt=html,index-raw.html
 	cat docs/header.txt docs/index-raw.html > docs/index.html
@@ -70,7 +70,7 @@ ts: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 	@rm -Rf typescript
 	@mkdir -p typescript
 	$(DOCKERENV) \
-		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
+		protoc -I.:vendor-proto \
 			--ts_out=typescript $(PROTOSOURCES) \
 			--ts_opt=.
 
