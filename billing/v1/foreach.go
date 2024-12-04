@@ -40,10 +40,10 @@ type (
 // ForEachInvoice iterates over all invoices that match the given request,
 // invoking the given callback for each invoice.
 func ForEachInvoice(ctx context.Context, listFunc func(ctx context.Context, req *ListInvoicesRequest) (*InvoiceList, error),
-	req ListInvoicesRequest, cb InvoiceCallback) error {
+	req *ListInvoicesRequest, cb InvoiceCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -66,10 +66,10 @@ func ForEachInvoice(ctx context.Context, listFunc func(ctx context.Context, req 
 // ForEachPaymentProvider iterates over all payment providers that match the given request,
 // invoking the given callback for each provider.
 func ForEachPaymentProvider(ctx context.Context, listFunc func(ctx context.Context, req *ListPaymentProvidersRequest) (*PaymentProviderList, error),
-	req ListPaymentProvidersRequest, cb PaymentProviderCallback) error {
+	req *ListPaymentProvidersRequest, cb PaymentProviderCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -92,10 +92,10 @@ func ForEachPaymentProvider(ctx context.Context, listFunc func(ctx context.Conte
 // ForEachPaymentMethod iterates over all payment methods that match the given request,
 // invoking the given callback for each method.
 func ForEachPaymentMethod(ctx context.Context, listFunc func(ctx context.Context, req *ListPaymentMethodsRequest) (*PaymentMethodList, error),
-	req ListPaymentMethodsRequest, cb PaymentMethodCallback) error {
+	req *ListPaymentMethodsRequest, cb PaymentMethodCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}

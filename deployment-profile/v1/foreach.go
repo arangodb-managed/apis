@@ -31,10 +31,10 @@ type (
 // identified by the given context ID,
 // invoking the given callback for each deployment profile.
 func ForEachDeploymentProfile(ctx context.Context, listFunc func(ctx context.Context, req *ListDeploymentProfilesRequest) (*DeploymentProfileList, error),
-	opts ListDeploymentProfilesRequest, cb DeploymentProfileCallback) error {
+	opts *ListDeploymentProfilesRequest, cb DeploymentProfileCallback) error {
 	opts.Options = opts.Options.CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}

@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Ewout Prangsma
-//
 
 package v1
 
 import (
 	"strings"
+
+	"google.golang.org/protobuf/proto"
 
 	common "github.com/arangodb-managed/apis/common/v1"
 	rm "github.com/arangodb-managed/apis/resourcemanager/v1"
@@ -48,14 +48,17 @@ func (s *Deployment_Status) Clone() *Deployment_Status {
 	if s == nil {
 		return nil
 	}
-	clone := *s
+	clone, ok := proto.Clone(s).(*Deployment_Status)
+	if !ok {
+		return nil
+	}
 	clone.ServerVersions = append([]string{}, s.GetServerVersions()...)
 	clone.BootstrappedAt = common.CloneTimestamp(s.GetBootstrappedAt())
 	clone.Servers = make([]*Deployment_ServerStatus, 0, len(s.GetServers()))
 	for _, x := range s.GetServers() {
 		clone.Servers = append(clone.Servers, x.Clone())
 	}
-	return &clone
+	return clone
 }
 
 // Clone creates a deep clone of the given source
@@ -63,10 +66,13 @@ func (s *Deployment_ServerStatus) Clone() *Deployment_ServerStatus {
 	if s == nil {
 		return nil
 	}
-	clone := *s
+	clone, ok := proto.Clone(s).(*Deployment_ServerStatus)
+	if !ok {
+		return nil
+	}
 	clone.CreatedAt = common.CloneTimestamp(s.GetCreatedAt())
 	clone.DataVolumeInfo = s.GetDataVolumeInfo().Clone()
-	return &clone
+	return clone
 }
 
 // Clone creates a deep clone of the given source
@@ -74,9 +80,12 @@ func (s *DataVolumeInfo) Clone() *DataVolumeInfo {
 	if s == nil {
 		return nil
 	}
-	clone := *s
+	clone, ok := proto.Clone(s).(*DataVolumeInfo)
+	if !ok {
+		return nil
+	}
 	clone.MeasuredAt = common.CloneTimestamp(s.GetMeasuredAt())
-	return &clone
+	return clone
 }
 
 // Clone creates a deep copy of the given source
@@ -84,7 +93,12 @@ func (s *ServersSpecLimits) Clone() *ServersSpecLimits {
 	if s == nil {
 		return nil
 	}
-	clone := *s
+
+	clone, ok := proto.Clone(s).(*ServersSpecLimits)
+	if !ok {
+		return nil
+	}
+
 	clone.Coordinators = s.Coordinators.Clone()
 	clone.CoordinatorMemorySize = s.CoordinatorMemorySize.Clone()
 	clone.Dbservers = s.Dbservers.Clone()
@@ -92,7 +106,7 @@ func (s *ServersSpecLimits) Clone() *ServersSpecLimits {
 	clone.DbserverDiskSize = s.DbserverDiskSize.Clone()
 	clone.NodeMemorySize = s.NodeMemorySize.Clone()
 	clone.NodeCount = s.NodeCount.Clone()
-	return &clone
+	return clone
 }
 
 // Clone creates a deep copy of the given source
@@ -100,8 +114,11 @@ func (s *ServersSpecLimits_Limits) Clone() *ServersSpecLimits_Limits {
 	if s == nil {
 		return nil
 	}
-	clone := *s
-	return &clone
+	clone, ok := proto.Clone(s).(*ServersSpecLimits_Limits)
+	if !ok {
+		return nil
+	}
+	return clone
 }
 
 // SpecEquals returns true when source & other have the same specification values
@@ -119,7 +136,7 @@ func (source *Deployment) SpecEquals(other *Deployment) bool {
 func (source *Deployment_BackupRestoreSpec) Equals(other *Deployment_BackupRestoreSpec) bool {
 	return source.GetRevision() == other.GetRevision() &&
 		source.GetRestoredById() == other.GetRestoredById() &&
-		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
+		common.TimestampsEqual(source.GetLastUpdatedAt(), other.GetLastUpdatedAt()) &&
 		source.GetBackupId() == other.GetBackupId()
 }
 
@@ -170,7 +187,7 @@ func (source *Deployment_BackupRestoreStatus) Equals(other *Deployment_BackupRes
 	return source.GetRevision() == other.GetRevision() &&
 		source.GetRestoring() == other.GetRestoring() &&
 		source.GetStatus() == other.GetStatus() &&
-		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
+		common.TimestampsEqual(source.GetLastUpdatedAt(), other.GetLastUpdatedAt()) &&
 		source.GetFailureReason() == other.GetFailureReason()
 }
 
@@ -196,7 +213,7 @@ func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus, ignoreTimestamps
 		a.GetMemberOfCluster() == b.GetMemberOfCluster() &&
 		a.GetFailed() == b.GetFailed() &&
 		a.GetVersion() == b.GetVersion() &&
-		a.GetLastStartedAt().Equal(b.GetLastStartedAt()) &&
+		common.TimestampsEqual(a.GetLastStartedAt(), b.GetLastStartedAt()) &&
 		a.GetRotationPending() == b.GetRotationPending() &&
 		(ignoreVolatile || DataVolumeInfoEqual(a.GetDataVolumeInfo(), b.GetDataVolumeInfo(), ignoreTimestamps)) &&
 		a.GetRecentRestarts() == b.GetRecentRestarts() &&
@@ -213,7 +230,7 @@ func DataVolumeInfoEqual(a, b *DataVolumeInfo, ignoreTimestamps bool) bool {
 		a.GetAvailableInodes() == b.GetAvailableInodes() &&
 		a.GetTotalInodes() == b.GetTotalInodes() &&
 		a.GetUsedInodes() == b.GetUsedInodes() &&
-		(ignoreTimestamps || (a.GetMeasuredAt().Equal(b.GetMeasuredAt())))
+		(ignoreTimestamps || common.TimestampsEqual(a.GetMeasuredAt(), b.GetMeasuredAt()))
 
 }
 

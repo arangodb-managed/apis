@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2021-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Marcin Swiderski
-//
 
 package v1
 
@@ -26,7 +24,7 @@ import (
 	"testing"
 	"time"
 
-	types "github.com/gogo/protobuf/types"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func TestIsActivePrepaidDeployment(t *testing.T) {
@@ -190,7 +188,8 @@ func TestIsActivePrepaidDeployment(t *testing.T) {
 		},
 	}
 
-	for _, data := range tests {
+	for i := range tests {
+		data := &tests[i]
 		t.Run(data.name, func(t *testing.T) {
 			actual := data.item.IsActivePrepaidDeployment()
 			if actual != data.expected {
@@ -200,10 +199,6 @@ func TestIsActivePrepaidDeployment(t *testing.T) {
 	}
 }
 
-func TimestampMust(t time.Time) *types.Timestamp {
-	val, err := types.TimestampProto(t)
-	if err != nil {
-		panic(err)
-	}
-	return val
+func TimestampMust(t time.Time) *timestamppb.Timestamp {
+	return timestamppb.New(t)
 }

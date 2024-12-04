@@ -22,8 +22,6 @@
 
 package v1
 
-import common "github.com/arangodb-managed/apis/common/v1"
-
 // Equals returns true when source & other have the same values
 func (source *ExampleDataset) Equals(other *ExampleDataset) bool {
 	return source.GetName() == other.GetName() &&
@@ -46,35 +44,4 @@ func (source *ExampleDatasetInstallation_Status) Equals(other *ExampleDatasetIns
 		source.GetIsFailed() == other.GetIsFailed() &&
 		source.GetUserName() == other.GetUserName() &&
 		source.GetDemoUrl() == other.GetDemoUrl()
-}
-
-// CloneExampleDataset creates a deep copy of the given source
-func (source *ExampleDataset) Clone() *ExampleDataset {
-	if source == nil {
-		return nil
-	}
-	clone := *source
-	clone.CreatedAt = common.CloneTimestamp(source.GetCreatedAt())
-	return &clone
-}
-
-// CloneExampleDatasetInstallation creates a deep copy of the given source
-func (source *ExampleDatasetInstallation) Clone() *ExampleDatasetInstallation {
-	if source == nil {
-		return nil
-	}
-	clone := *source
-	clone.CreatedAt = common.CloneTimestamp(source.GetCreatedAt())
-	clone.DeletedAt = common.CloneTimestamp(source.GetDeletedAt())
-	clone.Status = source.GetStatus().Clone()
-	return &clone
-}
-
-// CloneExampleDatasetInstallationStatus creates a deep copy fo the given source
-func (source *ExampleDatasetInstallation_Status) Clone() *ExampleDatasetInstallation_Status {
-	if source == nil {
-		return nil
-	}
-	clone := *source
-	return &clone
 }

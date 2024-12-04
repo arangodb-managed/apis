@@ -35,10 +35,10 @@ type (
 // ForEachExampleDatasetInstallation iterates over all example dataset installations for a specific deployment,
 // invoking the given callback for each of them.
 func ForEachExampleDatasetInstallation(ctx context.Context, listFunc func(ctx context.Context, req *ListExampleDatasetInstallationsRequest) (*ExampleDatasetInstallationList, error),
-	req ListExampleDatasetInstallationsRequest, cb ExampleDatasetInstallationCallback) error {
+	req *ListExampleDatasetInstallationsRequest, cb ExampleDatasetInstallationCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -61,10 +61,10 @@ func ForEachExampleDatasetInstallation(ctx context.Context, listFunc func(ctx co
 // ForEachExampleDataset iterates over all example datasets,
 // invoking the given callback for each of them.
 func ForEachExampleDataset(ctx context.Context, listFunc func(ctx context.Context, req *ListExampleDatasetsRequest) (*ExampleDatasetList, error),
-	req ListExampleDatasetsRequest, cb ExampleDatasetCallback) error {
+	req *ListExampleDatasetsRequest, cb ExampleDatasetCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}

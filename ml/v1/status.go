@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2023-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,11 @@
 
 package v1
 
-import "sort"
+import (
+	"sort"
+
+	common "github.com/arangodb-managed/apis/common/v1"
+)
 
 const (
 	// MLServices status phases
@@ -52,7 +56,7 @@ const (
 func (source *Status) Equals(other *Status) bool {
 	return source.GetPhase() == other.GetPhase() &&
 		source.GetMessage() == other.GetMessage() &&
-		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
+		common.TimestampsEqual(source.GetLastUpdatedAt(), other.GetLastUpdatedAt()) &&
 		Equals(source.GetServices(), other.GetServices())
 }
 

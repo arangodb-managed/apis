@@ -37,10 +37,10 @@ type (
 // ForEachAuditLog iterates over all audit logs for a specific organization,
 // invoking the given callback for each audit log.
 func ForEachAuditLog(ctx context.Context, listFunc func(ctx context.Context, req *ListAuditLogsRequest) (*AuditLogList, error),
-	req ListAuditLogsRequest, cb AuditLogCallback) error {
+	req *ListAuditLogsRequest, cb AuditLogCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -63,10 +63,10 @@ func ForEachAuditLog(ctx context.Context, listFunc func(ctx context.Context, req
 // ForEachAuditLogArchive iterates over all audit log archives for a specific audit log,
 // invoking the given callback for each audit log archive.
 func ForEachAuditLogArchive(ctx context.Context, listFunc func(ctx context.Context, req *ListAuditLogArchivesRequest) (*AuditLogArchiveList, error),
-	req ListAuditLogArchivesRequest, cb AuditLogArchiveCallback) error {
+	req *ListAuditLogArchivesRequest, cb AuditLogArchiveCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}

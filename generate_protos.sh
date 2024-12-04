@@ -8,9 +8,18 @@ fi
 
 PROTO_FILE=$1
 
-## Run protoc with the necessary arguments
 protoc \
-  -I .:../../:../../vendor/:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf/ \
-  --gofast_out=Mgithub.com/golang/protobuf/ptypes/duration/duration.proto=github.com/gogo/protobuf/types,Mgithub.com/golang/protobuf/ptypes/timestamp/timestamp.proto=github.com/gogo/protobuf/types,plugins=grpc,paths=source_relative:. \
-  --grpc-gateway_out=paths=source_relative,logtostderr=true,allow_delete_body=true:. \
+  --proto_path . \
+    -I ../../vendor-proto/ \
+    -I ../../ \
+  --go_out . \
+    --go_opt=plugins=grpc,paths=source_relative, \
+    --go_opt=Mgoogle/protobuf/timestamp.proto=google.golang.org/protobuf/types/known/timestamppb \
+    --go_opt=Mgoogle/protobuf/duration.proto=google.golang.org/protobuf/types/known/durationpb \
+    --go_opt=Mgoogle/protobuf/empty.proto=google.golang.org/protobuf/types/known/emptypb \
+    --go_opt=Mgoogle/protobuf/descriptor.proto=google.golang.org/protobuf/types/known/descriptorpb \
+  --grpc-gateway_out=. \
+    --grpc-gateway_opt=logtostderr=true \
+    --grpc-gateway_opt=paths=source_relative \
+    --grpc-gateway_opt=allow_delete_body=true \
   ./$PROTO_FILE

@@ -37,10 +37,10 @@ type (
 // ForEachBackupPolicy iterates over all backup policies for a specific deployment,
 // invoking the given callback for each backup policy.
 func ForEachBackupPolicy(ctx context.Context, listFunc func(ctx context.Context, req *ListBackupPoliciesRequest) (*BackupPolicyList, error),
-	req ListBackupPoliciesRequest, cb BackupPolicyCallback) error {
+	req *ListBackupPoliciesRequest, cb BackupPolicyCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -63,10 +63,10 @@ func ForEachBackupPolicy(ctx context.Context, listFunc func(ctx context.Context,
 // ForEachBackup iterates over all backups for a specific deployment,
 // invoking the given callback for each backup.
 func ForEachBackup(ctx context.Context, listFunc func(ctx context.Context, req *ListBackupsRequest) (*BackupList, error),
-	req ListBackupsRequest, cb BackupCallback) error {
+	req *ListBackupsRequest, cb BackupCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, &req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}

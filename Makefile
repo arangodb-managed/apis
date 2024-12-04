@@ -58,7 +58,7 @@ check:
 .PHONY: docs
 docs: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 	$(DOCKERENV) \
-		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
+		protoc -I.:vendor-proto/ \
 			--doc_out=docs $(PROTOSOURCES) \
 			--doc_opt=html,index-raw.html
 	cat docs/header.txt docs/index-raw.html > docs/index.html
@@ -70,7 +70,7 @@ ts: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 	@rm -Rf typescript
 	@mkdir -p typescript
 	$(DOCKERENV) \
-		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
+		protoc -I.:vendor-proto \
 			--ts_out=typescript $(PROTOSOURCES) \
 			--ts_opt=.
 
@@ -96,11 +96,8 @@ vendor:
 .PHONY: update-modules
 update-modules:
 	go get \
-		github.com/golang/protobuf@v1.3.5
+		github.com/golang/protobuf@v1.5.4 \
+		github.com/grpc-ecosystem/grpc-gateway@v1.16.0
 
 	go mod tidy
 	go mod vendor
-
-    # add .proto files manually
-	cp -r vendor-proto/googleapis vendor/
-	cp -r vendor-proto/github.com/gogo/protobuf/protobuf vendor/github.com/gogo/protobuf/

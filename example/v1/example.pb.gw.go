@@ -21,6 +21,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 )
 
@@ -31,6 +32,7 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = descriptor.ForMessage
+var _ = metadata.Join
 
 func request_ExampleDatasetService_GetAPIVersion_0(ctx context.Context, marshaler runtime.Marshaler, client ExampleDatasetServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq v1.Empty
@@ -463,11 +465,14 @@ func local_request_ExampleDatasetService_DeleteExampleDatasetInstallation_0(ctx 
 // RegisterExampleDatasetServiceHandlerServer registers the http handlers for service ExampleDatasetService to "mux".
 // UnaryRPC     :call ExampleDatasetServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterExampleDatasetServiceHandlerFromEndpoint instead.
 func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server ExampleDatasetServiceServer) error {
 
 	mux.Handle("GET", pattern_ExampleDatasetService_GetAPIVersion_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
 		if err != nil {
@@ -475,6 +480,7 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 		resp, md, err := local_request_ExampleDatasetService_GetAPIVersion_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -488,6 +494,8 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 	mux.Handle("GET", pattern_ExampleDatasetService_ListExampleDatasets_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
 		if err != nil {
@@ -495,6 +503,7 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 		resp, md, err := local_request_ExampleDatasetService_ListExampleDatasets_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -508,6 +517,8 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 	mux.Handle("GET", pattern_ExampleDatasetService_GetExampleDataset_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
 		if err != nil {
@@ -515,6 +526,7 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 		resp, md, err := local_request_ExampleDatasetService_GetExampleDataset_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -528,6 +540,8 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 	mux.Handle("GET", pattern_ExampleDatasetService_ListExampleDatasetInstallations_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
 		if err != nil {
@@ -535,6 +549,7 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 		resp, md, err := local_request_ExampleDatasetService_ListExampleDatasetInstallations_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -548,6 +563,8 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 	mux.Handle("GET", pattern_ExampleDatasetService_GetExampleDatasetInstallation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
 		if err != nil {
@@ -555,6 +572,7 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 		resp, md, err := local_request_ExampleDatasetService_GetExampleDatasetInstallation_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -568,6 +586,8 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 	mux.Handle("POST", pattern_ExampleDatasetService_CreateExampleDatasetInstallation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
 		if err != nil {
@@ -575,6 +595,7 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 		resp, md, err := local_request_ExampleDatasetService_CreateExampleDatasetInstallation_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -588,6 +609,8 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 	mux.Handle("PATCH", pattern_ExampleDatasetService_UpdateExampleDatasetInstallation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
 		if err != nil {
@@ -595,6 +618,7 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 		resp, md, err := local_request_ExampleDatasetService_UpdateExampleDatasetInstallation_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -608,6 +632,8 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 	mux.Handle("DELETE", pattern_ExampleDatasetService_DeleteExampleDatasetInstallation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
 		if err != nil {
@@ -615,6 +641,7 @@ func RegisterExampleDatasetServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 		resp, md, err := local_request_ExampleDatasetService_DeleteExampleDatasetInstallation_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)

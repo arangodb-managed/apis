@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2023-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,13 +21,15 @@
 package v1
 
 import (
-	"github.com/gogo/protobuf/types"
+	"google.golang.org/protobuf/types/known/timestamppb"
+
+	common "github.com/arangodb-managed/apis/common/v1"
 )
 
 // IsExpired returns true if a credit bundle is expired.
 func (bundle *CreditBundle) IsExpired() bool {
-	now := types.TimestampNow()
-	return now.Compare(bundle.GetValidUntil()) > 0
+	now := timestamppb.Now()
+	return common.CompareTimestamps(now, bundle.GetValidUntil()) > 0
 }
 
 // IsUsed returns true if a credit bundle has been used.
