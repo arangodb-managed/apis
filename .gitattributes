@@ -4,4 +4,4 @@ typescript* linguist-generated
 
 docs/* linguist-documentation
 
-vendor/* -diff
+vendor/* linguist-vendored
