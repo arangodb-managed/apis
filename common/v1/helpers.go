@@ -128,3 +128,15 @@ func DurationsEqual(d1, d2 *durationpb.Duration) bool {
 	}
 	return d1.Seconds == d2.Seconds && d1.Nanos == d2.Nanos
 }
+
+func CompareDurations(d1, d2 *durationpb.Duration) int {
+	td1 := d1.AsDuration()
+	td2 := d2.AsDuration()
+
+	if td1 < td2 {
+		return -1
+	} else if td1 > td2 {
+		return 1
+	}
+	return 0
+}
