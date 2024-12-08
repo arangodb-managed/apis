@@ -129,14 +129,32 @@ func DurationsEqual(d1, d2 *durationpb.Duration) bool {
 	return d1.Seconds == d2.Seconds && d1.Nanos == d2.Nanos
 }
 
+// Compare compares two durationpb.Duration instances.
+// Returns 0 if d1 == d2, 1 if d1 > d2, and -1 if d1 < d2.
 func CompareDurations(d1, d2 *durationpb.Duration) int {
-	td1 := d1.AsDuration()
-	td2 := d2.AsDuration()
-
-	if td1 < td2 {
-		return -1
-	} else if td1 > td2 {
+	if d2 == nil {
+		if d1 == nil {
+			return 0
+		}
 		return 1
 	}
+	if d1 == nil {
+		return -1
+	}
+
+	if d1.Seconds != d2.Seconds {
+		if d1.Seconds < d2.Seconds {
+			return -1
+		}
+		return 1
+	}
+
+	if d1.Nanos != d2.Nanos {
+		if d1.Nanos < d2.Nanos {
+			return -1
+		}
+		return 1
+	}
+
 	return 0
 }
