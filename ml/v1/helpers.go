@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2024 ArangoDB GmbH, Cologne, Germany
+// Copyright 2024-2025 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,15 +28,9 @@ import (
 
 // IsExpired returns true if the MLServices has expired.
 func (ml *MLServices) IsExpired() bool {
-	// Check if we have exceeded the allowed quota?
-	sts := ml.GetStatus()
-	if hoursUsed, hoursAllowed := sts.GetHoursUsed(),
-		sts.GetHoursAllowed(); hoursAllowed > 0 && hoursUsed > hoursAllowed {
-		return true
-	}
 	// Check if we have exceeded the specified expiry deadline?
-	now := timestamppb.Now()
-	if expiresAt := sts.GetExpiresAt(); expiresAt != nil && common.CompareTimestamps(now, expiresAt) > 0 {
+	expiresAt := ml.GetStatus().GetExpiresAt()
+	if expiresAt != nil && common.CompareTimestamps(timestamppb.Now(), expiresAt) > 0 {
 		return true
 	}
 	return false
