@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2025 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,9 +16,6 @@
 // limitations under the License.
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-//
-// Author Ewout Prangsma
-// Author Robert Stam
 //
 
 package v1
@@ -48,18 +45,20 @@ const (
 	// the amount of cloud storage used by audit log (of a deployment).
 	// UsageItems from this kind will not be closed automatically, so open items can exists.
 	UsageItemKindAuditLogStorageSize = "AuditLogStorageSize"
-	// UsageItemKindNotebookSize indicates a UsageItem that contains
+
+	// Deprecated: UsageItemKindNotebookSize indicates a UsageItem that contains
 	// the amount of resources used by the notebooks (of a deployment).
 	// UsageItems from this kind will not be closed automatically, so open items can exists.
 	UsageItemKindNotebookSize = "NotebookSize"
-	// UsageItemKindMLServicesSize indicates a UsageItem that contains
+	// Deprecated: UsageItemKindMLServicesSize indicates a UsageItem that contains
 	// the amount of resources used by a MLServices resources (of a deployment).
 	// UsageItems from this kind will not be closed automatically, so open items can exist.
 	UsageItemKindMLServicesSize = "MLServicesSize"
-	// UsageItemKindMLJobSize indicates a UsageItem that contains
+	// Deprecated: UsageItemKindMLJobSize indicates a UsageItem that contains
 	// the amount of resources used by a ML job (of a MLServices).
 	// UsageItems of this kind are closed on creation itself, so open items cannot exist.
 	UsageItemKindMLJobSize = "MLJobSize"
+
 	// UsageItemKindGraphAnalyticsJobSize indicates a UsageItem that contains
 	// the amount of resources used by a GraphAnalytics job.
 	// UsageItems of this kind are closed on creation, so open items cannot exist.
