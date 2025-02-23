@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2023-2025 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -141,11 +141,11 @@ message Status {
     repeated ServiceStatus services = 4;
 
     // Total number of hours ML Jobs have run for this Deployment.
-    float hours_used = 5;
+    float hours_used = 5 [deprecated=true];
 
     // Total number of runtime hours allowed for ML Jobs for this Deployment.
     // Set to 0 if unlimited (i.e, no restriction).
-    float hours_allowed = 6;
+    float hours_allowed = 6 [deprecated=true];
 
     // Timestamp after which MLServices are no longer usable.
     // This is set during trial use.
@@ -179,7 +179,7 @@ message ServiceStatus {
         float last_cpu_limit = 4;
     }
     // Resource usage information for this service.
-    Usage usage = 4;
+    Usage usage = 4 [deprecated=true];
     // Number of replicas running for this service.
     int32 replicas = 5;
 }
