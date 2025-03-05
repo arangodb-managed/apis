@@ -449,6 +449,8 @@ message CreatePaymentMethodRequest {
     string first_name = 2;
     // Last name of owner of payment method
     string last_name = 3;
+    // Country of issuing of the payment method
+    string issuing_country = 4;
 }
 
 // Request arguments for ListPaymentProviders
