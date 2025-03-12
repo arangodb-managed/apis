@@ -489,6 +489,10 @@ export interface PaymentMethod {
   // string
   currency_id?: string;
   
+  // Country of issuing of the payment method
+  // string
+  issuing_country?: string;
+  
   // PaymentMethod_CreditCardInfo
   credit_card_info?: PaymentMethod_CreditCardInfo;
 }
