@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2025 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -449,6 +449,8 @@ message CreatePaymentMethodRequest {
     string first_name = 2;
     // Last name of owner of payment method
     string last_name = 3;
+    // Country of issuing of the payment method
+    string issuing_country = 4;
 }
 
 // Request arguments for ListPaymentProviders
@@ -498,6 +500,8 @@ message PaymentMethod {
     bool is_default = 16;
     // Currency for invoices using this payment method
     string currency_id = 17;
+    // Country of issuing of the payment method
+    string issuing_country = 18;
 
     // Information of the creditcard.
     // Only set when type == "creditcard"

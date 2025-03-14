@@ -89,6 +89,10 @@ export interface CreatePaymentMethodRequest {
   // Last name of owner of payment method
   // string
   last_name?: string;
+  
+  // Country of issuing of the payment method
+  // string
+  issuing_country?: string;
 }
 export interface GetAvailableCreditsRequest {
   // string
@@ -484,6 +488,10 @@ export interface PaymentMethod {
   // Currency for invoices using this payment method
   // string
   currency_id?: string;
+  
+  // Country of issuing of the payment method
+  // string
+  issuing_country?: string;
   
   // PaymentMethod_CreditCardInfo
   credit_card_info?: PaymentMethod_CreditCardInfo;
