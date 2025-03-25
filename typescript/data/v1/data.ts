@@ -444,6 +444,10 @@ export interface Deployment {
   // Defines notifications attached to the Deployment
   // Deployment_NotificationsEntry
   notifications?: { [key: string]: Notification };
+  
+  // If set to true, arangodb platform is enabled for this deployment
+  // boolean
+  arangodb_platform_enabled?: boolean;
 }
 
 // Information about a backup restore.

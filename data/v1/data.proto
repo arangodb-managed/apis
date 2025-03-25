@@ -822,6 +822,9 @@ message Deployment {
 
     // Defines notifications attached to the Deployment
     map<string, Notification> notifications = 618;
+
+    // If set to true, arangodb platform is enabled for this deployment
+    bool arangodb_platform_enabled = 619;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
