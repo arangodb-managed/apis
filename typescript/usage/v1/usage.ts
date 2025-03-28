@@ -88,6 +88,14 @@ export interface ListUsageItemsRequest {
   // This is an optional field.
   // googleTypes.Timestamp
   not_start_before?: googleTypes.Timestamp;
+  
+  // Limit to usage items for the deployment with this model.
+  // string
+  included_tier_ids?: string[];
+  
+  // Limit to usage items for the deployment with this model.
+  // string
+  excluded_tier_ids?: string[];
 }
 
 // A UsageItem message contained usage tracking information for a tracked

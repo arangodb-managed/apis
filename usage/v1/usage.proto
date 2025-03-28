@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2025 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -376,9 +376,12 @@ message ListUsageItemsRequest {
     // If set, limit to usage items that have the invoice_id set to this specific value.
     // This is an optional field.
     string invoice_id = 22;
-
     // Request usage items that start at or after given timestamp.
     // This is an optional field.
     google.protobuf.Timestamp not_start_before = 23;
 
+    // Limit to usage items for the deployment with this model.
+    repeated string included_tier_ids = 30;
+    // Limit to usage items for the deployment with this model.
+    repeated string excluded_tier_ids = 31;
 }
