@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2024 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2025 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -1117,6 +1117,10 @@ message DeploymentSize {
     int32 dbserver_memory_size = 32;
     // Amount of disk space (in GB) to allocate for each dbserver.
     int32 dbserver_disk_size = 33;
+    // Number of gateways
+    int32 gateways = 41;
+    // Amount of memory (in GB) to allocate for each gateway.
+    int32 gateway_memory_size = 42;
 }
 
 // Request arguments for RecommendDeploymentSize.
