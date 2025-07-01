@@ -1120,7 +1120,7 @@ message DeploymentSize {
     // Number of gateways
     int32 gateways = 41;
     // Amount of memory (in GB) to allocate for each gateway.
-    int32 gateway_memory_size = 42;
+    float gateway_memory_size = 42;
 }
 
 // Request arguments for RecommendDeploymentSize.
