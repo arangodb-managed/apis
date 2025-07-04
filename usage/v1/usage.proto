@@ -159,6 +159,11 @@ message UsageItem {
 
         // IF true the deployment was in paused state
         bool is_paused = 42;
+
+        // Number of gateways of the deployment.
+        int32 gateways = 51;
+        // Amount of memory (in GB) allocated for each gateway.
+        float gateway_memory_size = 52;
     }
     // Amount of (computer) resources used by the resource covered by this usage item.
     // This field is only set when the usage item is of kind DeploymentSize.

@@ -1123,6 +1123,14 @@ export interface DeploymentSize {
   // Amount of disk space (in GB) to allocate for each dbserver.
   // number
   dbserver_disk_size?: number;
+  
+  // Number of gateways
+  // number
+  gateways?: number;
+  
+  // Amount of memory (in GB) to allocate for each gateway.
+  // number
+  gateway_memory_size?: number;
 }
 
 // Response of RecommendDeploymentSize.
