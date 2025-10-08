@@ -23,28 +23,28 @@ package v1
 const (
 	// UsageItems kind
 
-	// UsageItemKindCPUSize indicates a UsageItem that contains
+	// UsageItemKindCPUSize (Billing 2.0) indicates a UsageItem that contains
 	// the amount of CPU resources used by a deployment (or member of a deployment).
 	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindCPUSize = "CPUSize"
 
-	// UsageItemKindMemorySize indicates a UsageItem that contains
+	// UsageItemKindMemorySize (Billing 2.0) indicates a UsageItem that contains
 	// the amount of memory resources used by a deployment (or member of a deployment).
 	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindMemorySize = "MemorySize"
 
-	// UsageItemKindStorageSize indicates a UsageItem that contains
+	// UsageItemKindStorageSize (Billing 2.0) indicates a UsageItem that contains
 	// the amount of storage resources used by a deployment (or member of a deployment).
 	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindStorageSize = "StorageSize"
 
-	// UsageItemKindNetworkTransferSize indicates a UsageItem that contains
+	// UsageItemKindNetworkTransferSize (Billing 1.0 & 2.0) indicates a UsageItem that contains
 	// the amount of network traffic caused by a deployment (or member of a deployment).
 	// UsageItems of this kind will be closed automatically, so no open items can exist.
 	// The timespan of this UsageItem is normally 24h (unless the deployment is deleted)
 	UsageItemKindNetworkTransferSize = "NetworkTransferSize"
 
-	// UsageItemKindCloudStorageSize indicates a UsageItem that contains the amount of Cloud Storage data,
+	// UsageItemKindCloudStorageSize (Billing 2.0) indicates a UsageItem that contains the amount of Cloud Storage data,
 	// e.g. for backup, audit, platform, etc.
 	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindCloudStorageSize = "CloudStorageSize"
