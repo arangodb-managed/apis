@@ -15,6 +15,7 @@ DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \
 	-v $(ROOTDIR):/usr/src \
 	-e GOSUMDB=off \
+	-e GOTOOLCHAIN=local \
 	-e GOCACHE=/tmp/gocache \
 	-e CGO_ENABLED=0 \
 	-e GO111MODULE=on \
