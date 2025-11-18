@@ -705,13 +705,8 @@ export interface Deployment_ServersSpec {
   // string
   dbserver_args?: string[];
   
-  // The minimum number of dbservers based on the highest replication factor
-  // defined by all databases and all collections.
-  // number
-  minimum_dbservers_count?: number;
-  
   // The minimum amount of disk space (in GB) to allocate for dbservers based on the highest usage of all running DB servers.
-  // The nearest size (larger then indicated here) need to be depected if the provider doesn't support all values (See GetServersSpecLimits)
+  // The nearest size (larger then indicated here) need to be deprecated if the provider doesn't support all values (See GetServersSpecLimits)
   // number
   minimum_dbserver_disk_size?: number;
 }
