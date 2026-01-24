@@ -8,6 +8,8 @@ fi
 
 PROTO_FILE=$1
 
+echo "Generating Go code from $PROTO_FILE"
+
 protoc \
   --proto_path . \
     -I ../../vendor-proto/ \

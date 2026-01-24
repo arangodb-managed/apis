@@ -11,9 +11,16 @@ else
 	GITHUB_TOKEN :=
 endif
 
+GOMODCACHE := $(shell go env GOMODCACHE)
+ifeq ($(GOMODCACHE),)
+	GOMODCACHE := $(HOME)/go/pkg/mod
+endif
+
 DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \
 	-v $(ROOTDIR):/usr/src \
+	-v $(GOMODCACHE):/go/pkg/mod \
+	-e GOMODCACHE=/go/pkg/mod \
 	-e GOSUMDB=off \
 	-e GOTOOLCHAIN=local \
 	-e GOCACHE=/tmp/gocache \
@@ -28,6 +35,11 @@ else
 	DOCKERENV :=
 endif
 
+# Ensure modules are downloaded
+.PHONY: download-modules
+download-modules:
+	go mod download
+
 .PHONY: all
 all: generate build check ts docs
 
@@ -41,7 +53,7 @@ endif
 
 # Generate go code for proto files
 .PHONY: generate
-generate: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
+generate: download-modules
 	$(DOCKERENV) \
 		go generate ./...
 
@@ -57,7 +69,7 @@ check:
 
 # Generate API docs
 .PHONY: docs
-docs: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
+docs: download-modules
 	$(DOCKERENV) \
 		protoc -I.:vendor-proto/ \
 			--doc_out=docs $(PROTOSOURCES) \
@@ -67,7 +79,7 @@ docs: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 
 # Generate API as typescript
 .PHONY: ts
-ts: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
+ts: download-modules
 	@rm -Rf typescript
 	@mkdir -p typescript
 	$(DOCKERENV) \
@@ -90,10 +102,6 @@ bootstrap:
 check-version:
 	zutano check api branch
 
-.PHONY: vendor
-vendor:
-	go mod vendor
-
 .PHONY: update-modules
 update-modules:
 	go get \
@@ -101,4 +109,3 @@ update-modules:
 		github.com/grpc-ecosystem/grpc-gateway@v1.16.0
 
 	go mod tidy
-	go mod vendor
