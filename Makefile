@@ -11,9 +11,16 @@ else
 	GITHUB_TOKEN :=
 endif
 
+GOMODCACHE := $(shell go env GOMODCACHE)
+ifeq ($(GOMODCACHE),)
+	GOMODCACHE := $(HOME)/go/pkg/mod
+endif
+
 DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \
 	-v $(ROOTDIR):/usr/src \
+	-v $(GOMODCACHE):/go/pkg/mod \
+	-e GOMODCACHE=/go/pkg/mod \
 	-e GOSUMDB=off \
 	-e GOTOOLCHAIN=local \
 	-e GOCACHE=/tmp/gocache \
@@ -41,7 +48,7 @@ endif
 
 # Generate go code for proto files
 .PHONY: generate
-generate: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
+generate:
 	$(DOCKERENV) \
 		go generate ./...
 
@@ -57,7 +64,7 @@ check:
 
 # Generate API docs
 .PHONY: docs
-docs: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
+docs:
 	$(DOCKERENV) \
 		protoc -I.:vendor-proto/ \
 			--doc_out=docs $(PROTOSOURCES) \
@@ -67,7 +74,7 @@ docs: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 
 # Generate API as typescript
 .PHONY: ts
-ts: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
+ts:
 	@rm -Rf typescript
 	@mkdir -p typescript
 	$(DOCKERENV) \
@@ -90,10 +97,6 @@ bootstrap:
 check-version:
 	zutano check api branch
 
-.PHONY: vendor
-vendor:
-	go mod vendor
-
 .PHONY: update-modules
 update-modules:
 	go get \
@@ -101,4 +104,30 @@ update-modules:
 		github.com/grpc-ecosystem/grpc-gateway@v1.16.0
 
 	go mod tidy
-	go mod vendor
+
+.PHONY: update-vendor-proto
+update-vendor-proto:
+	@rm -rf vendor-proto
+	@mkdir -p vendor-proto
+
+	@# Copy google/api and google/rpc from grpc-gateway (which matches go.mod)
+	@GRPC_GATEWAY_DIR=$$(go list -m -f '{{.Dir}}' github.com/grpc-ecosystem/grpc-gateway); \
+	(cd $$GRPC_GATEWAY_DIR/third_party/googleapis && find google/api google/rpc -name "*.proto") | while read proto; do \
+		mkdir -p vendor-proto/$$(dirname $$proto); \
+		cp -f $$GRPC_GATEWAY_DIR/third_party/googleapis/$$proto vendor-proto/$$proto; \
+	done
+
+	@# Copy google/protobuf from protobuf repo (explicit version to avoid go.mod update)
+	@go mod download github.com/protocolbuffers/protobuf@v3.20.3+incompatible
+	@PROTOBUF_DIR=$$(go list -m -f '{{.Dir}}' github.com/protocolbuffers/protobuf@v3.20.3+incompatible); \
+	(cd $$PROTOBUF_DIR/src && find google/protobuf -maxdepth 1 -name "*.proto" ! -name "*test*.proto") | while read proto; do \
+		mkdir -p vendor-proto/$$(dirname $$proto); \
+		cp -f $$PROTOBUF_DIR/src/$$proto vendor-proto/$$proto; \
+		echo "Copied $$proto"; \
+	done; \
+	# Always include google/protobuf/compiler/plugin.proto \
+	mkdir -p vendor-proto/google/protobuf/compiler; \
+	cp -f $$PROTOBUF_DIR/src/google/protobuf/compiler/plugin.proto vendor-proto/google/protobuf/compiler/plugin.proto; \
+	echo "Copied google/protobuf/compiler/plugin.proto";
+
+	@chmod -R u+w vendor-proto
