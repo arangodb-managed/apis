@@ -105,7 +105,7 @@ update-modules:
 
 	go mod tidy
 
-.PHONY: vendor-sync
+.PHONY: update-vendor-proto
 update-vendor-proto:
 	@rm -rf vendor-proto
 	@mkdir -p vendor-proto
