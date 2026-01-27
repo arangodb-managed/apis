@@ -95,7 +95,7 @@ export interface Event {
   // Payload of the event.
   // The fields used in the payload are specific
   // to the type of event.
-  // Event_PayloadEntry
+  // map<string, string>
   payload?: { [key: string]: string };
   
   // The creation timestamp of the event
@@ -133,13 +133,6 @@ export interface Event {
   // This is a read-only value that can be empty.
   // string
   created_with?: string;
-}
-export interface Event_PayloadEntry {
-  // string
-  key?: string;
-  
-  // string
-  value?: string;
 }
 
 // List of Events.
@@ -295,7 +288,7 @@ export interface Organization {
   // its entire lifetime per tier-id.
   // map: tier-id -> count
   // This is a read-only value.
-  // Organization_TotalDeploymentsEntry
+  // map<string, number>
   total_deployments?: { [key: string]: number };
   
   // If set, all projects in this organization are allowed to use deployments using the flexible model.
@@ -339,22 +332,8 @@ export interface Organization {
   is_allowed_to_use_scim?: boolean;
   
   // Defines notifications attached to the Organization
-  // Organization_NotificationsEntry
+  // map<string, arangodb.cloud.resourcemanager.v1.Notification>
   notifications?: { [key: string]: Notification };
-}
-export interface Organization_NotificationsEntry {
-  // string
-  key?: string;
-  
-  // Notification
-  value?: Notification;
-}
-export interface Organization_TotalDeploymentsEntry {
-  // string
-  key?: string;
-  
-  // number
-  value?: number;
 }
 
 // An OrganizationInvite represents an invite for a human to join an

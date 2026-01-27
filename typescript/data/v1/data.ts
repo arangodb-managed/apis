@@ -442,7 +442,7 @@ export interface Deployment {
   drop_vst_support?: boolean;
   
   // Defines notifications attached to the Deployment
-  // Deployment_NotificationsEntry
+  // map<string, arangodb.cloud.data.v1.Notification>
   notifications?: { [key: string]: Notification };
   
   // If set to true, arangodb platform is enabled for this deployment
@@ -564,13 +564,6 @@ export interface Deployment_NotificationSettings {
   // Email addresses that notifications related to this deployment should be sent to.
   // string
   email_addresses?: string[];
-}
-export interface Deployment_NotificationsEntry {
-  // string
-  key?: string;
-  
-  // Notification
-  value?: Notification;
 }
 
 // Status of a single server (of the ArangoDB cluster)
