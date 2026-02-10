@@ -504,6 +504,8 @@ message Member {
 // List of Members.
 message MemberList {
     repeated Member items = 1;
+    // Budget for members
+    common.v1.Budget budget = 2;
 }
 
 // Request arguments for IsMemberOfOrganization.

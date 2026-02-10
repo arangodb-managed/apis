@@ -221,6 +221,10 @@ export interface Member {
 export interface MemberList {
   // Member
   items?: Member[];
+  
+  // Budget for members
+  // arangodb.cloud.common.v1.Budget
+  budget?: arangodb_cloud_common_v1_Budget;
 }
 
 // Define the Notification details
