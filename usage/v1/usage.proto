@@ -196,6 +196,9 @@ message UsageItem {
     message BackupStorageSize {
         // Amount of cloud storage (in bytes) used by backups of a deployment.
         int64 cloud_storage_size = 1;
+        // Purpose of the cloud storage.
+        // Can be 'auditlogs', 'backups', 'platform', etc.
+        string purpose = 2;
     }
     // Amount of backup related cloud storage used by the resource covered by this usage item.
     // This field is only set when the usage item is of kind BackupStorageSize.
@@ -262,6 +265,7 @@ message UsageItem {
     NotebookSize notebook_size = 106;
 
     // Amount of compute resources used by a given MLServices resource.
+    //@deprecated TODO remove in future versions
     message MLServicesSize {
         // Number of training API servers.
         int32 training_apis = 1;

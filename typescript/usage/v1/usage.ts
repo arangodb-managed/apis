@@ -223,6 +223,11 @@ export interface UsageItem_BackupStorageSize {
   // Amount of cloud storage (in bytes) used by backups of a deployment.
   // number
   cloud_storage_size?: number;
+  
+  // Purpose of the cloud storage.
+  // Can be 'auditlogs', 'backups', 'platform', etc.
+  // string
+  purpose?: string;
 }
 
 // Amount of (computer) resources used by the resource covered by this usage item.
@@ -335,6 +340,7 @@ export interface UsageItem_MLJobSize {
 }
 
 // Amount of compute resources used by a given MLServices resource.
+// @deprecated TODO remove in future versions
 export interface UsageItem_MLServicesSize {
   // Number of training API servers.
   // number
