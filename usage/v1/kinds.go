@@ -25,43 +25,34 @@ const (
 
 	// UsageItemKindCPUHour (Billing 2.0) indicates a UsageItem that contains
 	// the number of CPU resources allocated for one hour by a deployment (or member of a deployment).
-	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindCPUHour = "CPUHour"
 
 	// UsageItemKindMemoryHour (Billing 2.0) indicates a UsageItem that contains
 	// the number of memory resources allocated for one hour by a deployment (or member of a deployment).
-	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindMemoryHour = "MemoryHour"
 
 	// UsageItemKindStorageHour (Billing 2.0) indicates a UsageItem that contains
 	// the amount of storage resources allocated for one hour by a deployment (or member of a deployment).
-	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindStorageHour = "StorageHour"
 
 	// UsageItemKindStoragePerformanceHour (Billing 2.0) indicates a UsageItem that contains
 	// the amount of storage performance resources allocated for one hour by a deployment (or member of a deployment).
-	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindStoragePerformanceHour = "StoragePerformanceHour"
 
 	// UsageItemKindGPUHour (Billing 2.0) indicates a UsageItem that contains
 	// the number of GPU resources allocated for one hour by a deployment (or member of a deployment).
-	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindGPUHour = "GPUHour"
 
-	// UsageItemKindNetworkTransferSize (Billing 1.0 & 2.0) indicates a UsageItem that contains
-	// the amount of network traffic caused by a deployment (or member of a deployment).
-	// UsageItems of this kind will be closed automatically, so no open items can exist.
-	// The timespan of this UsageItem is normally 24h (unless the deployment is deleted)
-	UsageItemKindNetworkTransferSize = "NetworkTransferSize"
+	// UsageItemKindNetworkSize (Billing 2.0) indicates a UsageItem that contains
+	// the GiB of the Transfer Network allocated for a deployment (or member of a deployment).
+	UsageItemKindNetworkSize = "NetworkUsageSize"
 
 	// UsageItemKindCloudStorageHour (Billing 2.0) indicates a UsageItem that contains the amount of Cloud Storage usage,
 	// e.g., for backup, audit, platform, etc., allocated/used for one hour.
-	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindCloudStorageHour = "CloudStorageHour"
 
 	// UsageItemKindDeploymentAEU (Billing 2.0) indicates a UsageItem that contains deployment AEU usage,
 	// where AEU = Deployment Size x Deployment Node Count x Deployment AEU Base x Deployment Type Ratio.
-	// UsageItems of this kind will not be closed automatically, so open items can exist.
 	UsageItemKindDeploymentAEU = "DeploymentAEU"
 
 	/*
@@ -69,6 +60,12 @@ const (
 		Deprecated section - to be removed in future releases:
 		###
 	*/
+
+	// UsageItemKindNetworkTransferSize indicates a UsageItem that contains
+	// the amount of network traffic caused by a deployment (or member of a deployment).
+	// UsageItems of this kind will be closed automatically, so no open items can exist.
+	// The timespan of this UsageItem is normally 24h (unless the deployment is deleted)
+	UsageItemKindNetworkTransferSize = "NetworkTransferSize"
 
 	// Deprecated: UsageItemKindDeploymentSize indicates a UsageItem that contains cloud
 	// resources for Deployment.
