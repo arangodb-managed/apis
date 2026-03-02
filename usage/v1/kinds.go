@@ -23,37 +23,37 @@ package v1
 const (
 	// UsageItems kind
 
-	// UsageItemKindCPUHour (Billing 2.0) indicates a UsageItem that contains
+	// UsageItemKindV2CPUHour (Billing 2.0) indicates a UsageItem that contains
 	// the number of CPU resources allocated for one hour by a deployment (or member of a deployment).
-	UsageItemKindCPUHour = "CPUHour"
+	UsageItemKindV2CPUHour = "CPUHour"
 
-	// UsageItemKindMemoryHour (Billing 2.0) indicates a UsageItem that contains
+	// UsageItemKindV2MemoryHour (Billing 2.0) indicates a UsageItem that contains
 	// the number of memory resources allocated for one hour by a deployment (or member of a deployment).
-	UsageItemKindMemoryHour = "MemoryHour"
+	UsageItemKindV2MemoryHour = "MemoryHour"
 
-	// UsageItemKindStorageHour (Billing 2.0) indicates a UsageItem that contains
-	// the amount of storage resources allocated for one hour by a deployment (or member of a deployment).
-	UsageItemKindStorageHour = "StorageHour"
+	// UsageItemKindV2StorageHour (Billing 2.0) indicates a UsageItem that contains
+	// the number of storage resources allocated for one hour by a deployment (or member of a deployment).
+	UsageItemKindV2StorageHour = "StorageHour"
 
-	// UsageItemKindStoragePerformanceHour (Billing 2.0) indicates a UsageItem that contains
+	// UsageItemKindV2StoragePerformanceHour (Billing 2.0) indicates a UsageItem that contains
 	// the amount of storage performance resources allocated for one hour by a deployment (or member of a deployment).
-	UsageItemKindStoragePerformanceHour = "StoragePerformanceHour"
+	UsageItemKindV2StoragePerformanceHour = "StoragePerformanceHour"
 
-	// UsageItemKindGPUHour (Billing 2.0) indicates a UsageItem that contains
+	// UsageItemKindV2GPUHour (Billing 2.0) indicates a UsageItem that contains
 	// the number of GPU resources allocated for one hour by a deployment (or member of a deployment).
-	UsageItemKindGPUHour = "GPUHour"
+	UsageItemKindV2GPUHour = "GPUHour"
 
-	// UsageItemKindNetworkSize (Billing 2.0) indicates a UsageItem that contains
+	// UsageItemKindV2NetworkSize (Billing 2.0) indicates a UsageItem that contains
 	// the GiB of the Transfer Network allocated for a deployment (or member of a deployment).
-	UsageItemKindNetworkSize = "NetworkUsageSize"
+	UsageItemKindV2NetworkSize = "NetworkUsageSize"
 
-	// UsageItemKindCloudStorageHour (Billing 2.0) indicates a UsageItem that contains the amount of Cloud Storage usage,
+	// UsageItemKindV2CloudStorageHour (Billing 2.0) indicates a UsageItem that contains the amount of Cloud Storage usage,
 	// e.g., for backup, audit, platform, etc., allocated/used for one hour.
-	UsageItemKindCloudStorageHour = "CloudStorageHour"
+	UsageItemKindV2CloudStorageHour = "CloudStorageHour"
 
-	// UsageItemKindDeploymentAEU (Billing 2.0) indicates a UsageItem that contains deployment AEU usage,
+	// UsageItemKindV2DeploymentAEU (Billing 2.0) indicates a UsageItem that contains deployment AEU usage,
 	// where AEU = Deployment Size x Deployment Node Count x Deployment AEU Base x Deployment Type Ratio.
-	UsageItemKindDeploymentAEU = "DeploymentAEU"
+	UsageItemKindV2DeploymentAEU = "DeploymentAEU"
 
 	/*
 		###
