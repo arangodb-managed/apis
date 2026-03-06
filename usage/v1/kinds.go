@@ -61,7 +61,7 @@ const (
 		###
 	*/
 
-	// UsageItemKindNetworkTransferSize indicates a UsageItem that contains
+	// Deprecated: UsageItemKindNetworkTransferSize indicates a UsageItem that contains
 	// the amount of network traffic caused by a deployment (or member of a deployment).
 	// UsageItems of this kind will be closed automatically, so no open items can exist.
 	// The timespan of this UsageItem is normally 24h (unless the deployment is deleted)
