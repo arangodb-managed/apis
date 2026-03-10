@@ -614,17 +614,20 @@ type UsageItem_Resource struct {
 	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	// Identifier of the organization that owns the resource that this usage item covers.
 	OrganizationId string `protobuf:"bytes,5,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// @Deprecated - will be removed in OAS-12028
 	// Name of the organization that owns the resource that this usage item covers.
 	OrganizationName string `protobuf:"bytes,6,opt,name=organization_name,json=organizationName,proto3" json:"organization_name,omitempty"`
 	// Identifier of the project that owns the resource that this usage item covers.
 	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	ProjectId string `protobuf:"bytes,7,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	// @Deprecated - will be removed in OAS-12028
 	// Name of the project that owns the resource that this usage item covers.
 	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	ProjectName string `protobuf:"bytes,8,opt,name=project_name,json=projectName,proto3" json:"project_name,omitempty"`
 	// Identifier of the deployment that owns the resource that this usage item covers.
 	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	DeploymentId string `protobuf:"bytes,9,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
+	// @Deprecated - will be removed in OAS-12028
 	// Name of the deployment that owns the resource that this usage item covers.
 	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	DeploymentName string `protobuf:"bytes,10,opt,name=deployment_name,json=deploymentName,proto3" json:"deployment_name,omitempty"`

@@ -74,17 +74,20 @@ message UsageItem {
         string description = 4;
         // Identifier of the organization that owns the resource that this usage item covers.
         string organization_id = 5;
+        // @Deprecated - will be removed in OAS-12028
         // Name of the organization that owns the resource that this usage item covers.
         string organization_name = 6;
         // Identifier of the project that owns the resource that this usage item covers.
         // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string project_id = 7;
+        // @Deprecated - will be removed in OAS-12028
         // Name of the project that owns the resource that this usage item covers.
         // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string project_name = 8;
         // Identifier of the deployment that owns the resource that this usage item covers.
         // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string deployment_id = 9;
+        // @Deprecated - will be removed in OAS-12028
         // Name of the deployment that owns the resource that this usage item covers.
         // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string deployment_name = 10;

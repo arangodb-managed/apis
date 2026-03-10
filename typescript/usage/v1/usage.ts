@@ -544,6 +544,7 @@ export interface UsageItem_Resource {
   // string
   organization_id?: string;
   
+  // @Deprecated - will be removed in OAS-12028
   // Name of the organization that owns the resource that this usage item covers.
   // string
   organization_name?: string;
@@ -553,6 +554,7 @@ export interface UsageItem_Resource {
   // string
   project_id?: string;
   
+  // @Deprecated - will be removed in OAS-12028
   // Name of the project that owns the resource that this usage item covers.
   // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
@@ -563,6 +565,7 @@ export interface UsageItem_Resource {
   // string
   deployment_id?: string;
   
+  // @Deprecated - will be removed in OAS-12028
   // Name of the deployment that owns the resource that this usage item covers.
   // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
