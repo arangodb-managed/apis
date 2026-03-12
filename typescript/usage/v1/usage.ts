@@ -128,6 +128,7 @@ export interface UsageItem {
   // googleTypes.Timestamp
   ends_at?: googleTypes.Timestamp;
   
+  // @Deprecated - will be removed in OAS-12028
   // Set when this usage item has ended.
   // boolean
   has_ended?: boolean;
@@ -140,6 +141,10 @@ export interface UsageItem {
   // The usage item must be ended when this field it set.
   // string
   invoice_id?: string;
+  
+  // UsageItem creation time information
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
   
   // Amount of (computer) resources used by the resource covered by this usage item.
   // This field is only set when the usage item is of kind DeploymentSize.

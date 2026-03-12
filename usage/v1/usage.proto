@@ -123,6 +123,8 @@ message UsageItem {
     // This usage item covers a time period that ends at this timestamp.
     // If the usage item has not yet ended, this field is is set to the current time.
     google.protobuf.Timestamp ends_at = 6;
+
+    // @Deprecated - will be removed in OAS-12028
     // Set when this usage item has ended.
     bool has_ended = 7;
     // Identifier of the tier the organization was using at the start of this usage period.
@@ -130,6 +132,9 @@ message UsageItem {
     // Identifier of the invoice that includes this usage item.
     // The usage item must be ended when this field it set.
     string invoice_id = 9;
+
+    // UsageItem creation time information
+    google.protobuf.Timestamp created_at = 10;
 
 
     // @Deprecated - will be removed in OAS-12028

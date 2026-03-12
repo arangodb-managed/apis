@@ -24698,7 +24698,8 @@ If the usage item has not yet ended, this field is is set to the current time. <
                   <td>has_ended</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Set when this usage item has ended. </p></td>
+                  <td><p>@Deprecated - will be removed in OAS-12028
+Set when this usage item has ended. </p></td>
                 </tr>
               
                 <tr>
@@ -24714,6 +24715,13 @@ If the usage item has not yet ended, this field is is set to the current time. <
                   <td></td>
                   <td><p>Identifier of the invoice that includes this usage item.
 The usage item must be ended when this field it set. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>UsageItem creation time information </p></td>
                 </tr>
               
                 <tr>
