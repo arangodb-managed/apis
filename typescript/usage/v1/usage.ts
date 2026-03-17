@@ -109,7 +109,9 @@ export interface UsageItem {
   // string
   url?: string;
   
-  // Kind of usage item
+  // Kind of usage item.
+  // Examples:
+  // UsageItemKindNetworkSize (NetworkUsageSize), UsageItemKindCPUHour (CPUHour), etc.
   // string
   kind?: string;
   
@@ -126,6 +128,7 @@ export interface UsageItem {
   // googleTypes.Timestamp
   ends_at?: googleTypes.Timestamp;
   
+  // @Deprecated - will be removed in OAS-12028
   // Set when this usage item has ended.
   // boolean
   has_ended?: boolean;
@@ -139,13 +142,18 @@ export interface UsageItem {
   // string
   invoice_id?: string;
   
+  // UsageItem creation time information
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
   // Amount of (computer) resources used by the resource covered by this usage item.
   // This field is only set when the usage item is of kind DeploymentSize.
   // UsageItem_DeploymentSize
   deployment_size?: UsageItem_DeploymentSize;
   
   // Amount of network traffic used by the resource covered by this usage item.
-  // This field is only set when the usage item is of kind NetworkTransferSize.
+  // This field is only set when the usage item is of kind NetworkTransferSize
+  // (UsageItemKindNetworkTransferSize).
   // UsageItem_NetworkTransferSize
   network_transfer_size?: UsageItem_NetworkTransferSize;
   
@@ -183,8 +191,42 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind MLJobSize.
   // UsageItem_GraphAnalyticsJobSize
   graphanalyticsjob_size?: UsageItem_GraphAnalyticsJobSize;
+  
+  // This field is only set when the usage item is of kind CPUHour.
+  // UsageItem_CPUHour
+  cpu_hour?: UsageItem_CPUHour;
+  
+  // This field is only set when the usage item is of kind MemoryHour.
+  // UsageItem_MemoryHour
+  memory_hour?: UsageItem_MemoryHour;
+  
+  // This field is only set when the usage item is of kind StorageHour.
+  // UsageItem_StorageHour
+  storage_hour?: UsageItem_StorageHour;
+  
+  // This field is only set when the usage item is of kind StoragePerformanceHour.
+  // UsageItem_StoragePerformanceHour
+  storage_performance_hour?: UsageItem_StoragePerformanceHour;
+  
+  // This field is only set when the usage item is of kind GPUHour.
+  // UsageItem_GPUHour
+  gpu_hour?: UsageItem_GPUHour;
+  
+  // This field is only set when the usage item is of kind NetworkUsageSize
+  // (UsageItemKindNetworkSize).
+  // UsageItem_NetworkSize
+  network_size?: UsageItem_NetworkSize;
+  
+  // This field is only set when the usage item is of kind CloudStorageHour.
+  // UsageItem_CloudStorageHour
+  cloud_storage_hour?: UsageItem_CloudStorageHour;
+  
+  // This field is only set when the usage item is of kind DeploymentAEU.
+  // UsageItem_DeploymentAEU
+  deployment_aeu?: UsageItem_DeploymentAEU;
 }
 
+// @Deprecated - will be removed in OAS-12028
 // Amount of audit log related resources used by the resource covered by this usage item.
 export interface UsageItem_AuditLogSize {
   // Type of destination.
@@ -210,6 +252,7 @@ export interface UsageItem_AuditLogSize {
   https_post_count?: number;
 }
 
+// @Deprecated - will be removed in OAS-12028
 // Amount of audit log storage related resources used by the resource covered by this usage item.
 // When this usage type is used, the audit log destination_type is "cloud".
 export interface UsageItem_AuditLogStorageSize {
@@ -218,13 +261,39 @@ export interface UsageItem_AuditLogStorageSize {
   cloud_storage_size?: number;
 }
 
+// @Deprecated - will be removed in OAS-12028
 // Amount of backup related cloud storage used by the resource covered by this usage item.
 export interface UsageItem_BackupStorageSize {
   // Amount of cloud storage (in bytes) used by backups of a deployment.
   // number
   cloud_storage_size?: number;
+  
+  // Purpose of the cloud storage.
+  // Can be 'auditlogs', 'backups', 'platform', etc.
+  // string
+  purpose?: string;
+}
+export interface UsageItem_CPUHour {
+  // Number of CPU hours allocated/used in this usage period.
+  // number
+  cpu_hours?: number;
+}
+export interface UsageItem_CloudStorageHour {
+  // Amount of cloud storage (in bytes) allocated/used in this usage period.
+  // number
+  cloud_storage_size?: number;
+  
+  // Optional textual breakdown by purpose.
+  // string
+  purpose_breakdown?: string;
+}
+export interface UsageItem_DeploymentAEU {
+  // Number of deployment AEU-hours allocated/used in this usage period.
+  // number
+  deployment_aeu_hours?: number;
 }
 
+// @Deprecated - will be removed in OAS-12028
 // Amount of (computer) resources used by the resource covered by this usage item.
 export interface UsageItem_DeploymentSize {
   // Number of coordinators of the deployment
@@ -283,7 +352,13 @@ export interface UsageItem_DeploymentSize {
   // number
   gateway_memory_size?: number;
 }
+export interface UsageItem_GPUHour {
+  // Number of GPU hours allocated/used in this usage period.
+  // number
+  gpu_hours?: number;
+}
 
+// @Deprecated - will be removed in OAS-12028
 // Amount of compute resources used by a Graph Analytics Job.
 export interface UsageItem_GraphAnalyticsJobSize {
   // Amount of memory (in GB) allocated for the job.
@@ -309,6 +384,7 @@ export interface UsageItem_GraphAnalyticsJobSize {
   job_type?: string;
 }
 
+// @Deprecated - will be removed in OAS-12028
 // Amount of compute resources used by a ML Job.
 export interface UsageItem_MLJobSize {
   // Amount of memory (in GB) allocated for the job.
@@ -334,6 +410,7 @@ export interface UsageItem_MLJobSize {
   job_type?: string;
 }
 
+// @Deprecated - will be removed in OAS-12028
 // Amount of compute resources used by a given MLServices resource.
 export interface UsageItem_MLServicesSize {
   // Number of training API servers.
@@ -375,7 +452,27 @@ export interface UsageItem_MLServicesSize {
   // number
   projects_api_cpu_size?: number;
 }
+export interface UsageItem_MemoryHour {
+  // Number of memory GiB hours allocated/used in this usage period.
+  // number
+  memory_gib_hours?: number;
+}
+export interface UsageItem_NetworkSize {
+  // The destination (or source) the network traffic going to (or coming from).
+  // Can be 'Internet', 'PrivateEndpoint' or 'InCluster'.
+  // string
+  destination?: string;
+  
+  // Total amount of network ingress traffic in bytes for the usage period.
+  // number
+  total_transfer_ingress_size?: number;
+  
+  // Total amount of network egress traffic in bytes for the usage period.
+  // number
+  total_transfer_egress_size?: number;
+}
 
+// @Deprecated - will be removed in OAS-12028
 // Amount of network traffic used by the resource covered by this usage item.
 export interface UsageItem_NetworkTransferSize {
   // The destination (or source) the network traffic going to (or coming from)
@@ -401,6 +498,7 @@ export interface UsageItem_NetworkTransferSize {
   total_transfer_egress_size?: number;
 }
 
+// @Deprecated - will be removed in OAS-12028
 // Amount of cloud resources used by a given Notebook.
 // This field is only set when the usage item is of kind NotebookSize.
 export interface UsageItem_NotebookSize {
@@ -451,6 +549,7 @@ export interface UsageItem_Resource {
   // string
   organization_id?: string;
   
+  // @Deprecated - will be removed in OAS-12028
   // Name of the organization that owns the resource that this usage item covers.
   // string
   organization_name?: string;
@@ -460,6 +559,7 @@ export interface UsageItem_Resource {
   // string
   project_id?: string;
   
+  // @Deprecated - will be removed in OAS-12028
   // Name of the project that owns the resource that this usage item covers.
   // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
@@ -470,6 +570,7 @@ export interface UsageItem_Resource {
   // string
   deployment_id?: string;
   
+  // @Deprecated - will be removed in OAS-12028
   // Name of the deployment that owns the resource that this usage item covers.
   // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
@@ -515,6 +616,16 @@ export interface UsageItem_Resource {
   // Identifiers of the credit bundles (if any) that were used to pay for this usage item.
   // string
   credit_bundle_ids?: string[];
+}
+export interface UsageItem_StorageHour {
+  // Number of storage GiB hours allocated/used in this usage period.
+  // number
+  storage_gib_hours?: number;
+}
+export interface UsageItem_StoragePerformanceHour {
+  // Number of storage performance unit-hours allocated/used in this usage period.
+  // number
+  storage_performance_unit_hours?: number;
 }
 
 // List of UsageItems.
