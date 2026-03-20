@@ -65,6 +65,10 @@ export interface CreditBundle {
   // Timestamp of when this credit bundle was last used.
   // googleTypes.Timestamp
   last_used_at?: googleTypes.Timestamp;
+  
+  // The total amount of debt deducted from this bundle.
+  // number
+  debt_cleared?: number;
 }
 
 // Usage of credit bundle.
