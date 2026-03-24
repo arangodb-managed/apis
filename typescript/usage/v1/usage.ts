@@ -279,13 +279,20 @@ export interface UsageItem_CPUHour {
   cpu_hours?: number;
 }
 export interface UsageItem_CloudStorageHour {
-  // Amount of cloud storage (in bytes) allocated/used in this usage period.
+  // Average amount of cloud storage allocated/used during this usage period, in bytes.
+  // This value is derived from the average of the cloud storage usage gauge over the covered time range.
   // number
   cloud_storage_size?: number;
   
-  // Optional textual breakdown by purpose.
+  // Optional human-readable breakdown by storage purpose, for example:
+  // "Backups: 600.00 MiB, Audit Logs: 120.00 MiB".
   // string
   purpose_breakdown?: string;
+  
+  // Billable cloud storage usage during this usage period, in GiB-hours.
+  // This value is derived from cloud_storage_size and the duration of the covered time range (24h by default).
+  // number
+  gib_hours?: number;
 }
 export interface UsageItem_DeploymentAEU {
   // Number of deployment AEU-hours allocated/used in this usage period.

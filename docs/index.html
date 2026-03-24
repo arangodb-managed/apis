@@ -25006,14 +25006,24 @@ Can be &#39;auditlogs&#39;, &#39;backups&#39;, &#39;platform&#39;, etc. </p></td
                   <td>cloud_storage_size</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p>Amount of cloud storage (in bytes) allocated/used in this usage period. </p></td>
+                  <td><p>Average amount of cloud storage allocated/used during this usage period, in bytes.
+This value is derived from the average of the cloud storage usage gauge over the covered time range. </p></td>
                 </tr>
               
                 <tr>
                   <td>purpose_breakdown</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Optional textual breakdown by purpose. </p></td>
+                  <td><p>Optional human-readable breakdown by storage purpose, for example:
+&#34;Backups: 600.00 MiB, Audit Logs: 120.00 MiB&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>gib_hours</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Billable cloud storage usage during this usage period, in GiB-hours.
+This value is derived from cloud_storage_size and the duration of the covered time range (24h by default). </p></td>
                 </tr>
               
             </tbody>
