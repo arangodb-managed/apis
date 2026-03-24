@@ -284,15 +284,15 @@ export interface UsageItem_CloudStorageHour {
   // number
   cloud_storage_size?: number;
   
-  // Billable cloud storage usage during this usage period, in GiB-hours.
-  // This value is derived from avg_size_bytes and the duration of the covered time range.
-  // number
-  gib_hours?: number;
-  
   // Optional human-readable breakdown by storage purpose, for example:
   // "Backups: 600.00 MiB, Audit Logs: 120.00 MiB".
   // string
   purpose_breakdown?: string;
+  
+  // Billable cloud storage usage during this usage period, in GiB-hours.
+  // This value is derived from cloud_storage_size and the duration of the covered time range (24h by default).
+  // number
+  gib_hours?: number;
 }
 export interface UsageItem_DeploymentAEU {
   // Number of deployment AEU-hours allocated/used in this usage period.
