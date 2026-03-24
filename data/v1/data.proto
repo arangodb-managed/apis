@@ -200,6 +200,15 @@ service DataService {
         };
     }
 
+    // Fetch the platform bundles available for the given organization.
+    // Required permissions:
+    // - data.arangoplatformbundle.list on the requested organization
+    rpc ListArangoPlatformBundles(ListArangoPlatformBundlesRequest) returns (ArangoPlatformBundleList) {
+        option (google.api.http) = {
+            get: "/api/data/v1/organizations/{organization_id}/arangoplatformbundles"
+        };
+    }
+
     // Fetch the CPU sizes available for deployments owned by the project with given ID.
     // Required permissions:
     // - data.cpusize.list on the requested project
@@ -825,6 +834,10 @@ message Deployment {
 
     // If set to true, arangodb platform is enabled for this deployment
     bool arangodb_platform_enabled = 619;
+
+    // Selects which platform bundle is to be used for this deployment
+    // Standard|Data|AI Suite|Whatever is available in the cluster
+    string arangodb_platform_bundle = 620;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
@@ -912,6 +925,32 @@ message ListDeploymentModelsRequest {
     // Optional identifier of a deployment, so the current model can be added to the list if needed
     // This deployment should be inside the provided project
     string deployment_id = 2;
+}
+
+// ArangoPlatformBundle specifies an available platform bundle.
+message ArangoPlatformBundle {
+    // System identifier of the bundle (e.g. standard)
+    string id = 1;
+    // Human readable name of the bundle (e.g. Standard)
+    string name = 2;
+    // Priority of the bundle, to order the list of bundles.
+    int32 priority = 3;
+    // Description of the bundle.
+    string description = 4;
+}
+
+// List of ArangoPlatformBundles.
+message ArangoPlatformBundleList {
+    repeated ArangoPlatformBundle items = 1;
+}
+
+// Request arguments for ListArangoPlatformBundles.
+message ListArangoPlatformBundlesRequest {
+    // Identifier of organization for which platform bundles are requested.
+    string organization_id = 1;
+
+    // Identifier for the region for which platform bundles are requested.
+    string region_id = 2;
 }
 
 // CPUSize specifies the a specific level of CPU for a node.

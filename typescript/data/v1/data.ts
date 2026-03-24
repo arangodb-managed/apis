@@ -13,6 +13,31 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: data/v1/data.proto
 // Package: arangodb.cloud.data.v1
 
+// ArangoPlatformBundle specifies an available platform bundle.
+export interface ArangoPlatformBundle {
+  // System identifier of the bundle (e.g. standard)
+  // string
+  id?: string;
+  
+  // Human readable name of the bundle (e.g. Standard)
+  // string
+  name?: string;
+  
+  // Priority of the bundle, to order the list of bundles.
+  // number
+  priority?: number;
+  
+  // Description of the bundle.
+  // string
+  description?: string;
+}
+
+// List of ArangoPlatformBundles.
+export interface ArangoPlatformBundleList {
+  // ArangoPlatformBundle
+  items?: ArangoPlatformBundle[];
+}
+
 // CPUSize specifies the a specific level of CPU for a node.
 export interface CPUSize {
   // System identifier of the size (e.g. standard)
@@ -448,6 +473,11 @@ export interface Deployment {
   // If set to true, arangodb platform is enabled for this deployment
   // boolean
   arangodb_platform_enabled?: boolean;
+  
+  // Selects which platform bundle is to be used for this deployment
+  // Standard|Data|AI Suite|Whatever is available in the cluster
+  // string
+  arangodb_platform_bundle?: string;
 }
 
 // Information about a backup restore.
@@ -1290,6 +1320,17 @@ export interface ImportDataInstructions {
   arango_import_tsv?: string[];
 }
 
+// Request arguments for ListArangoPlatformBundles.
+export interface ListArangoPlatformBundlesRequest {
+  // Identifier of organization for which platform bundles are requested.
+  // string
+  organization_id?: string;
+  
+  // Identifier for the region for which platform bundles are requested.
+  // string
+  region_id?: string;
+}
+
 // Request arguments for ListCPUSizes
 export interface ListCPUSizesRequest {
   // Identifier of project that will own a deployment.
@@ -1765,6 +1806,11 @@ export interface IDataService {
   // - data.deploymentmodel.list on the requested project
   ListDeploymentModels: (req: ListDeploymentModelsRequest) => Promise<DeploymentModelList>;
   
+  // Fetch the platform bundles available for the given organization.
+  // Required permissions:
+  // - data.arangoplatformbundle.list on the requested organization
+  ListArangoPlatformBundles: (req: ListArangoPlatformBundlesRequest) => Promise<ArangoPlatformBundleList>;
+  
   // Fetch the CPU sizes available for deployments owned by the project with given ID.
   // Required permissions:
   // - data.cpusize.list on the requested project
@@ -2008,6 +2054,15 @@ export class DataService implements IDataService {
   async ListDeploymentModels(req: ListDeploymentModelsRequest): Promise<DeploymentModelList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/deploymentmodels`;
     const url = path + api.queryString(req, [`project_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch the platform bundles available for the given organization.
+  // Required permissions:
+  // - data.arangoplatformbundle.list on the requested organization
+  async ListArangoPlatformBundles(req: ListArangoPlatformBundlesRequest): Promise<ArangoPlatformBundleList> {
+    const path = `/api/data/v1/organizations/${encodeURIComponent(req.organization_id || '')}/arangoplatformbundles`;
+    const url = path + api.queryString(req, [`organization_id`]);
     return api.get(url, undefined);
   }
   
