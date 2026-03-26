@@ -734,6 +734,14 @@ title: "ArangoGraph Insights Platform API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.ArangoPlatformBundle"><span class="badge">M</span>ArangoPlatformBundle</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.data.v1.ArangoPlatformBundleList"><span class="badge">M</span>ArangoPlatformBundleList</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.CPUSize"><span class="badge">M</span>CPUSize</a>
                 </li>
               
@@ -891,6 +899,10 @@ title: "ArangoGraph Insights Platform API"
               
                 <li>
                   <a href="#arangodb.cloud.data.v1.ImportDataInstructions"><span class="badge">M</span>ImportDataInstructions</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.data.v1.ListArangoPlatformBundlesRequest"><span class="badge">M</span>ListArangoPlatformBundlesRequest</a>
                 </li>
               
                 <li>
@@ -8893,6 +8905,75 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.data.v1.ArangoPlatformBundle">ArangoPlatformBundle</h3>
+        <p>ArangoPlatformBundle specifies an available platform bundle.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>System identifier of the bundle (e.g. standard) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Human readable name of the bundle (e.g. Standard) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>priority</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Priority of the bundle, to order the list of bundles. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Description of the bundle. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.ArangoPlatformBundleList">ArangoPlatformBundleList</h3>
+        <p>List of ArangoPlatformBundles.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.data.v1.ArangoPlatformBundle">ArangoPlatformBundle</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.CPUSize">CPUSize</h3>
         <p>CPUSize specifies the a specific level of CPU for a node.</p>
 
@@ -9711,6 +9792,14 @@ Defaults to false. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set to true, arangodb platform is enabled for this deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>arangodb_platform_bundle</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Selects which platform bundle is to be used for this deployment
+Standard|Data|AI Suite|Whatever is available in the cluster </p></td>
                 </tr>
               
             </tbody>
@@ -11526,6 +11615,37 @@ Must be &gt;= 3 and &lt;= 5 </p></td>
 
         
       
+        <h3 id="arangodb.cloud.data.v1.ListArangoPlatformBundlesRequest">ListArangoPlatformBundlesRequest</h3>
+        <p>Request arguments for ListArangoPlatformBundles.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of organization for which platform bundles are requested. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>region_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier for the region for which platform bundles are requested. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.ListCPUSizesRequest">ListCPUSizesRequest</h3>
         <p>Request arguments for ListCPUSizes</p>
 
@@ -12566,6 +12686,15 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>ListArangoPlatformBundles</td>
+                <td><a href="#arangodb.cloud.data.v1.ListArangoPlatformBundlesRequest">ListArangoPlatformBundlesRequest</a></td>
+                <td><a href="#arangodb.cloud.data.v1.ArangoPlatformBundleList">ArangoPlatformBundleList</a></td>
+                <td><p>Fetch the platform bundles available for the given organization.
+Required permissions:
+- data.arangoplatformbundle.list on the requested organization</p></td>
+              </tr>
+            
+              <tr>
                 <td>ListCPUSizes</td>
                 <td><a href="#arangodb.cloud.data.v1.ListCPUSizesRequest">ListCPUSizesRequest</a></td>
                 <td><a href="#arangodb.cloud.data.v1.CPUSizeList">CPUSizeList</a></td>
@@ -12882,6 +13011,16 @@ Required permissions:
                 <td>ListDeploymentModels</td>
                 <td>GET</td>
                 <td>/api/data/v1/projects/{project_id}/deploymentmodels</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListArangoPlatformBundles</td>
+                <td>GET</td>
+                <td>/api/data/v1/organizations/{organization_id}/arangoplatformbundles</td>
                 <td></td>
               </tr>
               
