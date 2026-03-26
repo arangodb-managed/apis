@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2023-2026 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -290,6 +290,8 @@ message CreditBundle {
     google.protobuf.Timestamp valid_until = 11;
     // Timestamp of when this credit bundle was last used.
     google.protobuf.Timestamp last_used_at = 12;
+    // The total amount of debt deducted from this bundle.
+    float debt_cleared = 13;
 }
 
 // Usage of credit bundle.

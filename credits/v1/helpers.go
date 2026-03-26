@@ -34,5 +34,5 @@ func (bundle *CreditBundle) IsExpired() bool {
 
 // IsUsed returns true if a credit bundle has been used.
 func (bundle *CreditBundle) IsUsed() bool {
-	return bundle.GetCreditsPurchased() != bundle.GetCreditsRemaining()
+	return bundle.GetCreditsPurchased() != bundle.GetCreditsRemaining() || bundle.GetDebtCleared() > 0
 }
