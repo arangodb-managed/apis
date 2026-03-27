@@ -34,3 +34,10 @@ const (
 const (
 	ExpirationReasonNoExpire = "doesn't expire"
 )
+
+// Known values for Deployment.arangodb_platform_bundle.
+const (
+	ArangoDBPlatformBundleCoreDB      = "coredb"
+	ArangoDBPlatformBundleAISuite     = "aisuite"
+	ArangoDBPlatformBundleDataScience = "datascience"
+)

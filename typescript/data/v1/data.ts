@@ -471,11 +471,12 @@ export interface Deployment {
   notifications?: { [key: string]: Notification };
   
   // If set to true, arangodb platform is enabled for this deployment
+  // [Deprecated] Use arangodb_platform_bundle instead. See Go helper Deployment.IsPlatformEnabled.
   // boolean
   arangodb_platform_enabled?: boolean;
   
-  // Selects which platform bundle is to be used for this deployment
-  // Standard|Data|AI Suite|Whatever is available in the cluster
+  // Selects which platform bundle is to be used for this deployment.
+  // Known values: "coredb", "aisuite", "datascience" (see Go constants ArangoDBPlatformBundle*).
   // string
   arangodb_platform_bundle?: string;
 }
