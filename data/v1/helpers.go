@@ -29,6 +29,13 @@ import (
 	rm "github.com/arangodb-managed/apis/resourcemanager/v1"
 )
 
+// IsPlatformEnabled reports whether the ArangoDB platform extras are enabled for this deployment.
+// It is false when arangodb_platform_bundle is unset or ArangoDBPlatformBundleCoreDB; true for any other non-empty value.
+func (d *Deployment) IsPlatformEnabled() bool {
+	b := d.GetArangodbPlatformBundle()
+	return b != "" && b != ArangoDBPlatformBundleCoreDB
+}
+
 // IsSingleServer returns true if the model yields a single server deployment.
 func (model *Deployment_ModelSpec) IsSingleServer() bool {
 	return model.GetModel() == ModelFree || model.GetModel() == ModelDeveloper

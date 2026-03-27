@@ -833,10 +833,11 @@ message Deployment {
     map<string, Notification> notifications = 618;
 
     // If set to true, arangodb platform is enabled for this deployment
-    bool arangodb_platform_enabled = 619;
+    // [Deprecated] Use arangodb_platform_bundle instead. See Go helper Deployment.IsPlatformEnabled.
+    bool arangodb_platform_enabled = 619 [deprecated = true];
 
-    // Selects which platform bundle is to be used for this deployment
-    // Standard|Data|AI Suite|Whatever is available in the cluster
+    // Selects which platform bundle is to be used for this deployment.
+    // Known values: "coredb", "aisuite", "datascience" (see Go constants ArangoDBPlatformBundle*).
     string arangodb_platform_bundle = 620;
 }
 
