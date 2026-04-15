@@ -2,6 +2,7 @@ SHELL = bash
 SCRIPTDIR := $(shell pwd)
 ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
 BUILDIMAGE := arangodboasis/golang-ci:latest
+DOCKER_PULL_POLICY ?= always
 
 PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*' -not -path './vendor-proto/*' | sort)
 
@@ -16,7 +17,7 @@ ifeq ($(GOMODCACHE),)
 	GOMODCACHE := $(HOME)/go/pkg/mod
 endif
 
-DOCKERARGS := run -t --rm \
+DOCKERARGS := run -t --rm --pull=$(DOCKER_PULL_POLICY) \
 	-u $(shell id -u):$(shell id -g) \
 	-v $(ROOTDIR):/usr/src \
 	-v $(GOMODCACHE):/go/pkg/mod \
