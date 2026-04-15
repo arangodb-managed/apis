@@ -588,6 +588,16 @@ export interface Deployment_ModelSpec {
   // This field is ignored set in case the flexible model is used.
   // number
   node_disk_size?: number;
+  
+  // Type component of the node_size_id (e.g., "A" from "a64").
+  // This is a read-only value.
+  // string
+  node_type?: string;
+  
+  // Numeric size component of the node_size_id (e.g., 64 from "a64").
+  // This is a read-only value.
+  // number
+  node_size?: number;
 }
 
 // Deployment's notification settings
