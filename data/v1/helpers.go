@@ -21,6 +21,8 @@
 package v1
 
 import (
+	"regexp"
+	"strconv"
 	"strings"
 
 	"google.golang.org/protobuf/proto"
@@ -28,6 +30,29 @@ import (
 	common "github.com/arangodb-managed/apis/common/v1"
 	rm "github.com/arangodb-managed/apis/resourcemanager/v1"
 )
+
+var nodeSizeIDPattern = regexp.MustCompile(`(?i)^([a-z]+)([0-9]+)$`)
+
+// ParseNodeSizeID parses a node_size_id into its type and numeric size components.
+// For IDs with a CPU prefix (e.g., "c4-a64"), only the last dash-separated segment is used.
+// Returns ("A", 64, true) for "a64" or "c4-a64".
+func ParseNodeSizeID(id string) (nodeType string, nodeSize int32, ok bool) {
+	normalized := strings.TrimSpace(id)
+	if normalized == "" {
+		return "", 0, false
+	}
+	parts := strings.Split(normalized, "-")
+	sizeName := parts[len(parts)-1]
+	match := nodeSizeIDPattern.FindStringSubmatch(sizeName)
+	if len(match) != 3 {
+		return "", 0, false
+	}
+	n, err := strconv.ParseInt(match[2], 10, 32)
+	if err != nil {
+		return "", 0, false
+	}
+	return strings.ToUpper(match[1]), int32(n), true
+}
 
 // IsPlatformEnabled reports whether the ArangoDB platform extras are enabled for this deployment.
 // It is false when arangodb_platform_bundle is unset or ArangoDBPlatformBundleCoreDB; true for any other non-empty value.
