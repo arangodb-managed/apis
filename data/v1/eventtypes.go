@@ -69,4 +69,12 @@ const (
 	// DeploymentEventReasonRestoreBackup contains the reason taht should be set
 	// in the event that is emitted when a deployment backup is restored.
 	DeploymentEventReasonRestoreBackup = "restore_backup"
+	// DeploymentEventReasonStatus contains the reason set when deployment status is updated.
+	DeploymentEventReasonStatus = "status"
+	// DeploymentEventReasonBootstrapped contains the reason set when a deployment is bootstrapped for the first time.
+	DeploymentEventReasonBootstrapped = "bootstrapped"
+	// DeploymentEventReasonPlatform contains the reason set when arangodb platform enabled is updated.
+	DeploymentEventReasonPlatform = "platform"
+	// DeploymentEventReasonUpdate contains the reason set when a deployment is updated through the data API.
+	DeploymentEventReasonUpdate = "update"
 )
