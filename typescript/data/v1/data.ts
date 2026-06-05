@@ -634,27 +634,27 @@ export interface Deployment_ServerStatus {
   member_of_cluster?: boolean;
   
   // Set if the server is in a failed state
-  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing.
   // boolean
   failed?: boolean;
   
   // Set if the server is still being created
-  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing.
   // boolean
   creating?: boolean;
   
   // Set if the server is in the ok state.
-  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing.
   // boolean
   ok?: boolean;
   
   // Set if the server is in the bad state.
-  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing.
   // boolean
   bad?: boolean;
   
   // Set if the server is still being upgraded
-  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing.
   // boolean
   upgrading?: boolean;
   
@@ -678,6 +678,11 @@ export interface Deployment_ServerStatus {
   // If set, this server is leader in its type (currently applies only to agents).
   // boolean
   is_leader?: boolean;
+  
+  // Set while the member is waiting to synchronize after upgrade or join
+  // (shard sync for DBServers, agency sync for Agents).
+  // boolean
+  synchronizing?: boolean;
   
   // Information about the data volume used to store the data
   // DataVolumeInfo
