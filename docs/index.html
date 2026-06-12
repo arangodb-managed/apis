@@ -10213,7 +10213,7 @@ This is a read-only value. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set if the server is in a failed state
-Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading. </p></td>
+Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing. </p></td>
                 </tr>
               
                 <tr>
@@ -10221,7 +10221,7 @@ Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set if the server is still being created
-Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading. </p></td>
+Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing. </p></td>
                 </tr>
               
                 <tr>
@@ -10229,7 +10229,7 @@ Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set if the server is in the ok state.
-Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading. </p></td>
+Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing. </p></td>
                 </tr>
               
                 <tr>
@@ -10237,7 +10237,7 @@ Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set if the server is in the bad state.
-Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading. </p></td>
+Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing. </p></td>
                 </tr>
               
                 <tr>
@@ -10245,7 +10245,7 @@ Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set if the server is still being upgraded
-Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading. </p></td>
+Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading/synchronizing. </p></td>
                 </tr>
               
                 <tr>
@@ -10282,6 +10282,14 @@ Initially this field is empty. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set, this server is leader in its type (currently applies only to agents). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>synchronizing</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set while the member is waiting to synchronize after upgrade or join
+(shard sync for DBServers, agency sync for Agents). </p></td>
                 </tr>
               
                 <tr>

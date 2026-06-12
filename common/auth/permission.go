@@ -29,7 +29,7 @@ import (
 )
 
 var (
-	partRegexp = regexp.MustCompile(`^[a-z][a-z\-]*$`)
+	partRegexp = regexp.MustCompile(`^[a-z][a-z\-\_]*$`)
 )
 
 // ParsePermission parses a permission into:
