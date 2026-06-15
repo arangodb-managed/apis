@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2026 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 // limitations under the License.
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-//
-// Author Ewout Prangsma
 //
 
 package v1
@@ -35,6 +33,12 @@ const (
 	// EventTypeDeploymentDeleted is the type of event fired after a deployment has been (marked for) deleted
 	// SubjectID contains the ID of the deployment.
 	EventTypeDeploymentDeleted = "data.deployment.deleted"
+	// EventTypeDeploymentBilling is the type of event fired when a deployment's
+	// usage items are reconciled (recalculated) for billing. It is emitted
+	// frequently (every few hours per deployment), so it has a dedicated type to
+	// keep it out of the default events view and let it be grouped separately.
+	// SubjectID contains the ID of the deployment.
+	EventTypeDeploymentBilling = "data.deployment.billing"
 )
 
 const (
