@@ -40,7 +40,7 @@ func TestPermission(t *testing.T) {
 		{"foo.something.create", true, "foo", "something", "create"},
 		{"foo.some-thing.create", true, "foo", "some-thing", "create"},
 		{"foo .something.create", false, "", "", ""},
-		{"foo.some_thing.create", false, "", "", ""},
+		{"foo.something.create_something", true, "foo", "something", "create_something"},
 		{"foo.something", false, "", "", ""},
 		{"foo.something.create.more", false, "", "", ""},
 	}
