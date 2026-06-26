@@ -425,6 +425,20 @@ message UsageItem {
     }
     // This field is only set when the usage item is of kind DeploymentAEU.
     DeploymentAEU deployment_aeu = 127;
+
+    message AuditLogRequests {
+        // Number of audit-log HTTPS-POST delivery requests (invocations) in this usage period.
+        int64 count = 1;
+    }
+    // This field is only set when the usage item is of kind AuditLogRequests.
+    AuditLogRequests audit_log_requests = 128;
+
+    message AuditLogData {
+        // Number of bytes delivered as audit-log HTTPS-POST request bodies in this usage period.
+        int64 bytes = 1;
+    }
+    // This field is only set when the usage item is of kind AuditLogData.
+    AuditLogData audit_log_data = 129;
 }
 
 // List of UsageItems.

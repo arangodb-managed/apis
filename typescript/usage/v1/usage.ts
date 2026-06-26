@@ -224,6 +224,24 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind DeploymentAEU.
   // UsageItem_DeploymentAEU
   deployment_aeu?: UsageItem_DeploymentAEU;
+  
+  // This field is only set when the usage item is of kind AuditLogRequests.
+  // UsageItem_AuditLogRequests
+  audit_log_requests?: UsageItem_AuditLogRequests;
+  
+  // This field is only set when the usage item is of kind AuditLogData.
+  // UsageItem_AuditLogData
+  audit_log_data?: UsageItem_AuditLogData;
+}
+export interface UsageItem_AuditLogData {
+  // Number of bytes delivered as audit-log HTTPS-POST request bodies in this usage period.
+  // number
+  bytes?: number;
+}
+export interface UsageItem_AuditLogRequests {
+  // Number of audit-log HTTPS-POST delivery requests (invocations) in this usage period.
+  // number
+  count?: number;
 }
 
 // @Deprecated - will be removed in OAS-12028

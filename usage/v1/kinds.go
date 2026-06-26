@@ -55,6 +55,16 @@ const (
 	// where AEU = Deployment Size x Deployment Node Count x Deployment AEU Base x Deployment Type Ratio.
 	UsageItemKindV2DeploymentAEU = "DeploymentAEU"
 
+	// UsageItemKindV2AuditLogRequests (Billing 2.0) indicates a UsageItem that contains
+	// the number of audit-log HTTPS-POST delivery requests (invocations) made for a deployment.
+	// Produced for audit-log destinations of type "https-post" only.
+	UsageItemKindV2AuditLogRequests = "AuditLogRequests"
+
+	// UsageItemKindV2AuditLogData (Billing 2.0) indicates a UsageItem that contains
+	// the number of bytes delivered as audit-log HTTPS-POST request bodies for a deployment.
+	// Produced for audit-log destinations of type "https-post" only.
+	UsageItemKindV2AuditLogData = "AuditLogData"
+
 	/*
 		###
 		Deprecated section - to be removed in future releases:
@@ -109,3 +119,41 @@ const (
 	// UsageItems of this kind are closed on creation, so open items cannot exist.
 	UsageItemKindGraphAnalyticsJobSize = "GraphAnalyticsJobSize"
 )
+
+// BillingV2UsageItemKinds is the full set of Billing 2.0 (V2) usage item kinds,
+// in a stable order. Reference this (or IsBillingV2UsageItemKind) instead of
+// hand-maintaining per-service copies, so new V2 kinds are picked up everywhere:
+// ingestion (everestd), skipping V1 pricing (usage-item-price-calculator),
+// dashboards, validation, etc.
+//
+// When adding a kind here, also: add its CreditPlan variable mapping (pricingd
+// variableForKind) and Everest component (everestd kindToComponent/quantityForItem) —
+// both are guarded by *_CoversAllV2Kinds tests — and update the idashboard frontend
+// list `creditUsageKindOptions` (apis/usage kinds cannot be imported into TS).
+var BillingV2UsageItemKinds = []string{
+	UsageItemKindV2CPUHour,
+	UsageItemKindV2MemoryHour,
+	UsageItemKindV2StorageHour,
+	UsageItemKindV2StoragePerformanceHour,
+	UsageItemKindV2GPUHour,
+	UsageItemKindV2NetworkSize,
+	UsageItemKindV2CloudStorageHour,
+	UsageItemKindV2DeploymentAEU,
+	UsageItemKindV2AuditLogRequests,
+	UsageItemKindV2AuditLogData,
+}
+
+// billingV2UsageItemKindSet backs IsBillingV2UsageItemKind for O(1) lookups.
+var billingV2UsageItemKindSet = func() map[string]struct{} {
+	m := make(map[string]struct{}, len(BillingV2UsageItemKinds))
+	for _, k := range BillingV2UsageItemKinds {
+		m[k] = struct{}{}
+	}
+	return m
+}()
+
+// IsBillingV2UsageItemKind reports whether kind is a Billing 2.0 (V2) usage item kind.
+func IsBillingV2UsageItemKind(kind string) bool {
+	_, ok := billingV2UsageItemKindSet[kind]
+	return ok
+}

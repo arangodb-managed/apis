@@ -1888,6 +1888,14 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.usage.v1.UsageItem.AuditLogData"><span class="badge">M</span>UsageItem.AuditLogData</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.usage.v1.UsageItem.AuditLogRequests"><span class="badge">M</span>UsageItem.AuditLogRequests</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.usage.v1.UsageItem.AuditLogSize"><span class="badge">M</span>UsageItem.AuditLogSize</a>
                 </li>
               
@@ -25044,6 +25052,68 @@ This field is only set when the usage item is of kind MLJobSize. </p></td>
                   <td><a href="#arangodb.cloud.usage.v1.UsageItem.DeploymentAEU">UsageItem.DeploymentAEU</a></td>
                   <td></td>
                   <td><p>This field is only set when the usage item is of kind DeploymentAEU. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>audit_log_requests</td>
+                  <td><a href="#arangodb.cloud.usage.v1.UsageItem.AuditLogRequests">UsageItem.AuditLogRequests</a></td>
+                  <td></td>
+                  <td><p>This field is only set when the usage item is of kind AuditLogRequests. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>audit_log_data</td>
+                  <td><a href="#arangodb.cloud.usage.v1.UsageItem.AuditLogData">UsageItem.AuditLogData</a></td>
+                  <td></td>
+                  <td><p>This field is only set when the usage item is of kind AuditLogData. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.usage.v1.UsageItem.AuditLogData">UsageItem.AuditLogData</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>bytes</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Number of bytes delivered as audit-log HTTPS-POST request bodies in this usage period. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.usage.v1.UsageItem.AuditLogRequests">UsageItem.AuditLogRequests</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>count</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Number of audit-log HTTPS-POST delivery requests (invocations) in this usage period. </p></td>
                 </tr>
               
             </tbody>
