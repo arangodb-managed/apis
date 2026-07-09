@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2025 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2026 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -86,6 +86,25 @@ service BillingService {
     rpc GetInvoicePDF(common.v1.IDOptions) returns (PDFDocument) {
         option (google.api.http) = {
             get: "/api/billing/v1/invoices/{id}/pdf"
+        };
+    }
+
+    // Fetch all EverestInvoice resources (new billing system) for the
+    // organization identified by the given organization ID.
+    // Required permissions:
+    // - billing.invoice.list on the organization identified by the given organization ID
+    rpc ListEverestInvoices(ListEverestInvoicesRequest) returns (EverestInvoiceList) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{organization_id}/everest-invoices"
+        };
+    }
+
+    // Fetch a specific EverestInvoice identified by the given invoice UUID.
+    // Required permissions:
+    // - billing.invoice.get on the organization that owns the invoice.
+    rpc GetEverestInvoice(common.v1.IDOptions) returns (EverestInvoice) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/everest-invoices/{id}"
         };
     }
 
@@ -389,6 +408,75 @@ message ListInvoicesRequest {
     // Whether or not to include the usage item IDs on every Invoice_Item in the returned Invoices.
     // This is an optional field; usage item IDs are not included by default.
     bool include_usageitem_ids = 20;
+}
+
+// EverestInvoicePaymentState describes how far an Everest (new billing) invoice is settled.
+enum EverestInvoicePaymentState {
+    // Not set.
+    EVEREST_INVOICE_PAYMENT_STATE_UNSPECIFIED = 0;
+    // No payments or credits applied yet.
+    EVEREST_INVOICE_PAYMENT_STATE_UNPAID = 1;
+    // Some payments or credits applied, but an amount is still due.
+    EVEREST_INVOICE_PAYMENT_STATE_PARTIALLY_PAID = 2;
+    // Fully settled by payments.
+    EVEREST_INVOICE_PAYMENT_STATE_PAID_IN_FULL = 3;
+    // Fully settled by credit notes.
+    EVEREST_INVOICE_PAYMENT_STATE_CREDITED_IN_FULL = 4;
+}
+
+// EverestInvoiceAmount is a currency-tagged decimal amount.
+message EverestInvoiceAmount {
+    // Decimal amount, e.g. "1234.56".
+    string amount = 1;
+    // ISO currency code, e.g. "USD".
+    string currency = 2;
+}
+
+// EverestInvoice is an invoice created by the new (Everest based) billing
+// system. Unlike Invoice, it carries no verification/payment workflow —
+// payment collection is handled by the billing provider.
+message EverestInvoice {
+    // UUID of the invoice (use as id in GetEverestInvoice / PDF download).
+    string invoice_uuid = 1;
+    // Identifier of the organization owning the invoice.
+    string organization_id = 2;
+    // Human readable invoice number.
+    string invoice_number = 3;
+
+    // Issue date.
+    google.protobuf.Timestamp invoice_date = 10;
+    // Payment due date. The invoice becomes overdue at the end of the due day.
+    google.protobuf.Timestamp due_date = 11;
+
+    // Gross total including tax.
+    EverestInvoiceAmount total_amount = 20;
+    // Outstanding balance.
+    EverestInvoiceAmount total_amount_due = 21;
+    // Sum of payments applied.
+    EverestInvoiceAmount payments_applied = 22;
+    // Sum of credit notes applied.
+    EverestInvoiceAmount total_credited = 23;
+    // Total tax.
+    EverestInvoiceAmount total_tax = 24;
+
+    // Settlement state.
+    EverestInvoicePaymentState payment_state = 30;
+    // Set when the invoice is not settled and its due day has passed.
+    bool is_overdue = 31;
+}
+
+// List of EverestInvoice items.
+message EverestInvoiceList {
+    repeated EverestInvoice items = 1;
+}
+
+// Request arguments for ListEverestInvoices
+message ListEverestInvoicesRequest {
+    // Request invoices for the organization with this id.
+    // This is a required field.
+    string organization_id = 1;
+    // Standard list options
+    common.v1.ListOptions options = 10;
 }
 
 // Request argument for GetPreliminaryInvoice
