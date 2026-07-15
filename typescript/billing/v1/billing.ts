@@ -94,6 +94,76 @@ export interface CreatePaymentMethodRequest {
   // string
   issuing_country?: string;
 }
+
+// EverestInvoice is an invoice created by the new (Everest based) billing
+// system. Unlike Invoice, it carries no verification/payment workflow —
+// payment collection is handled by the billing provider.
+export interface EverestInvoice {
+  // UUID of the invoice (use as id in GetEverestInvoice / PDF download).
+  // string
+  invoice_uuid?: string;
+  
+  // Identifier of the organization owning the invoice.
+  // string
+  organization_id?: string;
+  
+  // Human readable invoice number.
+  // string
+  invoice_number?: string;
+  
+  // Issue date.
+  // googleTypes.Timestamp
+  invoice_date?: googleTypes.Timestamp;
+  
+  // Payment due date. The invoice becomes overdue at the end of the due day.
+  // googleTypes.Timestamp
+  due_date?: googleTypes.Timestamp;
+  
+  // Gross total including tax.
+  // EverestInvoiceAmount
+  total_amount?: EverestInvoiceAmount;
+  
+  // Outstanding balance.
+  // EverestInvoiceAmount
+  total_amount_due?: EverestInvoiceAmount;
+  
+  // Sum of payments applied.
+  // EverestInvoiceAmount
+  payments_applied?: EverestInvoiceAmount;
+  
+  // Sum of credit notes applied.
+  // EverestInvoiceAmount
+  total_credited?: EverestInvoiceAmount;
+  
+  // Total tax.
+  // EverestInvoiceAmount
+  total_tax?: EverestInvoiceAmount;
+  
+  // Settlement state.
+  // EverestInvoicePaymentState
+  payment_state?: EverestInvoicePaymentState;
+  
+  // Set when the invoice is not settled and its due day has passed.
+  // boolean
+  is_overdue?: boolean;
+}
+
+// EverestInvoiceAmount is a currency-tagged decimal amount.
+export interface EverestInvoiceAmount {
+  // Decimal amount, e.g. "1234.56".
+  // string
+  amount?: string;
+  
+  // ISO currency code, e.g. "USD".
+  // string
+  currency?: string;
+}
+
+// List of EverestInvoice items.
+export interface EverestInvoiceList {
+  // EverestInvoice
+  items?: EverestInvoice[];
+}
 export interface GetAvailableCreditsRequest {
   // string
   organization_id?: string;
@@ -352,6 +422,18 @@ export interface InvoiceList {
   items?: Invoice[];
 }
 
+// Request arguments for ListEverestInvoices
+export interface ListEverestInvoicesRequest {
+  // Request invoices for the organization with this id.
+  // This is a required field.
+  // string
+  organization_id?: string;
+  
+  // Standard list options
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+}
+
 // Request arguments for ListInvoices
 export interface ListInvoicesRequest {
   // Request invoices for the organization with this id.
@@ -604,6 +686,24 @@ export interface SetDefaultPaymentMethodRequest {
   payment_method_id?: string;
 }
 
+// EverestInvoicePaymentState describes how far an Everest (new billing) invoice is settled.
+export enum EverestInvoicePaymentState {
+  // Not set.
+  EVEREST_INVOICE_PAYMENT_STATE_UNSPECIFIED = 0,
+  
+  // No payments or credits applied yet.
+  EVEREST_INVOICE_PAYMENT_STATE_UNPAID = 1,
+  
+  // Some payments or credits applied, but an amount is still due.
+  EVEREST_INVOICE_PAYMENT_STATE_PARTIALLY_PAID = 2,
+  
+  // Fully settled by payments.
+  EVEREST_INVOICE_PAYMENT_STATE_PAID_IN_FULL = 3,
+  
+  // Fully settled by credit notes.
+  EVEREST_INVOICE_PAYMENT_STATE_CREDITED_IN_FULL = 4,
+}
+
 // BillingService is the API used to fetch billing information.
 export interface IBillingService {
   // Get the current API version of this service.
@@ -639,6 +739,17 @@ export interface IBillingService {
   // - billing.invoice.get on the organization that owns the invoice
   // with given ID.
   GetInvoicePDF: (req: arangodb_cloud_common_v1_IDOptions) => Promise<PDFDocument>;
+  
+  // Fetch all EverestInvoice resources (new billing system) for the
+  // organization identified by the given organization ID.
+  // Required permissions:
+  // - billing.invoice.list on the organization identified by the given organization ID
+  ListEverestInvoices: (req: ListEverestInvoicesRequest) => Promise<EverestInvoiceList>;
+  
+  // Fetch a specific EverestInvoice identified by the given invoice UUID.
+  // Required permissions:
+  // - billing.invoice.get on the organization that owns the invoice.
+  GetEverestInvoice: (req: arangodb_cloud_common_v1_IDOptions) => Promise<EverestInvoice>;
   
   // Fetch all payment providers that are usable for the organization identified
   // by the given context ID.
@@ -769,6 +880,25 @@ export class BillingService implements IBillingService {
   // with given ID.
   async GetInvoicePDF(req: arangodb_cloud_common_v1_IDOptions): Promise<PDFDocument> {
     const path = `/api/billing/v1/invoices/${encodeURIComponent(req.id || '')}/pdf`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch all EverestInvoice resources (new billing system) for the
+  // organization identified by the given organization ID.
+  // Required permissions:
+  // - billing.invoice.list on the organization identified by the given organization ID
+  async ListEverestInvoices(req: ListEverestInvoicesRequest): Promise<EverestInvoiceList> {
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/everest-invoices`;
+    const url = path + api.queryString(req, [`organization_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch a specific EverestInvoice identified by the given invoice UUID.
+  // Required permissions:
+  // - billing.invoice.get on the organization that owns the invoice.
+  async GetEverestInvoice(req: arangodb_cloud_common_v1_IDOptions): Promise<EverestInvoice> {
+    const path = `/api/billing/v1/everest-invoices/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }

@@ -440,6 +440,18 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.billing.v1.EverestInvoice"><span class="badge">M</span>EverestInvoice</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.billing.v1.EverestInvoiceAmount"><span class="badge">M</span>EverestInvoiceAmount</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.billing.v1.EverestInvoiceList"><span class="badge">M</span>EverestInvoiceList</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.billing.v1.GetAvailableCreditsRequest"><span class="badge">M</span>GetAvailableCreditsRequest</a>
                 </li>
               
@@ -465,6 +477,10 @@ title: "ArangoGraph Insights Platform API"
               
                 <li>
                   <a href="#arangodb.cloud.billing.v1.InvoiceList"><span class="badge">M</span>InvoiceList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.billing.v1.ListEverestInvoicesRequest"><span class="badge">M</span>ListEverestInvoicesRequest</a>
                 </li>
               
                 <li>
@@ -523,6 +539,10 @@ title: "ArangoGraph Insights Platform API"
                   <a href="#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest"><span class="badge">M</span>SetDefaultPaymentMethodRequest</a>
                 </li>
               
+              
+                <li>
+                  <a href="#arangodb.cloud.billing.v1.EverestInvoicePaymentState"><span class="badge">E</span>EverestInvoicePaymentState</a>
+                </li>
               
               
               
@@ -5425,6 +5445,162 @@ See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations </p></td>
 
         
       
+        <h3 id="arangodb.cloud.billing.v1.EverestInvoice">EverestInvoice</h3>
+        <p>EverestInvoice is an invoice created by the new (Everest based) billing</p><p>system. Unlike Invoice, it carries no verification/payment workflow —</p><p>payment collection is handled by the billing provider.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>invoice_uuid</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>UUID of the invoice (use as id in GetEverestInvoice / PDF download). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the organization owning the invoice. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>invoice_number</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Human readable invoice number. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>invoice_date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Issue date. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>due_date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Payment due date. The invoice becomes overdue at the end of the due day. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_amount</td>
+                  <td><a href="#arangodb.cloud.billing.v1.EverestInvoiceAmount">EverestInvoiceAmount</a></td>
+                  <td></td>
+                  <td><p>Gross total including tax. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_amount_due</td>
+                  <td><a href="#arangodb.cloud.billing.v1.EverestInvoiceAmount">EverestInvoiceAmount</a></td>
+                  <td></td>
+                  <td><p>Outstanding balance. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>payments_applied</td>
+                  <td><a href="#arangodb.cloud.billing.v1.EverestInvoiceAmount">EverestInvoiceAmount</a></td>
+                  <td></td>
+                  <td><p>Sum of payments applied. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_credited</td>
+                  <td><a href="#arangodb.cloud.billing.v1.EverestInvoiceAmount">EverestInvoiceAmount</a></td>
+                  <td></td>
+                  <td><p>Sum of credit notes applied. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_tax</td>
+                  <td><a href="#arangodb.cloud.billing.v1.EverestInvoiceAmount">EverestInvoiceAmount</a></td>
+                  <td></td>
+                  <td><p>Total tax. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>payment_state</td>
+                  <td><a href="#arangodb.cloud.billing.v1.EverestInvoicePaymentState">EverestInvoicePaymentState</a></td>
+                  <td></td>
+                  <td><p>Settlement state. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_overdue</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when the invoice is not settled and its due day has passed. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.billing.v1.EverestInvoiceAmount">EverestInvoiceAmount</h3>
+        <p>EverestInvoiceAmount is a currency-tagged decimal amount.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>amount</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Decimal amount, e.g. &#34;1234.56&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ISO currency code, e.g. &#34;USD&#34;. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.billing.v1.EverestInvoiceList">EverestInvoiceList</h3>
+        <p>List of EverestInvoice items.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.billing.v1.EverestInvoice">EverestInvoice</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.billing.v1.GetAvailableCreditsRequest">GetAvailableCreditsRequest</h3>
         <p></p>
 
@@ -5944,6 +6120,38 @@ that payment failed, nil otherwise. </p></td>
                   <td><a href="#arangodb.cloud.billing.v1.Invoice">Invoice</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.billing.v1.ListEverestInvoicesRequest">ListEverestInvoicesRequest</h3>
+        <p>Request arguments for ListEverestInvoices</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Request invoices for the organization with this id.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Standard list options </p></td>
                 </tr>
               
             </tbody>
@@ -6556,6 +6764,47 @@ This is a read-only field. </p></td>
       
 
       
+        <h3 id="arangodb.cloud.billing.v1.EverestInvoicePaymentState">EverestInvoicePaymentState</h3>
+        <p>EverestInvoicePaymentState describes how far an Everest (new billing) invoice is settled.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>EVEREST_INVOICE_PAYMENT_STATE_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p>Not set.</p></td>
+              </tr>
+            
+              <tr>
+                <td>EVEREST_INVOICE_PAYMENT_STATE_UNPAID</td>
+                <td>1</td>
+                <td><p>No payments or credits applied yet.</p></td>
+              </tr>
+            
+              <tr>
+                <td>EVEREST_INVOICE_PAYMENT_STATE_PARTIALLY_PAID</td>
+                <td>2</td>
+                <td><p>Some payments or credits applied, but an amount is still due.</p></td>
+              </tr>
+            
+              <tr>
+                <td>EVEREST_INVOICE_PAYMENT_STATE_PAID_IN_FULL</td>
+                <td>3</td>
+                <td><p>Fully settled by payments.</p></td>
+              </tr>
+            
+              <tr>
+                <td>EVEREST_INVOICE_PAYMENT_STATE_CREDITED_IN_FULL</td>
+                <td>4</td>
+                <td><p>Fully settled by credit notes.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
 
       
 
@@ -6624,6 +6873,25 @@ Required permissions:
 Required permissions:
 - billing.invoice.get on the organization that owns the invoice
   with given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListEverestInvoices</td>
+                <td><a href="#arangodb.cloud.billing.v1.ListEverestInvoicesRequest">ListEverestInvoicesRequest</a></td>
+                <td><a href="#arangodb.cloud.billing.v1.EverestInvoiceList">EverestInvoiceList</a></td>
+                <td><p>Fetch all EverestInvoice resources (new billing system) for the
+organization identified by the given organization ID.
+Required permissions:
+- billing.invoice.list on the organization identified by the given organization ID</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetEverestInvoice</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.billing.v1.EverestInvoice">EverestInvoice</a></td>
+                <td><p>Fetch a specific EverestInvoice identified by the given invoice UUID.
+Required permissions:
+- billing.invoice.get on the organization that owns the invoice.</p></td>
               </tr>
             
               <tr>
@@ -6824,6 +7092,26 @@ Required permissions:
                 <td>GetInvoicePDF</td>
                 <td>GET</td>
                 <td>/api/billing/v1/invoices/{id}/pdf</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListEverestInvoices</td>
+                <td>GET</td>
+                <td>/api/billing/v1/organization/{organization_id}/everest-invoices</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetEverestInvoice</td>
+                <td>GET</td>
+                <td>/api/billing/v1/everest-invoices/{id}</td>
                 <td></td>
               </tr>
               
