@@ -52,11 +52,13 @@ func IsCanceled(err error) bool {
 }
 
 // Canceled creates a new error that signals a request that was canceled. Typically by the caller.
-func Canceled(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.Canceled, msg, args...)
-	}
+func Canceled(msg string) error {
 	return status.Error(codes.Canceled, msg)
+}
+
+// Canceledf creates a new error that signals a request that was canceled. Typically by the caller.
+func Canceledf(format string, args ...interface{}) error {
+	return status.Errorf(codes.Canceled, format, args...)
 }
 
 // IsDeadlineExceeded returns true if the given error signals a request that timed out.
@@ -65,11 +67,13 @@ func IsDeadlineExceeded(err error) bool {
 }
 
 // DeadlineExceeded creates a new error that signals a request that timed out.
-func DeadlineExceeded(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.DeadlineExceeded, msg, args...)
-	}
+func DeadlineExceeded(msg string) error {
 	return status.Error(codes.DeadlineExceeded, msg)
+}
+
+// DeadlineExceededf creates a new error that signals a request that timed out.
+func DeadlineExceededf(format string, args ...interface{}) error {
+	return status.Errorf(codes.DeadlineExceeded, format, args...)
 }
 
 // IsInvalidArgument returns true if the given error signals a request with invalid arguments.
@@ -78,11 +82,13 @@ func IsInvalidArgument(err error) bool {
 }
 
 // InvalidArgument creates a new error that signals a request with invalid arguments.
-func InvalidArgument(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.InvalidArgument, msg, args...)
-	}
+func InvalidArgument(msg string) error {
 	return status.Error(codes.InvalidArgument, msg)
+}
+
+// InvalidArgumentf creates a new error that signals a request with invalid arguments.
+func InvalidArgumentf(format string, args ...interface{}) error {
+	return status.Errorf(codes.InvalidArgument, format, args...)
 }
 
 // IsNotFound returns true if the given error signals a request to an object that is not found.
@@ -91,11 +97,13 @@ func IsNotFound(err error) bool {
 }
 
 // NotFound creates a new error that signals a request to an object that is not found.
-func NotFound(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.NotFound, msg, args...)
-	}
+func NotFound(msg string) error {
 	return status.Error(codes.NotFound, msg)
+}
+
+// NotFoundf creates a new error that signals a request to an object that is not found.
+func NotFoundf(format string, args ...interface{}) error {
+	return status.Errorf(codes.NotFound, format, args...)
 }
 
 // IsAlreadyExists returns true if the given error signals a request to create an object that already exists.
@@ -104,11 +112,13 @@ func IsAlreadyExists(err error) bool {
 }
 
 // AlreadyExists creates a new error that signals a request to create an object that already exists.
-func AlreadyExists(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.AlreadyExists, msg, args...)
-	}
+func AlreadyExists(msg string) error {
 	return status.Error(codes.AlreadyExists, msg)
+}
+
+// AlreadyExistsf creates a new error that signals a request to create an object that already exists.
+func AlreadyExistsf(format string, args ...interface{}) error {
+	return status.Errorf(codes.AlreadyExists, format, args...)
 }
 
 // IsPermissionDenied returns true if the given error signals a request that the caller has not enough permissions for.
@@ -117,11 +127,13 @@ func IsPermissionDenied(err error) bool {
 }
 
 // PermissionDenied creates a new error that signals a request that the caller has not enough permissions for.
-func PermissionDenied(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.PermissionDenied, msg, args...)
-	}
+func PermissionDenied(msg string) error {
 	return status.Error(codes.PermissionDenied, msg)
+}
+
+// PermissionDeniedf creates a new error that signals a request that the caller has not enough permissions for.
+func PermissionDeniedf(format string, args ...interface{}) error {
+	return status.Errorf(codes.PermissionDenied, format, args...)
 }
 
 // IsPreconditionFailed returns true if the given error signals a precondition of the request has failed.
@@ -130,11 +142,13 @@ func IsPreconditionFailed(err error) bool {
 }
 
 // PreconditionFailed creates a new error that signals a request that a precondition of the call has failed.
-func PreconditionFailed(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.FailedPrecondition, msg, args...)
-	}
+func PreconditionFailed(msg string) error {
 	return status.Error(codes.FailedPrecondition, msg)
+}
+
+// PreconditionFailedf creates a new error that signals a request that a precondition of the call has failed.
+func PreconditionFailedf(format string, args ...interface{}) error {
+	return status.Errorf(codes.FailedPrecondition, format, args...)
 }
 
 // IsUnauthenticated returns true if the given error signals an unauthenticated request.
@@ -143,11 +157,13 @@ func IsUnauthenticated(err error) bool {
 }
 
 // Unauthenticated creates a new error that signals an unauthenticated request.
-func Unauthenticated(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.Unauthenticated, msg, args...)
-	}
+func Unauthenticated(msg string) error {
 	return status.Error(codes.Unauthenticated, msg)
+}
+
+// Unauthenticatedf creates a new error that signals an unauthenticated request.
+func Unauthenticatedf(format string, args ...interface{}) error {
+	return status.Errorf(codes.Unauthenticated, format, args...)
 }
 
 // IsResourceExhausted returns true if the given error signals a request that failed because of lack
@@ -158,11 +174,14 @@ func IsResourceExhausted(err error) bool {
 
 // ResourceExhausted creates a new error that signals  a request that failed because of lack
 // of resources, e.g. user quotas.
-func ResourceExhausted(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.ResourceExhausted, msg, args...)
-	}
+func ResourceExhausted(msg string) error {
 	return status.Error(codes.ResourceExhausted, msg)
+}
+
+// ResourceExhaustedf creates a new error that signals  a request that failed because of lack
+// of resources, e.g. user quotas.
+func ResourceExhaustedf(format string, args ...interface{}) error {
+	return status.Errorf(codes.ResourceExhausted, format, args...)
 }
 
 // IsUnknown returns true if the given error signals an unknown error.
@@ -171,11 +190,13 @@ func IsUnknown(err error) bool {
 }
 
 // Unknown creates a new error that signals an unknown error.
-func Unknown(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.Unknown, msg, args...)
-	}
+func Unknown(msg string) error {
 	return status.Error(codes.Unknown, msg)
+}
+
+// Unknownf creates a new error that signals an unknown error.
+func Unknownf(format string, args ...interface{}) error {
+	return status.Errorf(codes.Unknown, format, args...)
 }
 
 // IsUnavailable returns true if the given error signals an unavailable error.
@@ -187,11 +208,13 @@ func IsUnavailable(err error) bool {
 }
 
 // Unavailable creates a new error that signals an unavailable service.
-func Unavailable(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.Unavailable, msg, args...)
-	}
+func Unavailable(msg string) error {
 	return status.Error(codes.Unavailable, msg)
+}
+
+// Unavailablef creates a new error that signals an unavailable service.
+func Unavailablef(format string, args ...interface{}) error {
+	return status.Errorf(codes.Unavailable, format, args...)
 }
 
 // IsAborted returns true if the given error signals that the operation was aborted.
@@ -200,11 +223,13 @@ func IsAborted(err error) bool {
 }
 
 // Aborted creates a new error that signals that an operation was aborted.
-func Aborted(msg string, args ...interface{}) error {
-	if len(args) > 0 {
-		return status.Errorf(codes.Aborted, msg, args...)
-	}
+func Aborted(msg string) error {
 	return status.Error(codes.Aborted, msg)
+}
+
+// Abortedf creates a new error that signals that an operation was aborted.
+func Abortedf(format string, args ...interface{}) error {
+	return status.Errorf(codes.Aborted, format, args...)
 }
 
 // CommonError extracts common error from given error and returns it
