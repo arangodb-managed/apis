@@ -378,7 +378,11 @@ message UsageItem {
 
     message StoragePerformanceHour {
         // Number of storage performance unit-hours allocated/used in this usage period.
+        // One unit is one billable data volume; the value does not depend on volume size.
         double storage_performance_unit_hours = 1;
+        // Identifier of the disk performance tier the volumes ran at (e.g. "dp30", "dp100").
+        // Selects the per-tier rate when the item is priced.
+        string disk_performance_id = 2;
     }
     // This field is only set when the usage item is of kind StoragePerformanceHour.
     StoragePerformanceHour storage_performance_hour = 123;

@@ -649,8 +649,14 @@ export interface UsageItem_StorageHour {
 }
 export interface UsageItem_StoragePerformanceHour {
   // Number of storage performance unit-hours allocated/used in this usage period.
+  // One unit is one billable data volume; the value does not depend on volume size.
   // number
   storage_performance_unit_hours?: number;
+  
+  // Identifier of the disk performance tier the volumes ran at (e.g. "dp30", "dp100").
+  // Selects the per-tier rate when the item is priced.
+  // string
+  disk_performance_id?: string;
 }
 
 // List of UsageItems.
