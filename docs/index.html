@@ -26310,7 +26310,16 @@ This field is not filled-out when the kind is AuditLogSize </p></td>
                   <td>storage_performance_unit_hours</td>
                   <td><a href="#double">double</a></td>
                   <td></td>
-                  <td><p>Number of storage performance unit-hours allocated/used in this usage period. </p></td>
+                  <td><p>Number of storage performance unit-hours allocated/used in this usage period.
+One unit is one billable data volume; the value does not depend on volume size. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disk_performance_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the disk performance tier the volumes ran at (e.g. &#34;dp30&#34;, &#34;dp100&#34;).
+Selects the per-tier rate when the item is priced. </p></td>
                 </tr>
               
             </tbody>
