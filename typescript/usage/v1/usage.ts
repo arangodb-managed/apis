@@ -232,6 +232,19 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind AuditLogData.
   // UsageItem_AuditLogData
   audit_log_data?: UsageItem_AuditLogData;
+  
+  // This field is only set when the usage item is of kind AddonHour.
+  // UsageItem_AddonHour
+  addon_hour?: UsageItem_AddonHour;
+}
+export interface UsageItem_AddonHour {
+  // Identifier of the addon (e.g. "dedicateddatacluster").
+  // string
+  addon_id?: string;
+  
+  // Number of hours the addon was active in this usage period.
+  // number
+  addon_hours?: number;
 }
 export interface UsageItem_AuditLogData {
   // Number of bytes delivered as audit-log HTTPS-POST request bodies in this usage period.

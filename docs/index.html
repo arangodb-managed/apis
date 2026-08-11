@@ -1908,6 +1908,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.usage.v1.UsageItem.AddonHour"><span class="badge">M</span>UsageItem.AddonHour</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.usage.v1.UsageItem.AuditLogData"><span class="badge">M</span>UsageItem.AuditLogData</a>
                 </li>
               
@@ -25354,6 +25358,44 @@ This field is only set when the usage item is of kind MLJobSize. </p></td>
                   <td><a href="#arangodb.cloud.usage.v1.UsageItem.AuditLogData">UsageItem.AuditLogData</a></td>
                   <td></td>
                   <td><p>This field is only set when the usage item is of kind AuditLogData. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>addon_hour</td>
+                  <td><a href="#arangodb.cloud.usage.v1.UsageItem.AddonHour">UsageItem.AddonHour</a></td>
+                  <td></td>
+                  <td><p>This field is only set when the usage item is of kind AddonHour. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.usage.v1.UsageItem.AddonHour">UsageItem.AddonHour</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>addon_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the addon (e.g. &#34;dedicateddatacluster&#34;). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>addon_hours</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Number of hours the addon was active in this usage period. </p></td>
                 </tr>
               
             </tbody>

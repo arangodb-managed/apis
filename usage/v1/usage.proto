@@ -443,6 +443,15 @@ message UsageItem {
     }
     // This field is only set when the usage item is of kind AuditLogData.
     AuditLogData audit_log_data = 129;
+
+    message AddonHour {
+        // Identifier of the addon (e.g. "dedicateddatacluster").
+        string addon_id = 1;
+        // Number of hours the addon was active in this usage period.
+        double addon_hours = 2;
+    }
+    // This field is only set when the usage item is of kind AddonHour.
+    AddonHour addon_hour = 130;
 }
 
 // List of UsageItems.
