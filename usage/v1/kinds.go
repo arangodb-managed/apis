@@ -65,6 +65,12 @@ const (
 	// Produced for audit-log destinations of type "https-post" only.
 	UsageItemKindV2AuditLogData = "AuditLogData"
 
+	// UsageItemKindV2AddonHour (Billing 2.0) indicates a UsageItem that contains
+	// the number of hours a paid addon (identified by addon_id in the payload, e.g.
+	// "dedicateddatacluster") was active. The item is anchored on a deployment or,
+	// for addons that belong to a whole data cluster, on the data cluster itself.
+	UsageItemKindV2AddonHour = "AddonHour"
+
 	/*
 		###
 		Deprecated section - to be removed in future releases:
@@ -141,6 +147,7 @@ var BillingV2UsageItemKinds = []string{
 	UsageItemKindV2DeploymentAEU,
 	UsageItemKindV2AuditLogRequests,
 	UsageItemKindV2AuditLogData,
+	UsageItemKindV2AddonHour,
 }
 
 // billingV2UsageItemKindSet backs IsBillingV2UsageItemKind for O(1) lookups.

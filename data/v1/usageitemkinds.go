@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2021-2026 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,4 +27,9 @@ const (
 
 	// UsageItemResourceKindDeployment is the kind used inside the UsageItem.Resource to refer to a deployment.
 	UsageItemResourceKindDeployment = "Deployment"
+
+	// UsageItemResourceKindDataCluster is the kind used inside the UsageItem.Resource to refer to a data cluster.
+	// Used for usage that belongs to a whole data cluster rather than a single deployment
+	// (e.g. AddonHour items for dedicated data clusters).
+	UsageItemResourceKindDataCluster = "DataCluster"
 )
