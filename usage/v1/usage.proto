@@ -433,6 +433,14 @@ message UsageItem {
     message AuditLogRequests {
         // Number of audit-log HTTPS-POST delivery requests (invocations) in this usage period.
         int64 count = 1;
+        // Identifier of the audit-log destination these requests were delivered to
+        // (AuditLog.Destination.id).
+        // A deployment may have several HTTPS-POST destinations, all delivering over
+        // the same period; each is charged separately, so this is what keeps their
+        // usage items apart. Without it they are identical but for their quantity,
+        // and everything downstream that deduplicates on (kind, resource, period) —
+        // the usage store and the billing system alike — keeps only one of them.
+        string destination_id = 2;
     }
     // This field is only set when the usage item is of kind AuditLogRequests.
     AuditLogRequests audit_log_requests = 128;
@@ -440,6 +448,9 @@ message UsageItem {
     message AuditLogData {
         // Number of bytes delivered as audit-log HTTPS-POST request bodies in this usage period.
         int64 bytes = 1;
+        // Identifier of the audit-log destination this data was delivered to
+        // (AuditLog.Destination.id). See AuditLogRequests.destination_id.
+        string destination_id = 2;
     }
     // This field is only set when the usage item is of kind AuditLogData.
     AuditLogData audit_log_data = 129;

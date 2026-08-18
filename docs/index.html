@@ -25422,6 +25422,14 @@ This field is only set when the usage item is of kind MLJobSize. </p></td>
                   <td><p>Number of bytes delivered as audit-log HTTPS-POST request bodies in this usage period. </p></td>
                 </tr>
               
+                <tr>
+                  <td>destination_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the audit-log destination this data was delivered to
+(AuditLog.Destination.id). See AuditLogRequests.destination_id. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -25444,6 +25452,19 @@ This field is only set when the usage item is of kind MLJobSize. </p></td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p>Number of audit-log HTTPS-POST delivery requests (invocations) in this usage period. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the audit-log destination these requests were delivered to
+(AuditLog.Destination.id).
+A deployment may have several HTTPS-POST destinations, all delivering over
+the same period; each is charged separately, so this is what keeps their
+usage items apart. Without it they are identical but for their quantity,
+and everything downstream that deduplicates on (kind, resource, period) —
+the usage store and the billing system alike — keeps only one of them. </p></td>
                 </tr>
               
             </tbody>
