@@ -250,11 +250,26 @@ export interface UsageItem_AuditLogData {
   // Number of bytes delivered as audit-log HTTPS-POST request bodies in this usage period.
   // number
   bytes?: number;
+  
+  // Identifier of the audit-log destination this data was delivered to
+  // (AuditLog.Destination.id). See AuditLogRequests.destination_id.
+  // string
+  destination_id?: string;
 }
 export interface UsageItem_AuditLogRequests {
   // Number of audit-log HTTPS-POST delivery requests (invocations) in this usage period.
   // number
   count?: number;
+  
+  // Identifier of the audit-log destination these requests were delivered to
+  // (AuditLog.Destination.id).
+  // A deployment may have several HTTPS-POST destinations, all delivering over
+  // the same period; each is charged separately, so this is what keeps their
+  // usage items apart. Without it they are identical but for their quantity,
+  // and everything downstream that deduplicates on (kind, resource, period) —
+  // the usage store and the billing system alike — keeps only one of them.
+  // string
+  destination_id?: string;
 }
 
 // @Deprecated - will be removed in OAS-12028
