@@ -74,6 +74,14 @@ export interface BillingConfig {
   // Legal name of the organization
   // string
   company_legal_name?: string;
+  
+  // Tax classification of the organization (GmbH/EU flow). Drives VAT treatment.
+  // TaxClassification
+  tax_classification?: TaxClassification;
+  
+  // Generic (non-EU) business tax identifier, required for NON_EU_CORPORATION.
+  // string
+  non_eu_tax_id?: string;
 }
 
 // Request arguments for CreatePaymentMethod
@@ -702,6 +710,24 @@ export enum EverestInvoicePaymentState {
   
   // Fully settled by credit notes.
   EVEREST_INVOICE_PAYMENT_STATE_CREDITED_IN_FULL = 4,
+}
+
+// Tax classification of a GmbH/EU customer, driving VAT treatment.
+export enum TaxClassification {
+  // Not set (e.g. US customers, or pre-existing configs).
+  TAX_CLASSIFICATION_UNSPECIFIED = 0,
+  
+  // EU consumer (B2C) — VAT charged normally.
+  TAX_CLASSIFICATION_INDIVIDUAL = 1,
+  
+  // Non-German EU business with a VAT ID — reverse charge.
+  TAX_CLASSIFICATION_EU_CORPORATION = 2,
+  
+  // German business with a VAT ID — 19% domestic VAT.
+  TAX_CLASSIFICATION_GERMAN_CORPORATION = 3,
+  
+  // Business outside the EU — no EU VAT.
+  TAX_CLASSIFICATION_NON_EU_CORPORATION = 4,
 }
 
 // BillingService is the API used to fetch billing information.

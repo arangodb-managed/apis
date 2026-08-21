@@ -544,6 +544,10 @@ title: "ArangoGraph Insights Platform API"
                   <a href="#arangodb.cloud.billing.v1.EverestInvoicePaymentState"><span class="badge">E</span>EverestInvoicePaymentState</a>
                 </li>
               
+                <li>
+                  <a href="#arangodb.cloud.billing.v1.TaxClassification"><span class="badge">E</span>TaxClassification</a>
+                </li>
+              
               
               
                 <li>
@@ -5397,6 +5401,20 @@ See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations </p></td>
                   <td><p>Legal name of the organization </p></td>
                 </tr>
               
+                <tr>
+                  <td>tax_classification</td>
+                  <td><a href="#arangodb.cloud.billing.v1.TaxClassification">TaxClassification</a></td>
+                  <td></td>
+                  <td><p>Tax classification of the organization (GmbH/EU flow). Drives VAT treatment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>non_eu_tax_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Generic (non-EU) business tax identifier, required for NON_EU_CORPORATION. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -6804,6 +6822,47 @@ This is a read-only field. </p></td>
                 <td>EVEREST_INVOICE_PAYMENT_STATE_CREDITED_IN_FULL</td>
                 <td>4</td>
                 <td><p>Fully settled by credit notes.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="arangodb.cloud.billing.v1.TaxClassification">TaxClassification</h3>
+        <p>Tax classification of a GmbH/EU customer, driving VAT treatment.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>TAX_CLASSIFICATION_UNSPECIFIED</td>
+                <td>0</td>
+                <td><p>Not set (e.g. US customers, or pre-existing configs).</p></td>
+              </tr>
+            
+              <tr>
+                <td>TAX_CLASSIFICATION_INDIVIDUAL</td>
+                <td>1</td>
+                <td><p>EU consumer (B2C) — VAT charged normally.</p></td>
+              </tr>
+            
+              <tr>
+                <td>TAX_CLASSIFICATION_EU_CORPORATION</td>
+                <td>2</td>
+                <td><p>Non-German EU business with a VAT ID — reverse charge.</p></td>
+              </tr>
+            
+              <tr>
+                <td>TAX_CLASSIFICATION_GERMAN_CORPORATION</td>
+                <td>3</td>
+                <td><p>German business with a VAT ID — 19% domestic VAT.</p></td>
+              </tr>
+            
+              <tr>
+                <td>TAX_CLASSIFICATION_NON_EU_CORPORATION</td>
+                <td>4</td>
+                <td><p>Business outside the EU — no EU VAT.</p></td>
               </tr>
             
           </tbody>
