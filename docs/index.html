@@ -5408,13 +5408,6 @@ See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations </p></td>
                   <td><p>Tax classification of the organization (GmbH/EU flow). Drives VAT treatment. </p></td>
                 </tr>
               
-                <tr>
-                  <td>non_eu_tax_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Generic (non-EU) business tax identifier, required for NON_EU_CORPORATION. </p></td>
-                </tr>
-              
             </tbody>
           </table>
 
@@ -6850,19 +6843,8 @@ This is a read-only field. </p></td>
               <tr>
                 <td>TAX_CLASSIFICATION_EU_CORPORATION</td>
                 <td>2</td>
-                <td><p>Non-German EU business with a VAT ID — reverse charge.</p></td>
-              </tr>
-            
-              <tr>
-                <td>TAX_CLASSIFICATION_GERMAN_CORPORATION</td>
-                <td>3</td>
-                <td><p>German business with a VAT ID — 19% domestic VAT.</p></td>
-              </tr>
-            
-              <tr>
-                <td>TAX_CLASSIFICATION_NON_EU_CORPORATION</td>
-                <td>4</td>
-                <td><p>Business outside the EU — no EU VAT.</p></td>
+                <td><p>EU business with a VAT ID. Domestic (DE, 19%) vs cross-border reverse charge
+is derived by Everest/Avalara from the address country, not by us.</p></td>
               </tr>
             
           </tbody>
