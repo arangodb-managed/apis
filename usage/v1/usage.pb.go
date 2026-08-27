@@ -47,6 +47,59 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Granularity of the time buckets returned by GetCreditUsage.
+type Granularity int32
+
+const (
+	// A single bucket covering the whole requested period.
+	Granularity_GRANULARITY_TOTAL Granularity = 0
+	// One bucket per UTC day.
+	Granularity_GRANULARITY_DAY Granularity = 1
+	// One bucket per UTC month.
+	Granularity_GRANULARITY_MONTH Granularity = 2
+)
+
+// Enum value maps for Granularity.
+var (
+	Granularity_name = map[int32]string{
+		0: "GRANULARITY_TOTAL",
+		1: "GRANULARITY_DAY",
+		2: "GRANULARITY_MONTH",
+	}
+	Granularity_value = map[string]int32{
+		"GRANULARITY_TOTAL": 0,
+		"GRANULARITY_DAY":   1,
+		"GRANULARITY_MONTH": 2,
+	}
+)
+
+func (x Granularity) Enum() *Granularity {
+	p := new(Granularity)
+	*p = x
+	return p
+}
+
+func (x Granularity) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Granularity) Descriptor() protoreflect.EnumDescriptor {
+	return file_usage_proto_enumTypes[0].Descriptor()
+}
+
+func (Granularity) Type() protoreflect.EnumType {
+	return &file_usage_proto_enumTypes[0]
+}
+
+func (x Granularity) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Granularity.Descriptor instead.
+func (Granularity) EnumDescriptor() ([]byte, []int) {
+	return file_usage_proto_rawDescGZIP(), []int{0}
+}
+
 // A UsageItem message contained usage tracking information for a tracked
 // resource (usually deployment) in a specific time period.
 type UsageItem struct {
@@ -636,6 +689,251 @@ func (x *ListUsageItemsRequest) GetExcludedTierIds() []string {
 	return nil
 }
 
+// Request arguments for GetCreditUsage.
+type GetCreditUsageRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Request credit usage for the organization with this id.
+	// This is a required field.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Start of the reported period (inclusive).
+	// This is a required field.
+	From *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
+	// End of the reported period (exclusive).
+	// This is a required field.
+	// The period must not be longer than 366 days.
+	To *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
+	// Size of the returned time buckets.
+	// This is an optional field, defaulting to a single total bucket.
+	Granularity Granularity `protobuf:"varint,4,opt,name=granularity,proto3,enum=arangodb.cloud.usage.v1.Granularity" json:"granularity,omitempty"`
+	// Limit the report to the deployment with this id.
+	// This is an optional field.
+	DeploymentId string `protobuf:"bytes,5,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
+	// If set, return one bucket per deployment within each time bucket.
+	GroupByDeployment bool `protobuf:"varint,6,opt,name=group_by_deployment,json=groupByDeployment,proto3" json:"group_by_deployment,omitempty"`
+	// If set, return one bucket per usage component within each time bucket.
+	GroupByComponent bool `protobuf:"varint,7,opt,name=group_by_component,json=groupByComponent,proto3" json:"group_by_component,omitempty"`
+}
+
+func (x *GetCreditUsageRequest) Reset() {
+	*x = GetCreditUsageRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_usage_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetCreditUsageRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCreditUsageRequest) ProtoMessage() {}
+
+func (x *GetCreditUsageRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_usage_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCreditUsageRequest.ProtoReflect.Descriptor instead.
+func (*GetCreditUsageRequest) Descriptor() ([]byte, []int) {
+	return file_usage_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetCreditUsageRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *GetCreditUsageRequest) GetFrom() *timestamppb.Timestamp {
+	if x != nil {
+		return x.From
+	}
+	return nil
+}
+
+func (x *GetCreditUsageRequest) GetTo() *timestamppb.Timestamp {
+	if x != nil {
+		return x.To
+	}
+	return nil
+}
+
+func (x *GetCreditUsageRequest) GetGranularity() Granularity {
+	if x != nil {
+		return x.Granularity
+	}
+	return Granularity_GRANULARITY_TOTAL
+}
+
+func (x *GetCreditUsageRequest) GetDeploymentId() string {
+	if x != nil {
+		return x.DeploymentId
+	}
+	return ""
+}
+
+func (x *GetCreditUsageRequest) GetGroupByDeployment() bool {
+	if x != nil {
+		return x.GroupByDeployment
+	}
+	return false
+}
+
+func (x *GetCreditUsageRequest) GetGroupByComponent() bool {
+	if x != nil {
+		return x.GroupByComponent
+	}
+	return false
+}
+
+// Aggregated Billing 2.0 credit consumption.
+type CreditUsage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Aggregated buckets, ordered ascending by period_start.
+	Buckets []*CreditUsageBucket `protobuf:"bytes,1,rep,name=buckets,proto3" json:"buckets,omitempty"`
+	// Total credits consumed over the whole requested period.
+	TotalCredits float64 `protobuf:"fixed64,2,opt,name=total_credits,json=totalCredits,proto3" json:"total_credits,omitempty"`
+}
+
+func (x *CreditUsage) Reset() {
+	*x = CreditUsage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_usage_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreditUsage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreditUsage) ProtoMessage() {}
+
+func (x *CreditUsage) ProtoReflect() protoreflect.Message {
+	mi := &file_usage_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreditUsage.ProtoReflect.Descriptor instead.
+func (*CreditUsage) Descriptor() ([]byte, []int) {
+	return file_usage_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CreditUsage) GetBuckets() []*CreditUsageBucket {
+	if x != nil {
+		return x.Buckets
+	}
+	return nil
+}
+
+func (x *CreditUsage) GetTotalCredits() float64 {
+	if x != nil {
+		return x.TotalCredits
+	}
+	return 0
+}
+
+// A single aggregated bucket of credit consumption.
+type CreditUsageBucket struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Start of the period covered by this bucket, in UTC.
+	PeriodStart *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=period_start,json=periodStart,proto3" json:"period_start,omitempty"`
+	// Deployment covered by this bucket.
+	// Empty unless group_by_deployment was set on the request.
+	DeploymentId string `protobuf:"bytes,2,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
+	// Usage component (usage item kind) covered by this bucket.
+	// Empty unless group_by_component was set on the request.
+	Component string `protobuf:"bytes,3,opt,name=component,proto3" json:"component,omitempty"`
+	// Credits consumed in this bucket.
+	Credits float64 `protobuf:"fixed64,4,opt,name=credits,proto3" json:"credits,omitempty"`
+}
+
+func (x *CreditUsageBucket) Reset() {
+	*x = CreditUsageBucket{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_usage_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreditUsageBucket) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreditUsageBucket) ProtoMessage() {}
+
+func (x *CreditUsageBucket) ProtoReflect() protoreflect.Message {
+	mi := &file_usage_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreditUsageBucket.ProtoReflect.Descriptor instead.
+func (*CreditUsageBucket) Descriptor() ([]byte, []int) {
+	return file_usage_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CreditUsageBucket) GetPeriodStart() *timestamppb.Timestamp {
+	if x != nil {
+		return x.PeriodStart
+	}
+	return nil
+}
+
+func (x *CreditUsageBucket) GetDeploymentId() string {
+	if x != nil {
+		return x.DeploymentId
+	}
+	return ""
+}
+
+func (x *CreditUsageBucket) GetComponent() string {
+	if x != nil {
+		return x.Component
+	}
+	return ""
+}
+
+func (x *CreditUsageBucket) GetCredits() float64 {
+	if x != nil {
+		return x.Credits
+	}
+	return 0
+}
+
 type UsageItem_Resource struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -696,7 +994,7 @@ type UsageItem_Resource struct {
 func (x *UsageItem_Resource) Reset() {
 	*x = UsageItem_Resource{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[3]
+		mi := &file_usage_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -709,7 +1007,7 @@ func (x *UsageItem_Resource) String() string {
 func (*UsageItem_Resource) ProtoMessage() {}
 
 func (x *UsageItem_Resource) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[3]
+	mi := &file_usage_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -898,7 +1196,7 @@ type UsageItem_DeploymentSize struct {
 func (x *UsageItem_DeploymentSize) Reset() {
 	*x = UsageItem_DeploymentSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[4]
+		mi := &file_usage_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -911,7 +1209,7 @@ func (x *UsageItem_DeploymentSize) String() string {
 func (*UsageItem_DeploymentSize) ProtoMessage() {}
 
 func (x *UsageItem_DeploymentSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[4]
+	mi := &file_usage_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1051,7 +1349,7 @@ type UsageItem_NetworkTransferSize struct {
 func (x *UsageItem_NetworkTransferSize) Reset() {
 	*x = UsageItem_NetworkTransferSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[5]
+		mi := &file_usage_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1064,7 +1362,7 @@ func (x *UsageItem_NetworkTransferSize) String() string {
 func (*UsageItem_NetworkTransferSize) ProtoMessage() {}
 
 func (x *UsageItem_NetworkTransferSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[5]
+	mi := &file_usage_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1118,7 +1416,7 @@ type UsageItem_BackupStorageSize struct {
 func (x *UsageItem_BackupStorageSize) Reset() {
 	*x = UsageItem_BackupStorageSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[6]
+		mi := &file_usage_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1131,7 +1429,7 @@ func (x *UsageItem_BackupStorageSize) String() string {
 func (*UsageItem_BackupStorageSize) ProtoMessage() {}
 
 func (x *UsageItem_BackupStorageSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[6]
+	mi := &file_usage_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1187,7 +1485,7 @@ type UsageItem_AuditLogSize struct {
 func (x *UsageItem_AuditLogSize) Reset() {
 	*x = UsageItem_AuditLogSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[7]
+		mi := &file_usage_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1200,7 +1498,7 @@ func (x *UsageItem_AuditLogSize) String() string {
 func (*UsageItem_AuditLogSize) ProtoMessage() {}
 
 func (x *UsageItem_AuditLogSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[7]
+	mi := &file_usage_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1259,7 +1557,7 @@ type UsageItem_AuditLogStorageSize struct {
 func (x *UsageItem_AuditLogStorageSize) Reset() {
 	*x = UsageItem_AuditLogStorageSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[8]
+		mi := &file_usage_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1272,7 +1570,7 @@ func (x *UsageItem_AuditLogStorageSize) String() string {
 func (*UsageItem_AuditLogStorageSize) ProtoMessage() {}
 
 func (x *UsageItem_AuditLogStorageSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[8]
+	mi := &file_usage_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1322,7 +1620,7 @@ type UsageItem_NotebookSize struct {
 func (x *UsageItem_NotebookSize) Reset() {
 	*x = UsageItem_NotebookSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[9]
+		mi := &file_usage_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1335,7 +1633,7 @@ func (x *UsageItem_NotebookSize) String() string {
 func (*UsageItem_NotebookSize) ProtoMessage() {}
 
 func (x *UsageItem_NotebookSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[9]
+	mi := &file_usage_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1426,7 +1724,7 @@ type UsageItem_MLServicesSize struct {
 func (x *UsageItem_MLServicesSize) Reset() {
 	*x = UsageItem_MLServicesSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[10]
+		mi := &file_usage_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1439,7 +1737,7 @@ func (x *UsageItem_MLServicesSize) String() string {
 func (*UsageItem_MLServicesSize) ProtoMessage() {}
 
 func (x *UsageItem_MLServicesSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[10]
+	mi := &file_usage_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1542,7 +1840,7 @@ type UsageItem_MLJobSize struct {
 func (x *UsageItem_MLJobSize) Reset() {
 	*x = UsageItem_MLJobSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[11]
+		mi := &file_usage_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1555,7 +1853,7 @@ func (x *UsageItem_MLJobSize) String() string {
 func (*UsageItem_MLJobSize) ProtoMessage() {}
 
 func (x *UsageItem_MLJobSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[11]
+	mi := &file_usage_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1630,7 +1928,7 @@ type UsageItem_GraphAnalyticsJobSize struct {
 func (x *UsageItem_GraphAnalyticsJobSize) Reset() {
 	*x = UsageItem_GraphAnalyticsJobSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[12]
+		mi := &file_usage_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1643,7 +1941,7 @@ func (x *UsageItem_GraphAnalyticsJobSize) String() string {
 func (*UsageItem_GraphAnalyticsJobSize) ProtoMessage() {}
 
 func (x *UsageItem_GraphAnalyticsJobSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[12]
+	mi := &file_usage_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1706,7 +2004,7 @@ type UsageItem_CPUHour struct {
 func (x *UsageItem_CPUHour) Reset() {
 	*x = UsageItem_CPUHour{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[13]
+		mi := &file_usage_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1719,7 +2017,7 @@ func (x *UsageItem_CPUHour) String() string {
 func (*UsageItem_CPUHour) ProtoMessage() {}
 
 func (x *UsageItem_CPUHour) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[13]
+	mi := &file_usage_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1754,7 +2052,7 @@ type UsageItem_MemoryHour struct {
 func (x *UsageItem_MemoryHour) Reset() {
 	*x = UsageItem_MemoryHour{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[14]
+		mi := &file_usage_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1767,7 +2065,7 @@ func (x *UsageItem_MemoryHour) String() string {
 func (*UsageItem_MemoryHour) ProtoMessage() {}
 
 func (x *UsageItem_MemoryHour) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[14]
+	mi := &file_usage_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1802,7 +2100,7 @@ type UsageItem_StorageHour struct {
 func (x *UsageItem_StorageHour) Reset() {
 	*x = UsageItem_StorageHour{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[15]
+		mi := &file_usage_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1815,7 +2113,7 @@ func (x *UsageItem_StorageHour) String() string {
 func (*UsageItem_StorageHour) ProtoMessage() {}
 
 func (x *UsageItem_StorageHour) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[15]
+	mi := &file_usage_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1854,7 +2152,7 @@ type UsageItem_StoragePerformanceHour struct {
 func (x *UsageItem_StoragePerformanceHour) Reset() {
 	*x = UsageItem_StoragePerformanceHour{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[16]
+		mi := &file_usage_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1867,7 +2165,7 @@ func (x *UsageItem_StoragePerformanceHour) String() string {
 func (*UsageItem_StoragePerformanceHour) ProtoMessage() {}
 
 func (x *UsageItem_StoragePerformanceHour) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[16]
+	mi := &file_usage_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1909,7 +2207,7 @@ type UsageItem_GPUHour struct {
 func (x *UsageItem_GPUHour) Reset() {
 	*x = UsageItem_GPUHour{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[17]
+		mi := &file_usage_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1922,7 +2220,7 @@ func (x *UsageItem_GPUHour) String() string {
 func (*UsageItem_GPUHour) ProtoMessage() {}
 
 func (x *UsageItem_GPUHour) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[17]
+	mi := &file_usage_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1962,7 +2260,7 @@ type UsageItem_NetworkSize struct {
 func (x *UsageItem_NetworkSize) Reset() {
 	*x = UsageItem_NetworkSize{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[18]
+		mi := &file_usage_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1975,7 +2273,7 @@ func (x *UsageItem_NetworkSize) String() string {
 func (*UsageItem_NetworkSize) ProtoMessage() {}
 
 func (x *UsageItem_NetworkSize) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[18]
+	mi := &file_usage_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2031,7 +2329,7 @@ type UsageItem_CloudStorageHour struct {
 func (x *UsageItem_CloudStorageHour) Reset() {
 	*x = UsageItem_CloudStorageHour{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[19]
+		mi := &file_usage_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2044,7 +2342,7 @@ func (x *UsageItem_CloudStorageHour) String() string {
 func (*UsageItem_CloudStorageHour) ProtoMessage() {}
 
 func (x *UsageItem_CloudStorageHour) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[19]
+	mi := &file_usage_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2093,7 +2391,7 @@ type UsageItem_DeploymentAEU struct {
 func (x *UsageItem_DeploymentAEU) Reset() {
 	*x = UsageItem_DeploymentAEU{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[20]
+		mi := &file_usage_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2106,7 +2404,7 @@ func (x *UsageItem_DeploymentAEU) String() string {
 func (*UsageItem_DeploymentAEU) ProtoMessage() {}
 
 func (x *UsageItem_DeploymentAEU) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[20]
+	mi := &file_usage_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2149,7 +2447,7 @@ type UsageItem_AuditLogRequests struct {
 func (x *UsageItem_AuditLogRequests) Reset() {
 	*x = UsageItem_AuditLogRequests{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[21]
+		mi := &file_usage_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2162,7 +2460,7 @@ func (x *UsageItem_AuditLogRequests) String() string {
 func (*UsageItem_AuditLogRequests) ProtoMessage() {}
 
 func (x *UsageItem_AuditLogRequests) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[21]
+	mi := &file_usage_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2207,7 +2505,7 @@ type UsageItem_AuditLogData struct {
 func (x *UsageItem_AuditLogData) Reset() {
 	*x = UsageItem_AuditLogData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[22]
+		mi := &file_usage_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2220,7 +2518,7 @@ func (x *UsageItem_AuditLogData) String() string {
 func (*UsageItem_AuditLogData) ProtoMessage() {}
 
 func (x *UsageItem_AuditLogData) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[22]
+	mi := &file_usage_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2264,7 +2562,7 @@ type UsageItem_AddonHour struct {
 func (x *UsageItem_AddonHour) Reset() {
 	*x = UsageItem_AddonHour{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_usage_proto_msgTypes[23]
+		mi := &file_usage_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2277,7 +2575,7 @@ func (x *UsageItem_AddonHour) String() string {
 func (*UsageItem_AddonHour) ProtoMessage() {}
 
 func (x *UsageItem_AddonHour) ProtoReflect() protoreflect.Message {
-	mi := &file_usage_proto_msgTypes[23]
+	mi := &file_usage_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2748,30 +3046,87 @@ var file_usage_proto_rawDesc = []byte{
 	0x75, 0x64, 0x65, 0x64, 0x54, 0x69, 0x65, 0x72, 0x49, 0x64, 0x73, 0x12, 0x2a, 0x0a, 0x11, 0x65,
 	0x78, 0x63, 0x6c, 0x75, 0x64, 0x65, 0x64, 0x5f, 0x74, 0x69, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73,
 	0x18, 0x1f, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0f, 0x65, 0x78, 0x63, 0x6c, 0x75, 0x64, 0x65, 0x64,
-	0x54, 0x69, 0x65, 0x72, 0x49, 0x64, 0x73, 0x32, 0xb2, 0x02, 0x0a, 0x0c, 0x55, 0x73, 0x61, 0x67,
-	0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x76, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x41,
-	0x50, 0x49, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x1f, 0x2e, 0x61, 0x72, 0x61, 0x6e,
-	0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
-	0x6e, 0x2e, 0x76, 0x31, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x21, 0x2e, 0x61, 0x72, 0x61,
-	0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x2e, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x22, 0x21, 0x82,
-	0xd3, 0xe4, 0x93, 0x02, 0x1b, 0x12, 0x19, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x75, 0x73, 0x61, 0x67,
-	0x65, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e,
-	0x12, 0xa9, 0x01, 0x0a, 0x0e, 0x4c, 0x69, 0x73, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65, 0x49, 0x74,
-	0x65, 0x6d, 0x73, 0x12, 0x2e, 0x2e, 0x61, 0x72, 0x61, 0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63,
-	0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69,
-	0x73, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x26, 0x2e, 0x61, 0x72, 0x61, 0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63,
-	0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x73,
-	0x61, 0x67, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x3f, 0x82, 0xd3, 0xe4,
-	0x93, 0x02, 0x39, 0x12, 0x37, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2f,
-	0x76, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2f,
-	0x7b, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64,
-	0x7d, 0x2f, 0x75, 0x73, 0x61, 0x67, 0x65, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x42, 0x2b, 0x5a, 0x29,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x72, 0x61, 0x6e, 0x67,
-	0x6f, 0x64, 0x62, 0x2d, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x73,
-	0x2f, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x54, 0x69, 0x65, 0x72, 0x49, 0x64, 0x73, 0x22, 0xe7, 0x02, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x43,
+	0x72, 0x65, 0x64, 0x69, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x27, 0x0a, 0x0f, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x6f, 0x72, 0x67, 0x61,
+	0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x2e, 0x0a, 0x04, 0x66, 0x72,
+	0x6f, 0x6d, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
+	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x2a, 0x0a, 0x02, 0x74, 0x6f,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
+	0x6d, 0x70, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x46, 0x0a, 0x0b, 0x67, 0x72, 0x61, 0x6e, 0x75, 0x6c,
+	0x61, 0x72, 0x69, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x24, 0x2e, 0x61, 0x72,
+	0x61, 0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x75, 0x73, 0x61,
+	0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x72, 0x61, 0x6e, 0x75, 0x6c, 0x61, 0x72, 0x69, 0x74,
+	0x79, 0x52, 0x0b, 0x67, 0x72, 0x61, 0x6e, 0x75, 0x6c, 0x61, 0x72, 0x69, 0x74, 0x79, 0x12, 0x23,
+	0x0a, 0x0d, 0x64, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e,
+	0x74, 0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x62, 0x79, 0x5f,
+	0x64, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08,
+	0x52, 0x11, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x42, 0x79, 0x44, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d,
+	0x65, 0x6e, 0x74, 0x12, 0x2c, 0x0a, 0x12, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x62, 0x79, 0x5f,
+	0x63, 0x6f, 0x6d, 0x70, 0x6f, 0x6e, 0x65, 0x6e, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x10, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x42, 0x79, 0x43, 0x6f, 0x6d, 0x70, 0x6f, 0x6e, 0x65, 0x6e,
+	0x74, 0x22, 0x78, 0x0a, 0x0b, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65,
+	0x12, 0x44, 0x0a, 0x07, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x2a, 0x2e, 0x61, 0x72, 0x61, 0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x2e, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x72, 0x65, 0x64,
+	0x69, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x52, 0x07, 0x62,
+	0x75, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x12, 0x23, 0x0a, 0x0d, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f,
+	0x63, 0x72, 0x65, 0x64, 0x69, 0x74, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x74,
+	0x6f, 0x74, 0x61, 0x6c, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x73, 0x22, 0xaf, 0x01, 0x0a, 0x11,
+	0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65, 0x42, 0x75, 0x63, 0x6b, 0x65,
+	0x74, 0x12, 0x3d, 0x0a, 0x0c, 0x70, 0x65, 0x72, 0x69, 0x6f, 0x64, 0x5f, 0x73, 0x74, 0x61, 0x72,
+	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x52, 0x0b, 0x70, 0x65, 0x72, 0x69, 0x6f, 0x64, 0x53, 0x74, 0x61, 0x72, 0x74,
+	0x12, 0x23, 0x0a, 0x0d, 0x64, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x69,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x70, 0x6c, 0x6f, 0x79, 0x6d,
+	0x65, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x6f, 0x6e, 0x65,
+	0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x6f, 0x6e,
+	0x65, 0x6e, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x64, 0x69, 0x74, 0x73, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x63, 0x72, 0x65, 0x64, 0x69, 0x74, 0x73, 0x2a, 0x50, 0x0a,
+	0x0b, 0x47, 0x72, 0x61, 0x6e, 0x75, 0x6c, 0x61, 0x72, 0x69, 0x74, 0x79, 0x12, 0x15, 0x0a, 0x11,
+	0x47, 0x52, 0x41, 0x4e, 0x55, 0x4c, 0x41, 0x52, 0x49, 0x54, 0x59, 0x5f, 0x54, 0x4f, 0x54, 0x41,
+	0x4c, 0x10, 0x00, 0x12, 0x13, 0x0a, 0x0f, 0x47, 0x52, 0x41, 0x4e, 0x55, 0x4c, 0x41, 0x52, 0x49,
+	0x54, 0x59, 0x5f, 0x44, 0x41, 0x59, 0x10, 0x01, 0x12, 0x15, 0x0a, 0x11, 0x47, 0x52, 0x41, 0x4e,
+	0x55, 0x4c, 0x41, 0x52, 0x49, 0x54, 0x59, 0x5f, 0x4d, 0x4f, 0x4e, 0x54, 0x48, 0x10, 0x02, 0x32,
+	0xdd, 0x03, 0x0a, 0x0c, 0x55, 0x73, 0x61, 0x67, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x12, 0x76, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x41, 0x50, 0x49, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f,
+	0x6e, 0x12, 0x1f, 0x2e, 0x61, 0x72, 0x61, 0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x2e, 0x45, 0x6d, 0x70,
+	0x74, 0x79, 0x1a, 0x21, 0x2e, 0x61, 0x72, 0x61, 0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63, 0x6c,
+	0x6f, 0x75, 0x64, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x2e, 0x56, 0x65,
+	0x72, 0x73, 0x69, 0x6f, 0x6e, 0x22, 0x21, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1b, 0x12, 0x19, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x70, 0x69,
+	0x2d, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0xa9, 0x01, 0x0a, 0x0e, 0x4c, 0x69, 0x73,
+	0x74, 0x55, 0x73, 0x61, 0x67, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x73, 0x12, 0x2e, 0x2e, 0x61, 0x72,
+	0x61, 0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x75, 0x73, 0x61,
+	0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65, 0x49,
+	0x74, 0x65, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x26, 0x2e, 0x61, 0x72,
+	0x61, 0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x75, 0x73, 0x61,
+	0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x73, 0x61, 0x67, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x4c,
+	0x69, 0x73, 0x74, 0x22, 0x3f, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x39, 0x12, 0x37, 0x2f, 0x61, 0x70,
+	0x69, 0x2f, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2f, 0x76, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0x61, 0x6e,
+	0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2f, 0x7b, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x7d, 0x2f, 0x75, 0x73, 0x61, 0x67, 0x65, 0x69,
+	0x74, 0x65, 0x6d, 0x73, 0x12, 0xa8, 0x01, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x43, 0x72, 0x65, 0x64,
+	0x69, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65, 0x12, 0x2e, 0x2e, 0x61, 0x72, 0x61, 0x6e, 0x67, 0x6f,
+	0x64, 0x62, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2e, 0x76,
+	0x31, 0x2e, 0x47, 0x65, 0x74, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x61, 0x72, 0x61, 0x6e, 0x67, 0x6f,
+	0x64, 0x62, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2e, 0x76,
+	0x31, 0x2e, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x55, 0x73, 0x61, 0x67, 0x65, 0x22, 0x40, 0x82,
+	0xd3, 0xe4, 0x93, 0x02, 0x3a, 0x12, 0x38, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x75, 0x73, 0x61, 0x67,
+	0x65, 0x2f, 0x76, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x2f, 0x7b, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f,
+	0x69, 0x64, 0x7d, 0x2f, 0x63, 0x72, 0x65, 0x64, 0x69, 0x74, 0x75, 0x73, 0x61, 0x67, 0x65, 0x42,
+	0x2b, 0x5a, 0x29, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x72,
+	0x61, 0x6e, 0x67, 0x6f, 0x64, 0x62, 0x2d, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x64, 0x2f, 0x61,
+	0x70, 0x69, 0x73, 0x2f, 0x75, 0x73, 0x61, 0x67, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2786,78 +3141,90 @@ func file_usage_proto_rawDescGZIP() []byte {
 	return file_usage_proto_rawDescData
 }
 
-var file_usage_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
+var file_usage_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_usage_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_usage_proto_goTypes = []interface{}{
-	(*UsageItem)(nil),                        // 0: arangodb.cloud.usage.v1.UsageItem
-	(*UsageItemList)(nil),                    // 1: arangodb.cloud.usage.v1.UsageItemList
-	(*ListUsageItemsRequest)(nil),            // 2: arangodb.cloud.usage.v1.ListUsageItemsRequest
-	(*UsageItem_Resource)(nil),               // 3: arangodb.cloud.usage.v1.UsageItem.Resource
-	(*UsageItem_DeploymentSize)(nil),         // 4: arangodb.cloud.usage.v1.UsageItem.DeploymentSize
-	(*UsageItem_NetworkTransferSize)(nil),    // 5: arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize
-	(*UsageItem_BackupStorageSize)(nil),      // 6: arangodb.cloud.usage.v1.UsageItem.BackupStorageSize
-	(*UsageItem_AuditLogSize)(nil),           // 7: arangodb.cloud.usage.v1.UsageItem.AuditLogSize
-	(*UsageItem_AuditLogStorageSize)(nil),    // 8: arangodb.cloud.usage.v1.UsageItem.AuditLogStorageSize
-	(*UsageItem_NotebookSize)(nil),           // 9: arangodb.cloud.usage.v1.UsageItem.NotebookSize
-	(*UsageItem_MLServicesSize)(nil),         // 10: arangodb.cloud.usage.v1.UsageItem.MLServicesSize
-	(*UsageItem_MLJobSize)(nil),              // 11: arangodb.cloud.usage.v1.UsageItem.MLJobSize
-	(*UsageItem_GraphAnalyticsJobSize)(nil),  // 12: arangodb.cloud.usage.v1.UsageItem.GraphAnalyticsJobSize
-	(*UsageItem_CPUHour)(nil),                // 13: arangodb.cloud.usage.v1.UsageItem.CPUHour
-	(*UsageItem_MemoryHour)(nil),             // 14: arangodb.cloud.usage.v1.UsageItem.MemoryHour
-	(*UsageItem_StorageHour)(nil),            // 15: arangodb.cloud.usage.v1.UsageItem.StorageHour
-	(*UsageItem_StoragePerformanceHour)(nil), // 16: arangodb.cloud.usage.v1.UsageItem.StoragePerformanceHour
-	(*UsageItem_GPUHour)(nil),                // 17: arangodb.cloud.usage.v1.UsageItem.GPUHour
-	(*UsageItem_NetworkSize)(nil),            // 18: arangodb.cloud.usage.v1.UsageItem.NetworkSize
-	(*UsageItem_CloudStorageHour)(nil),       // 19: arangodb.cloud.usage.v1.UsageItem.CloudStorageHour
-	(*UsageItem_DeploymentAEU)(nil),          // 20: arangodb.cloud.usage.v1.UsageItem.DeploymentAEU
-	(*UsageItem_AuditLogRequests)(nil),       // 21: arangodb.cloud.usage.v1.UsageItem.AuditLogRequests
-	(*UsageItem_AuditLogData)(nil),           // 22: arangodb.cloud.usage.v1.UsageItem.AuditLogData
-	(*UsageItem_AddonHour)(nil),              // 23: arangodb.cloud.usage.v1.UsageItem.AddonHour
-	(*timestamppb.Timestamp)(nil),            // 24: google.protobuf.Timestamp
-	(*v1.ListOptions)(nil),                   // 25: arangodb.cloud.common.v1.ListOptions
-	(*v1.Empty)(nil),                         // 26: arangodb.cloud.common.v1.Empty
-	(*v1.Version)(nil),                       // 27: arangodb.cloud.common.v1.Version
+	(Granularity)(0),                         // 0: arangodb.cloud.usage.v1.Granularity
+	(*UsageItem)(nil),                        // 1: arangodb.cloud.usage.v1.UsageItem
+	(*UsageItemList)(nil),                    // 2: arangodb.cloud.usage.v1.UsageItemList
+	(*ListUsageItemsRequest)(nil),            // 3: arangodb.cloud.usage.v1.ListUsageItemsRequest
+	(*GetCreditUsageRequest)(nil),            // 4: arangodb.cloud.usage.v1.GetCreditUsageRequest
+	(*CreditUsage)(nil),                      // 5: arangodb.cloud.usage.v1.CreditUsage
+	(*CreditUsageBucket)(nil),                // 6: arangodb.cloud.usage.v1.CreditUsageBucket
+	(*UsageItem_Resource)(nil),               // 7: arangodb.cloud.usage.v1.UsageItem.Resource
+	(*UsageItem_DeploymentSize)(nil),         // 8: arangodb.cloud.usage.v1.UsageItem.DeploymentSize
+	(*UsageItem_NetworkTransferSize)(nil),    // 9: arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize
+	(*UsageItem_BackupStorageSize)(nil),      // 10: arangodb.cloud.usage.v1.UsageItem.BackupStorageSize
+	(*UsageItem_AuditLogSize)(nil),           // 11: arangodb.cloud.usage.v1.UsageItem.AuditLogSize
+	(*UsageItem_AuditLogStorageSize)(nil),    // 12: arangodb.cloud.usage.v1.UsageItem.AuditLogStorageSize
+	(*UsageItem_NotebookSize)(nil),           // 13: arangodb.cloud.usage.v1.UsageItem.NotebookSize
+	(*UsageItem_MLServicesSize)(nil),         // 14: arangodb.cloud.usage.v1.UsageItem.MLServicesSize
+	(*UsageItem_MLJobSize)(nil),              // 15: arangodb.cloud.usage.v1.UsageItem.MLJobSize
+	(*UsageItem_GraphAnalyticsJobSize)(nil),  // 16: arangodb.cloud.usage.v1.UsageItem.GraphAnalyticsJobSize
+	(*UsageItem_CPUHour)(nil),                // 17: arangodb.cloud.usage.v1.UsageItem.CPUHour
+	(*UsageItem_MemoryHour)(nil),             // 18: arangodb.cloud.usage.v1.UsageItem.MemoryHour
+	(*UsageItem_StorageHour)(nil),            // 19: arangodb.cloud.usage.v1.UsageItem.StorageHour
+	(*UsageItem_StoragePerformanceHour)(nil), // 20: arangodb.cloud.usage.v1.UsageItem.StoragePerformanceHour
+	(*UsageItem_GPUHour)(nil),                // 21: arangodb.cloud.usage.v1.UsageItem.GPUHour
+	(*UsageItem_NetworkSize)(nil),            // 22: arangodb.cloud.usage.v1.UsageItem.NetworkSize
+	(*UsageItem_CloudStorageHour)(nil),       // 23: arangodb.cloud.usage.v1.UsageItem.CloudStorageHour
+	(*UsageItem_DeploymentAEU)(nil),          // 24: arangodb.cloud.usage.v1.UsageItem.DeploymentAEU
+	(*UsageItem_AuditLogRequests)(nil),       // 25: arangodb.cloud.usage.v1.UsageItem.AuditLogRequests
+	(*UsageItem_AuditLogData)(nil),           // 26: arangodb.cloud.usage.v1.UsageItem.AuditLogData
+	(*UsageItem_AddonHour)(nil),              // 27: arangodb.cloud.usage.v1.UsageItem.AddonHour
+	(*timestamppb.Timestamp)(nil),            // 28: google.protobuf.Timestamp
+	(*v1.ListOptions)(nil),                   // 29: arangodb.cloud.common.v1.ListOptions
+	(*v1.Empty)(nil),                         // 30: arangodb.cloud.common.v1.Empty
+	(*v1.Version)(nil),                       // 31: arangodb.cloud.common.v1.Version
 }
 var file_usage_proto_depIdxs = []int32{
-	3,  // 0: arangodb.cloud.usage.v1.UsageItem.resource:type_name -> arangodb.cloud.usage.v1.UsageItem.Resource
-	24, // 1: arangodb.cloud.usage.v1.UsageItem.starts_at:type_name -> google.protobuf.Timestamp
-	24, // 2: arangodb.cloud.usage.v1.UsageItem.ends_at:type_name -> google.protobuf.Timestamp
-	24, // 3: arangodb.cloud.usage.v1.UsageItem.created_at:type_name -> google.protobuf.Timestamp
-	4,  // 4: arangodb.cloud.usage.v1.UsageItem.deployment_size:type_name -> arangodb.cloud.usage.v1.UsageItem.DeploymentSize
-	5,  // 5: arangodb.cloud.usage.v1.UsageItem.network_transfer_size:type_name -> arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize
-	6,  // 6: arangodb.cloud.usage.v1.UsageItem.backup_storage_size:type_name -> arangodb.cloud.usage.v1.UsageItem.BackupStorageSize
-	7,  // 7: arangodb.cloud.usage.v1.UsageItem.auditlog_size:type_name -> arangodb.cloud.usage.v1.UsageItem.AuditLogSize
-	8,  // 8: arangodb.cloud.usage.v1.UsageItem.auditlog_storage_size:type_name -> arangodb.cloud.usage.v1.UsageItem.AuditLogStorageSize
-	9,  // 9: arangodb.cloud.usage.v1.UsageItem.notebook_size:type_name -> arangodb.cloud.usage.v1.UsageItem.NotebookSize
-	10, // 10: arangodb.cloud.usage.v1.UsageItem.mlservices_size:type_name -> arangodb.cloud.usage.v1.UsageItem.MLServicesSize
-	11, // 11: arangodb.cloud.usage.v1.UsageItem.mljob_size:type_name -> arangodb.cloud.usage.v1.UsageItem.MLJobSize
-	12, // 12: arangodb.cloud.usage.v1.UsageItem.graphanalyticsjob_size:type_name -> arangodb.cloud.usage.v1.UsageItem.GraphAnalyticsJobSize
-	13, // 13: arangodb.cloud.usage.v1.UsageItem.cpu_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.CPUHour
-	14, // 14: arangodb.cloud.usage.v1.UsageItem.memory_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.MemoryHour
-	15, // 15: arangodb.cloud.usage.v1.UsageItem.storage_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.StorageHour
-	16, // 16: arangodb.cloud.usage.v1.UsageItem.storage_performance_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.StoragePerformanceHour
-	17, // 17: arangodb.cloud.usage.v1.UsageItem.gpu_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.GPUHour
-	18, // 18: arangodb.cloud.usage.v1.UsageItem.network_size:type_name -> arangodb.cloud.usage.v1.UsageItem.NetworkSize
-	19, // 19: arangodb.cloud.usage.v1.UsageItem.cloud_storage_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.CloudStorageHour
-	20, // 20: arangodb.cloud.usage.v1.UsageItem.deployment_aeu:type_name -> arangodb.cloud.usage.v1.UsageItem.DeploymentAEU
-	21, // 21: arangodb.cloud.usage.v1.UsageItem.audit_log_requests:type_name -> arangodb.cloud.usage.v1.UsageItem.AuditLogRequests
-	22, // 22: arangodb.cloud.usage.v1.UsageItem.audit_log_data:type_name -> arangodb.cloud.usage.v1.UsageItem.AuditLogData
-	23, // 23: arangodb.cloud.usage.v1.UsageItem.addon_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.AddonHour
-	0,  // 24: arangodb.cloud.usage.v1.UsageItemList.items:type_name -> arangodb.cloud.usage.v1.UsageItem
-	24, // 25: arangodb.cloud.usage.v1.ListUsageItemsRequest.from:type_name -> google.protobuf.Timestamp
-	24, // 26: arangodb.cloud.usage.v1.ListUsageItemsRequest.to:type_name -> google.protobuf.Timestamp
-	25, // 27: arangodb.cloud.usage.v1.ListUsageItemsRequest.options:type_name -> arangodb.cloud.common.v1.ListOptions
-	24, // 28: arangodb.cloud.usage.v1.ListUsageItemsRequest.not_start_before:type_name -> google.protobuf.Timestamp
-	24, // 29: arangodb.cloud.usage.v1.UsageItem.Resource.prepaid_deployment_starts_at:type_name -> google.protobuf.Timestamp
-	24, // 30: arangodb.cloud.usage.v1.UsageItem.Resource.prepaid_deployment_ends_at:type_name -> google.protobuf.Timestamp
-	26, // 31: arangodb.cloud.usage.v1.UsageService.GetAPIVersion:input_type -> arangodb.cloud.common.v1.Empty
-	2,  // 32: arangodb.cloud.usage.v1.UsageService.ListUsageItems:input_type -> arangodb.cloud.usage.v1.ListUsageItemsRequest
-	27, // 33: arangodb.cloud.usage.v1.UsageService.GetAPIVersion:output_type -> arangodb.cloud.common.v1.Version
-	1,  // 34: arangodb.cloud.usage.v1.UsageService.ListUsageItems:output_type -> arangodb.cloud.usage.v1.UsageItemList
-	33, // [33:35] is the sub-list for method output_type
-	31, // [31:33] is the sub-list for method input_type
-	31, // [31:31] is the sub-list for extension type_name
-	31, // [31:31] is the sub-list for extension extendee
-	0,  // [0:31] is the sub-list for field type_name
+	7,  // 0: arangodb.cloud.usage.v1.UsageItem.resource:type_name -> arangodb.cloud.usage.v1.UsageItem.Resource
+	28, // 1: arangodb.cloud.usage.v1.UsageItem.starts_at:type_name -> google.protobuf.Timestamp
+	28, // 2: arangodb.cloud.usage.v1.UsageItem.ends_at:type_name -> google.protobuf.Timestamp
+	28, // 3: arangodb.cloud.usage.v1.UsageItem.created_at:type_name -> google.protobuf.Timestamp
+	8,  // 4: arangodb.cloud.usage.v1.UsageItem.deployment_size:type_name -> arangodb.cloud.usage.v1.UsageItem.DeploymentSize
+	9,  // 5: arangodb.cloud.usage.v1.UsageItem.network_transfer_size:type_name -> arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize
+	10, // 6: arangodb.cloud.usage.v1.UsageItem.backup_storage_size:type_name -> arangodb.cloud.usage.v1.UsageItem.BackupStorageSize
+	11, // 7: arangodb.cloud.usage.v1.UsageItem.auditlog_size:type_name -> arangodb.cloud.usage.v1.UsageItem.AuditLogSize
+	12, // 8: arangodb.cloud.usage.v1.UsageItem.auditlog_storage_size:type_name -> arangodb.cloud.usage.v1.UsageItem.AuditLogStorageSize
+	13, // 9: arangodb.cloud.usage.v1.UsageItem.notebook_size:type_name -> arangodb.cloud.usage.v1.UsageItem.NotebookSize
+	14, // 10: arangodb.cloud.usage.v1.UsageItem.mlservices_size:type_name -> arangodb.cloud.usage.v1.UsageItem.MLServicesSize
+	15, // 11: arangodb.cloud.usage.v1.UsageItem.mljob_size:type_name -> arangodb.cloud.usage.v1.UsageItem.MLJobSize
+	16, // 12: arangodb.cloud.usage.v1.UsageItem.graphanalyticsjob_size:type_name -> arangodb.cloud.usage.v1.UsageItem.GraphAnalyticsJobSize
+	17, // 13: arangodb.cloud.usage.v1.UsageItem.cpu_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.CPUHour
+	18, // 14: arangodb.cloud.usage.v1.UsageItem.memory_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.MemoryHour
+	19, // 15: arangodb.cloud.usage.v1.UsageItem.storage_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.StorageHour
+	20, // 16: arangodb.cloud.usage.v1.UsageItem.storage_performance_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.StoragePerformanceHour
+	21, // 17: arangodb.cloud.usage.v1.UsageItem.gpu_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.GPUHour
+	22, // 18: arangodb.cloud.usage.v1.UsageItem.network_size:type_name -> arangodb.cloud.usage.v1.UsageItem.NetworkSize
+	23, // 19: arangodb.cloud.usage.v1.UsageItem.cloud_storage_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.CloudStorageHour
+	24, // 20: arangodb.cloud.usage.v1.UsageItem.deployment_aeu:type_name -> arangodb.cloud.usage.v1.UsageItem.DeploymentAEU
+	25, // 21: arangodb.cloud.usage.v1.UsageItem.audit_log_requests:type_name -> arangodb.cloud.usage.v1.UsageItem.AuditLogRequests
+	26, // 22: arangodb.cloud.usage.v1.UsageItem.audit_log_data:type_name -> arangodb.cloud.usage.v1.UsageItem.AuditLogData
+	27, // 23: arangodb.cloud.usage.v1.UsageItem.addon_hour:type_name -> arangodb.cloud.usage.v1.UsageItem.AddonHour
+	1,  // 24: arangodb.cloud.usage.v1.UsageItemList.items:type_name -> arangodb.cloud.usage.v1.UsageItem
+	28, // 25: arangodb.cloud.usage.v1.ListUsageItemsRequest.from:type_name -> google.protobuf.Timestamp
+	28, // 26: arangodb.cloud.usage.v1.ListUsageItemsRequest.to:type_name -> google.protobuf.Timestamp
+	29, // 27: arangodb.cloud.usage.v1.ListUsageItemsRequest.options:type_name -> arangodb.cloud.common.v1.ListOptions
+	28, // 28: arangodb.cloud.usage.v1.ListUsageItemsRequest.not_start_before:type_name -> google.protobuf.Timestamp
+	28, // 29: arangodb.cloud.usage.v1.GetCreditUsageRequest.from:type_name -> google.protobuf.Timestamp
+	28, // 30: arangodb.cloud.usage.v1.GetCreditUsageRequest.to:type_name -> google.protobuf.Timestamp
+	0,  // 31: arangodb.cloud.usage.v1.GetCreditUsageRequest.granularity:type_name -> arangodb.cloud.usage.v1.Granularity
+	6,  // 32: arangodb.cloud.usage.v1.CreditUsage.buckets:type_name -> arangodb.cloud.usage.v1.CreditUsageBucket
+	28, // 33: arangodb.cloud.usage.v1.CreditUsageBucket.period_start:type_name -> google.protobuf.Timestamp
+	28, // 34: arangodb.cloud.usage.v1.UsageItem.Resource.prepaid_deployment_starts_at:type_name -> google.protobuf.Timestamp
+	28, // 35: arangodb.cloud.usage.v1.UsageItem.Resource.prepaid_deployment_ends_at:type_name -> google.protobuf.Timestamp
+	30, // 36: arangodb.cloud.usage.v1.UsageService.GetAPIVersion:input_type -> arangodb.cloud.common.v1.Empty
+	3,  // 37: arangodb.cloud.usage.v1.UsageService.ListUsageItems:input_type -> arangodb.cloud.usage.v1.ListUsageItemsRequest
+	4,  // 38: arangodb.cloud.usage.v1.UsageService.GetCreditUsage:input_type -> arangodb.cloud.usage.v1.GetCreditUsageRequest
+	31, // 39: arangodb.cloud.usage.v1.UsageService.GetAPIVersion:output_type -> arangodb.cloud.common.v1.Version
+	2,  // 40: arangodb.cloud.usage.v1.UsageService.ListUsageItems:output_type -> arangodb.cloud.usage.v1.UsageItemList
+	5,  // 41: arangodb.cloud.usage.v1.UsageService.GetCreditUsage:output_type -> arangodb.cloud.usage.v1.CreditUsage
+	39, // [39:42] is the sub-list for method output_type
+	36, // [36:39] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_usage_proto_init() }
@@ -2903,7 +3270,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_Resource); i {
+			switch v := v.(*GetCreditUsageRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2915,7 +3282,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_DeploymentSize); i {
+			switch v := v.(*CreditUsage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2927,7 +3294,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_NetworkTransferSize); i {
+			switch v := v.(*CreditUsageBucket); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2939,7 +3306,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_BackupStorageSize); i {
+			switch v := v.(*UsageItem_Resource); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2951,7 +3318,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_AuditLogSize); i {
+			switch v := v.(*UsageItem_DeploymentSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2963,7 +3330,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_AuditLogStorageSize); i {
+			switch v := v.(*UsageItem_NetworkTransferSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2975,7 +3342,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_NotebookSize); i {
+			switch v := v.(*UsageItem_BackupStorageSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2987,7 +3354,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_MLServicesSize); i {
+			switch v := v.(*UsageItem_AuditLogSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2999,7 +3366,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_MLJobSize); i {
+			switch v := v.(*UsageItem_AuditLogStorageSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3011,7 +3378,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_GraphAnalyticsJobSize); i {
+			switch v := v.(*UsageItem_NotebookSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3023,7 +3390,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_CPUHour); i {
+			switch v := v.(*UsageItem_MLServicesSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3035,7 +3402,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_MemoryHour); i {
+			switch v := v.(*UsageItem_MLJobSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3047,7 +3414,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_StorageHour); i {
+			switch v := v.(*UsageItem_GraphAnalyticsJobSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3059,7 +3426,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_StoragePerformanceHour); i {
+			switch v := v.(*UsageItem_CPUHour); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3071,7 +3438,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_GPUHour); i {
+			switch v := v.(*UsageItem_MemoryHour); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3083,7 +3450,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_NetworkSize); i {
+			switch v := v.(*UsageItem_StorageHour); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3095,7 +3462,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_CloudStorageHour); i {
+			switch v := v.(*UsageItem_StoragePerformanceHour); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3107,7 +3474,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_DeploymentAEU); i {
+			switch v := v.(*UsageItem_GPUHour); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3119,7 +3486,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_AuditLogRequests); i {
+			switch v := v.(*UsageItem_NetworkSize); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3131,7 +3498,7 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UsageItem_AuditLogData); i {
+			switch v := v.(*UsageItem_CloudStorageHour); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3143,6 +3510,42 @@ func file_usage_proto_init() {
 			}
 		}
 		file_usage_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UsageItem_DeploymentAEU); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_usage_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UsageItem_AuditLogRequests); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_usage_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UsageItem_AuditLogData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_usage_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UsageItem_AddonHour); i {
 			case 0:
 				return &v.state
@@ -3160,13 +3563,14 @@ func file_usage_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_usage_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   24,
+			NumEnums:      1,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_usage_proto_goTypes,
 		DependencyIndexes: file_usage_proto_depIdxs,
+		EnumInfos:         file_usage_proto_enumTypes,
 		MessageInfos:      file_usage_proto_msgTypes,
 	}.Build()
 	File_usage_proto = out.File
@@ -3196,6 +3600,13 @@ type UsageServiceClient interface {
 	// Required permissions:
 	// - usage.usageitem.list on the organization identified by the given organization ID
 	ListUsageItems(ctx context.Context, in *ListUsageItemsRequest, opts ...grpc.CallOption) (*UsageItemList, error)
+	// Fetch aggregated Billing 2.0 credit consumption for the organization
+	// identified by the given organization ID.
+	// Only Billing 2.0 usage components are included, and usage on non-billable
+	// tiers is excluded.
+	// Required permissions:
+	// - usage.usageitem.list on the organization identified by the given organization ID
+	GetCreditUsage(ctx context.Context, in *GetCreditUsageRequest, opts ...grpc.CallOption) (*CreditUsage, error)
 }
 
 type usageServiceClient struct {
@@ -3224,6 +3635,15 @@ func (c *usageServiceClient) ListUsageItems(ctx context.Context, in *ListUsageIt
 	return out, nil
 }
 
+func (c *usageServiceClient) GetCreditUsage(ctx context.Context, in *GetCreditUsageRequest, opts ...grpc.CallOption) (*CreditUsage, error) {
+	out := new(CreditUsage)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.usage.v1.UsageService/GetCreditUsage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsageServiceServer is the server API for UsageService service.
 type UsageServiceServer interface {
 	// Get the current API version of this service.
@@ -3235,6 +3655,13 @@ type UsageServiceServer interface {
 	// Required permissions:
 	// - usage.usageitem.list on the organization identified by the given organization ID
 	ListUsageItems(context.Context, *ListUsageItemsRequest) (*UsageItemList, error)
+	// Fetch aggregated Billing 2.0 credit consumption for the organization
+	// identified by the given organization ID.
+	// Only Billing 2.0 usage components are included, and usage on non-billable
+	// tiers is excluded.
+	// Required permissions:
+	// - usage.usageitem.list on the organization identified by the given organization ID
+	GetCreditUsage(context.Context, *GetCreditUsageRequest) (*CreditUsage, error)
 }
 
 // UnimplementedUsageServiceServer can be embedded to have forward compatible implementations.
@@ -3246,6 +3673,9 @@ func (*UnimplementedUsageServiceServer) GetAPIVersion(context.Context, *v1.Empty
 }
 func (*UnimplementedUsageServiceServer) ListUsageItems(context.Context, *ListUsageItemsRequest) (*UsageItemList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsageItems not implemented")
+}
+func (*UnimplementedUsageServiceServer) GetCreditUsage(context.Context, *GetCreditUsageRequest) (*CreditUsage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCreditUsage not implemented")
 }
 
 func RegisterUsageServiceServer(s *grpc.Server, srv UsageServiceServer) {
@@ -3288,6 +3718,24 @@ func _UsageService_ListUsageItems_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UsageService_GetCreditUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCreditUsageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsageServiceServer).GetCreditUsage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.usage.v1.UsageService/GetCreditUsage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsageServiceServer).GetCreditUsage(ctx, req.(*GetCreditUsageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _UsageService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.usage.v1.UsageService",
 	HandlerType: (*UsageServiceServer)(nil),
@@ -3299,6 +3747,10 @@ var _UsageService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUsageItems",
 			Handler:    _UsageService_ListUsageItems_Handler,
+		},
+		{
+			MethodName: "GetCreditUsage",
+			Handler:    _UsageService_GetCreditUsage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
