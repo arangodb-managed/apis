@@ -49,6 +49,18 @@ service UsageService {
             get: "/api/usage/v1/organization/{organization_id}/usageitems"
         };
     }
+
+    // Fetch aggregated Billing 2.0 credit consumption for the organization
+    // identified by the given organization ID.
+    // Only Billing 2.0 usage components are included, and usage on non-billable
+    // tiers is excluded.
+    // Required permissions:
+    // - usage.usageitem.list on the organization identified by the given organization ID
+    rpc GetCreditUsage(GetCreditUsageRequest) returns (CreditUsage) {
+        option (google.api.http) = {
+            get: "/api/usage/v1/organization/{organization_id}/creditusage"
+        };
+    }
 }
 
 // A UsageItem message contained usage tracking information for a tracked
@@ -523,4 +535,60 @@ message ListUsageItemsRequest {
     repeated string included_tier_ids = 30;
     // Limit to usage items for the deployment with this model.
     repeated string excluded_tier_ids = 31;
+}
+
+// Granularity of the time buckets returned by GetCreditUsage.
+enum Granularity {
+    // A single bucket covering the whole requested period.
+    GRANULARITY_TOTAL = 0;
+    // One bucket per UTC day.
+    GRANULARITY_DAY = 1;
+    // One bucket per UTC month.
+    GRANULARITY_MONTH = 2;
+}
+
+// Request arguments for GetCreditUsage.
+message GetCreditUsageRequest {
+    // Request credit usage for the organization with this id.
+    // This is a required field.
+    string organization_id = 1;
+    // Start of the reported period (inclusive).
+    // This is a required field.
+    google.protobuf.Timestamp from = 2;
+    // End of the reported period (exclusive).
+    // This is a required field.
+    // The period must not be longer than 366 days.
+    google.protobuf.Timestamp to = 3;
+    // Size of the returned time buckets.
+    // This is an optional field, defaulting to a single total bucket.
+    Granularity granularity = 4;
+    // Limit the report to the deployment with this id.
+    // This is an optional field.
+    string deployment_id = 5;
+    // If set, return one bucket per deployment within each time bucket.
+    bool group_by_deployment = 6;
+    // If set, return one bucket per usage component within each time bucket.
+    bool group_by_component = 7;
+}
+
+// Aggregated Billing 2.0 credit consumption.
+message CreditUsage {
+    // Aggregated buckets, ordered ascending by period_start.
+    repeated CreditUsageBucket buckets = 1;
+    // Total credits consumed over the whole requested period.
+    double total_credits = 2;
+}
+
+// A single aggregated bucket of credit consumption.
+message CreditUsageBucket {
+    // Start of the period covered by this bucket, in UTC.
+    google.protobuf.Timestamp period_start = 1;
+    // Deployment covered by this bucket.
+    // Empty unless group_by_deployment was set on the request.
+    string deployment_id = 2;
+    // Usage component (usage item kind) covered by this bucket.
+    // Empty unless group_by_component was set on the request.
+    string component = 3;
+    // Credits consumed in this bucket.
+    double credits = 4;
 }

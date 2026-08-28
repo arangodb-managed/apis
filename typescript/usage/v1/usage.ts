@@ -11,6 +11,75 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: usage/v1/usage.proto
 // Package: arangodb.cloud.usage.v1
 
+// Aggregated Billing 2.0 credit consumption.
+export interface CreditUsage {
+  // Aggregated buckets, ordered ascending by period_start.
+  // CreditUsageBucket
+  buckets?: CreditUsageBucket[];
+  
+  // Total credits consumed over the whole requested period.
+  // number
+  total_credits?: number;
+}
+
+// A single aggregated bucket of credit consumption.
+export interface CreditUsageBucket {
+  // Start of the period covered by this bucket, in UTC.
+  // googleTypes.Timestamp
+  period_start?: googleTypes.Timestamp;
+  
+  // Deployment covered by this bucket.
+  // Empty unless group_by_deployment was set on the request.
+  // string
+  deployment_id?: string;
+  
+  // Usage component (usage item kind) covered by this bucket.
+  // Empty unless group_by_component was set on the request.
+  // string
+  component?: string;
+  
+  // Credits consumed in this bucket.
+  // number
+  credits?: number;
+}
+
+// Request arguments for GetCreditUsage.
+export interface GetCreditUsageRequest {
+  // Request credit usage for the organization with this id.
+  // This is a required field.
+  // string
+  organization_id?: string;
+  
+  // Start of the reported period (inclusive).
+  // This is a required field.
+  // googleTypes.Timestamp
+  from?: googleTypes.Timestamp;
+  
+  // End of the reported period (exclusive).
+  // This is a required field.
+  // The period must not be longer than 366 days.
+  // googleTypes.Timestamp
+  to?: googleTypes.Timestamp;
+  
+  // Size of the returned time buckets.
+  // This is an optional field, defaulting to a single total bucket.
+  // Granularity
+  granularity?: Granularity;
+  
+  // Limit the report to the deployment with this id.
+  // This is an optional field.
+  // string
+  deployment_id?: string;
+  
+  // If set, return one bucket per deployment within each time bucket.
+  // boolean
+  group_by_deployment?: boolean;
+  
+  // If set, return one bucket per usage component within each time bucket.
+  // boolean
+  group_by_component?: boolean;
+}
+
 // Request arguments for ListUsageItems
 export interface ListUsageItemsRequest {
   // Request usage items for the organization with this id.
@@ -693,6 +762,18 @@ export interface UsageItemList {
   items?: UsageItem[];
 }
 
+// Granularity of the time buckets returned by GetCreditUsage.
+export enum Granularity {
+  // A single bucket covering the whole requested period.
+  GRANULARITY_TOTAL = 0,
+  
+  // One bucket per UTC day.
+  GRANULARITY_DAY = 1,
+  
+  // One bucket per UTC month.
+  GRANULARITY_MONTH = 2,
+}
+
 // UsageService is the API used to fetch usage tracking information.
 export interface IUsageService {
   // Get the current API version of this service.
@@ -705,6 +786,14 @@ export interface IUsageService {
   // Required permissions:
   // - usage.usageitem.list on the organization identified by the given organization ID
   ListUsageItems: (req: ListUsageItemsRequest) => Promise<UsageItemList>;
+  
+  // Fetch aggregated Billing 2.0 credit consumption for the organization
+  // identified by the given organization ID.
+  // Only Billing 2.0 usage components are included, and usage on non-billable
+  // tiers is excluded.
+  // Required permissions:
+  // - usage.usageitem.list on the organization identified by the given organization ID
+  GetCreditUsage: (req: GetCreditUsageRequest) => Promise<CreditUsage>;
 }
 
 // UsageService is the API used to fetch usage tracking information.
@@ -724,6 +813,18 @@ export class UsageService implements IUsageService {
   // - usage.usageitem.list on the organization identified by the given organization ID
   async ListUsageItems(req: ListUsageItemsRequest): Promise<UsageItemList> {
     const path = `/api/usage/v1/organization/${encodeURIComponent(req.organization_id || '')}/usageitems`;
+    const url = path + api.queryString(req, [`organization_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch aggregated Billing 2.0 credit consumption for the organization
+  // identified by the given organization ID.
+  // Only Billing 2.0 usage components are included, and usage on non-billable
+  // tiers is excluded.
+  // Required permissions:
+  // - usage.usageitem.list on the organization identified by the given organization ID
+  async GetCreditUsage(req: GetCreditUsageRequest): Promise<CreditUsage> {
+    const path = `/api/usage/v1/organization/${encodeURIComponent(req.organization_id || '')}/creditusage`;
     const url = path + api.queryString(req, [`organization_id`]);
     return api.get(url, undefined);
   }
