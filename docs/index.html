@@ -1904,6 +1904,18 @@ title: "ArangoGraph Insights Platform API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.usage.v1.CreditUsage"><span class="badge">M</span>CreditUsage</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.usage.v1.CreditUsageBucket"><span class="badge">M</span>CreditUsageBucket</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.usage.v1.GetCreditUsageRequest"><span class="badge">M</span>GetCreditUsageRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.usage.v1.ListUsageItemsRequest"><span class="badge">M</span>ListUsageItemsRequest</a>
                 </li>
               
@@ -1999,6 +2011,10 @@ title: "ArangoGraph Insights Platform API"
                   <a href="#arangodb.cloud.usage.v1.UsageItemList"><span class="badge">M</span>UsageItemList</a>
                 </li>
               
+              
+                <li>
+                  <a href="#arangodb.cloud.usage.v1.Granularity"><span class="badge">E</span>Granularity</a>
+                </li>
               
               
               
@@ -25017,6 +25033,166 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.usage.v1.CreditUsage">CreditUsage</h3>
+        <p>Aggregated Billing 2.0 credit consumption.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>buckets</td>
+                  <td><a href="#arangodb.cloud.usage.v1.CreditUsageBucket">CreditUsageBucket</a></td>
+                  <td>repeated</td>
+                  <td><p>Aggregated buckets, ordered ascending by period_start. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_credits</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Total credits consumed over the whole requested period. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.usage.v1.CreditUsageBucket">CreditUsageBucket</h3>
+        <p>A single aggregated bucket of credit consumption.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>period_start</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Start of the period covered by this bucket, in UTC. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Deployment covered by this bucket.
+Empty unless group_by_deployment was set on the request. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>component</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Usage component (usage item kind) covered by this bucket.
+Empty unless group_by_component was set on the request. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credits</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Credits consumed in this bucket. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.usage.v1.GetCreditUsageRequest">GetCreditUsageRequest</h3>
+        <p>Request arguments for GetCreditUsage.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Request credit usage for the organization with this id.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>from</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Start of the reported period (inclusive).
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>End of the reported period (exclusive).
+This is a required field.
+The period must not be longer than 366 days. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>granularity</td>
+                  <td><a href="#arangodb.cloud.usage.v1.Granularity">Granularity</a></td>
+                  <td></td>
+                  <td><p>Size of the returned time buckets.
+This is an optional field, defaulting to a single total bucket. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Limit the report to the deployment with this id.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>group_by_deployment</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, return one bucket per deployment within each time bucket. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>group_by_component</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, return one bucket per usage component within each time bucket. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>component</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Limit the report to this usage component, e.g. &#34;MemoryHour&#34;.
+Must be one of the Billing 2.0 usage component kinds; an unknown value
+is rejected rather than silently returning an empty report.
+This is an optional field. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.usage.v1.ListUsageItemsRequest">ListUsageItemsRequest</h3>
         <p>Request arguments for ListUsageItems</p>
 
@@ -26459,6 +26635,35 @@ Selects the per-tier rate when the item is priced. </p></td>
       
 
       
+        <h3 id="arangodb.cloud.usage.v1.Granularity">Granularity</h3>
+        <p>Granularity of the time buckets returned by GetCreditUsage.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GRANULARITY_TOTAL</td>
+                <td>0</td>
+                <td><p>A single bucket covering the whole requested period.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GRANULARITY_DAY</td>
+                <td>1</td>
+                <td><p>One bucket per UTC day.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GRANULARITY_MONTH</td>
+                <td>2</td>
+                <td><p>One bucket per UTC month.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
 
       
 
@@ -26486,6 +26691,18 @@ Required permissions:
                 <td><a href="#arangodb.cloud.usage.v1.UsageItemList">UsageItemList</a></td>
                 <td><p>Fetch all UsageItem resources in the organization identified by the given
 organization ID that match the given criteria.
+Required permissions:
+- usage.usageitem.list on the organization identified by the given organization ID</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetCreditUsage</td>
+                <td><a href="#arangodb.cloud.usage.v1.GetCreditUsageRequest">GetCreditUsageRequest</a></td>
+                <td><a href="#arangodb.cloud.usage.v1.CreditUsage">CreditUsage</a></td>
+                <td><p>Fetch aggregated Billing 2.0 credit consumption for the organization
+identified by the given organization ID.
+Only Billing 2.0 usage components are included, and usage on non-billable
+tiers is excluded.
 Required permissions:
 - usage.usageitem.list on the organization identified by the given organization ID</p></td>
               </tr>
@@ -26524,6 +26741,16 @@ Required permissions:
                 <td>ListUsageItems</td>
                 <td>GET</td>
                 <td>/api/usage/v1/organization/{organization_id}/usageitems</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetCreditUsage</td>
+                <td>GET</td>
+                <td>/api/usage/v1/organization/{organization_id}/creditusage</td>
                 <td></td>
               </tr>
               

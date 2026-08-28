@@ -569,6 +569,11 @@ message GetCreditUsageRequest {
     bool group_by_deployment = 6;
     // If set, return one bucket per usage component within each time bucket.
     bool group_by_component = 7;
+    // Limit the report to this usage component, e.g. "MemoryHour".
+    // Must be one of the Billing 2.0 usage component kinds; an unknown value
+    // is rejected rather than silently returning an empty report.
+    // This is an optional field.
+    string component = 8;
 }
 
 // Aggregated Billing 2.0 credit consumption.

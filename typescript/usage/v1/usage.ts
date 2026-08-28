@@ -78,6 +78,13 @@ export interface GetCreditUsageRequest {
   // If set, return one bucket per usage component within each time bucket.
   // boolean
   group_by_component?: boolean;
+  
+  // Limit the report to this usage component, e.g. "MemoryHour".
+  // Must be one of the Billing 2.0 usage component kinds; an unknown value
+  // is rejected rather than silently returning an empty report.
+  // This is an optional field.
+  // string
+  component?: string;
 }
 
 // Request arguments for ListUsageItems
