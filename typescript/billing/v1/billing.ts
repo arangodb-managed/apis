@@ -426,6 +426,48 @@ export interface InvoiceList {
   items?: Invoice[];
 }
 
+// LensingCreditBalance is the prepaid credit balance of an organization in
+// the new (Lensing based) billing system.
+// Credit amounts are decimal strings, e.g. "1234.56".
+export interface LensingCreditBalance {
+  // Identifier of the organization owning the balance.
+  // string
+  organization_id?: string;
+  
+  // Human readable number of the prepaid credit subscription.
+  // string
+  subscription_number?: string;
+  
+  // Credits purchased for the subscription.
+  // string
+  credits_purchased?: string;
+  
+  // Credits left. Can be negative when more credits were consumed than purchased.
+  // string
+  credits_remaining?: string;
+  
+  // Credits consumed so far.
+  // string
+  credits_consumed?: string;
+  
+  // First day of the subscription term.
+  // googleTypes.Timestamp
+  starts_at?: googleTypes.Timestamp;
+  
+  // Last day of the subscription term.
+  // Not set for a subscription without an end date.
+  // googleTypes.Timestamp
+  ends_at?: googleTypes.Timestamp;
+  
+  // If set, the subscription renews automatically at the end of its term.
+  // boolean
+  auto_renew?: boolean;
+  
+  // Time the balance was last refreshed from the billing system.
+  // googleTypes.Timestamp
+  last_synced_at?: googleTypes.Timestamp;
+}
+
 // Request arguments for ListEverestInvoices
 export interface ListEverestInvoicesRequest {
   // Request invoices for the organization with this id.
@@ -768,6 +810,14 @@ export interface IBillingService {
   // - billing.invoice.get on the organization that owns the invoice.
   GetEverestInvoice: (req: arangodb_cloud_common_v1_IDOptions) => Promise<EverestInvoice>;
   
+  // Get the prepaid credit balance of the organization identified by the given
+  // ID (new billing system). The balance is that of the organization's
+  // prepaid credit subscription and is refreshed periodically.
+  // Returns a not-found error when the organization has no such subscription.
+  // Required permissions:
+  // - credit.creditbundle.list on the organization identified by the given ID
+  GetLensingCreditBalance: (req: arangodb_cloud_common_v1_IDOptions) => Promise<LensingCreditBalance>;
+  
   // Fetch all payment providers that are usable for the organization identified
   // by the given context ID.
   // Required permissions:
@@ -916,6 +966,18 @@ export class BillingService implements IBillingService {
   // - billing.invoice.get on the organization that owns the invoice.
   async GetEverestInvoice(req: arangodb_cloud_common_v1_IDOptions): Promise<EverestInvoice> {
     const path = `/api/billing/v1/everest-invoices/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Get the prepaid credit balance of the organization identified by the given
+  // ID (new billing system). The balance is that of the organization's
+  // prepaid credit subscription and is refreshed periodically.
+  // Returns a not-found error when the organization has no such subscription.
+  // Required permissions:
+  // - credit.creditbundle.list on the organization identified by the given ID
+  async GetLensingCreditBalance(req: arangodb_cloud_common_v1_IDOptions): Promise<LensingCreditBalance> {
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.id || '')}/lensing-credit-balance`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
