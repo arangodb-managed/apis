@@ -480,6 +480,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.billing.v1.LensingCreditBalance"><span class="badge">M</span>LensingCreditBalance</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.billing.v1.ListEverestInvoicesRequest"><span class="badge">M</span>ListEverestInvoicesRequest</a>
                 </li>
               
@@ -1245,49 +1249,6 @@ title: "ArangoGraph Insights Platform API"
         
           
           <li>
-            <a href="#ml%2fv1%2fml.proto">ml/v1/ml.proto</a>
-            <ul>
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.ListMLServicesSizesRequest"><span class="badge">M</span>ListMLServicesSizesRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.MLServices"><span class="badge">M</span>MLServices</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.MLServicesSize"><span class="badge">M</span>MLServicesSize</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.MLServicesSizeList"><span class="badge">M</span>MLServicesSizeList</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.ServiceStatus"><span class="badge">M</span>ServiceStatus</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.ServiceStatus.Usage"><span class="badge">M</span>ServiceStatus.Usage</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.Status"><span class="badge">M</span>Status</a>
-                </li>
-              
-              
-              
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.MLService"><span class="badge">S</span>MLService</a>
-                </li>
-              
-            </ul>
-          </li>
-        
-          
-          <li>
             <a href="#monitoring%2fv1%2fmonitoring.proto">monitoring/v1/monitoring.proto</a>
             <ul>
               
@@ -1391,57 +1352,6 @@ title: "ArangoGraph Insights Platform API"
               
                 <li>
                   <a href="#arangodb.cloud.network.v1.NetworkService"><span class="badge">S</span>NetworkService</a>
-                </li>
-              
-            </ul>
-          </li>
-        
-          
-          <li>
-            <a href="#notebook%2fv1%2fnotebook.proto">notebook/v1/notebook.proto</a>
-            <ul>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.ListNotebookModelsRequest"><span class="badge">M</span>ListNotebookModelsRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.ListNotebooksRequest"><span class="badge">M</span>ListNotebooksRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.ModelSpec"><span class="badge">M</span>ModelSpec</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.Notebook"><span class="badge">M</span>Notebook</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.NotebookList"><span class="badge">M</span>NotebookList</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.NotebookModel"><span class="badge">M</span>NotebookModel</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.NotebookModelList"><span class="badge">M</span>NotebookModelList</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.Status"><span class="badge">M</span>Status</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.Status.Usage"><span class="badge">M</span>Status.Usage</a>
-                </li>
-              
-              
-              
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.NotebookService"><span class="badge">S</span>NotebookService</a>
                 </li>
               
             </ul>
@@ -6160,6 +6070,87 @@ that payment failed, nil otherwise. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.billing.v1.LensingCreditBalance">LensingCreditBalance</h3>
+        <p>LensingCreditBalance is the prepaid credit balance of an organization in</p><p>the new (Lensing based) billing system.</p><p>Credit amounts are decimal strings, e.g. "1234.56".</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the organization owning the balance. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>subscription_number</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Human readable number of the prepaid credit subscription. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credits_purchased</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Credits purchased for the subscription. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credits_remaining</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Credits left. Can be negative when more credits were consumed than purchased. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credits_consumed</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Credits consumed so far. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>starts_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>First day of the subscription term. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ends_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Last day of the subscription term.
+Not set for a subscription without an end date. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auto_renew</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, the subscription renews automatically at the end of its term. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_synced_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Time the balance was last refreshed from the billing system. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.billing.v1.ListEverestInvoicesRequest">ListEverestInvoicesRequest</h3>
         <p>Request arguments for ListEverestInvoices</p>
 
@@ -6956,6 +6947,18 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>GetLensingCreditBalance</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.billing.v1.LensingCreditBalance">LensingCreditBalance</a></td>
+                <td><p>Get the prepaid credit balance of the organization identified by the given
+ID (new billing system). The balance is that of the organization&#39;s
+prepaid credit subscription and is refreshed periodically.
+Returns a not-found error when the organization has no such subscription.
+Required permissions:
+- credit.creditbundle.list on the organization identified by the given ID</p></td>
+              </tr>
+            
+              <tr>
                 <td>ListPaymentProviders</td>
                 <td><a href="#arangodb.cloud.billing.v1.ListPaymentProvidersRequest">ListPaymentProvidersRequest</a></td>
                 <td><a href="#arangodb.cloud.billing.v1.PaymentProviderList">PaymentProviderList</a></td>
@@ -7173,6 +7176,16 @@ Required permissions:
                 <td>GetEverestInvoice</td>
                 <td>GET</td>
                 <td>/api/billing/v1/everest-invoices/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetLensingCreditBalance</td>
+                <td>GET</td>
+                <td>/api/billing/v1/organization/{id}/lensing-credit-balance</td>
                 <td></td>
               </tr>
               
@@ -16686,518 +16699,6 @@ Required permissions:
     
       
       <div class="file-heading">
-        <h2 id="ml/v1/ml.proto">ml/v1/ml.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="arangodb.cloud.ml.v1.ListMLServicesSizesRequest">ListMLServicesSizesRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>deployment_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Optional ID of the Deployment for which sizes are being requested.
-If set, the response will exclude any sizes that are unavailable for the specified deployment model. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.ml.v1.MLServices">MLServices</h3>
-        <p>MLServices is a single resource which represents the state and configuration</p><p>of ML Services (ArangoGraphML) for a deployment specified by deployment_id.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>deployment_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Identifier of the deployment for this MLServices resource.
-This is a ready-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>enabled</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set to true if ML services are enabled for this deployment. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>size</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Size to use for the ML Jobs.
-Use `ListMLServicesSizes` to get a list of available sizes.
-If unspecified, the MLServiceSize marked as `is_default` is used.
-This is an optional field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>created_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The creation timestamp of the MLServices.
-This also serves as a timestamp of when MLServices were first enabled.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>status</td>
-                  <td><a href="#arangodb.cloud.ml.v1.Status">Status</a></td>
-                  <td></td>
-                  <td><p>Status of the MLServices.
-This is a read-only value. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.ml.v1.MLServicesSize">MLServicesSize</h3>
-        <p>MLServicesSize represents the resources allocated for MLServices.</p><p>Note that the specified configuration is applied for the ML jobs.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>size_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Identifier of the size configuration. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>is_default</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>If set, this is the default size when unspecified in MLServices. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>cpu</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Amount of CPU allocated (in vCPU units) </p></td>
-                </tr>
-              
-                <tr>
-                  <td>memory</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Amount of Memory allocated (in GB) </p></td>
-                </tr>
-              
-                <tr>
-                  <td>gpu</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Amount of GPUs allocated </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.ml.v1.MLServicesSizeList">MLServicesSizeList</h3>
-        <p>List of MLServicesSize.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>items</td>
-                  <td><a href="#arangodb.cloud.ml.v1.MLServicesSize">MLServicesSize</a></td>
-                  <td>repeated</td>
-                  <td><p>Items in this list. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.ml.v1.ServiceStatus">ServiceStatus</h3>
-        <p>Status of a single ArangoGraphML component.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>type</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Type of service.
-Should be one of: [training|prediction|projects] </p></td>
-                </tr>
-              
-                <tr>
-                  <td>available</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set to true if the service is available.
-Every service is always in ONLY ONE of the following states: (available|failed) </p></td>
-                </tr>
-              
-                <tr>
-                  <td>failed</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set to true if the service is in a failed state.
-Every service is always in ONLY ONE of the following states: (available|failed) </p></td>
-                </tr>
-              
-                <tr>
-                  <td>usage</td>
-                  <td><a href="#arangodb.cloud.ml.v1.ServiceStatus.Usage">ServiceStatus.Usage</a></td>
-                  <td></td>
-                  <td><p>Resource usage information for this service. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>replicas</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Number of replicas running for this service. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-            
-            
-            <h4>Fields with deprecated option</h4>
-            <table>
-              <thead>
-                <tr>
-                  <td>Name</td>
-                  <td>Option</td>
-                </tr>
-              </thead>
-              <tbody>
-              
-                <tr>
-                  <td>usage</td>
-                  <td><p>true</p></td>
-                </tr>
-              
-              </tbody>
-            </table>
-            
-          
-
-        
-      
-        <h3 id="arangodb.cloud.ml.v1.ServiceStatus.Usage">ServiceStatus.Usage</h3>
-        <p>Resource usage for this service.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>last_memory_usage</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Last known memory usage in bytes </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_cpu_usage</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Last known CPU usage in vCPU units </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_memory_limit</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Last known memory limit in bytes </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_cpu_limit</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Last known CPU limit in vCPU units </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.ml.v1.Status">Status</h3>
-        <p>Status of the MLServices.</p><p>Note: All fields are read-only.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>phase</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Overall status of where the MLServices resource is in its lifecycle at a given time.
-It will contain only one of the following values:
-&#34;Bootstrapping&#34;  - ArangoDB Deployment is being bootstrapped with the required databases, schemas and data.
-&#34;Initialising&#34;   - The services needed for ArangoGraphML are being installed.
-&#34;Running&#34;        - ArangoGraphML is setup and running correctly.
-&#34;Error&#34;          - Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info.
-&#34;Hibernated&#34;     - Indicates that ArangoGraphML and all its associated services are hibernated. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>message</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Supporting information about the phase of MLServices (such as error messages in case of failures). </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_updated_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The timestamp of when this status was last updated. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>services</td>
-                  <td><a href="#arangodb.cloud.ml.v1.ServiceStatus">ServiceStatus</a></td>
-                  <td>repeated</td>
-                  <td><p>Status of each ArangoGraphML components/services. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>hours_used</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Total number of hours ML Jobs have run for this Deployment. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>hours_allowed</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Total number of runtime hours allowed for ML Jobs for this Deployment.
-Set to 0 if unlimited (i.e, no restriction). </p></td>
-                </tr>
-              
-                <tr>
-                  <td>expires_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>Timestamp after which MLServices are no longer usable.
-This is set during trial use.
-If unset, no expiry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_enabled_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>Timestamp of when MLServices were last enabled for this deployment. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-            
-            
-            <h4>Fields with deprecated option</h4>
-            <table>
-              <thead>
-                <tr>
-                  <td>Name</td>
-                  <td>Option</td>
-                </tr>
-              </thead>
-              <tbody>
-              
-                <tr>
-                  <td>hours_used</td>
-                  <td><p>true</p></td>
-                </tr>
-              
-                <tr>
-                  <td>hours_allowed</td>
-                  <td><p>true</p></td>
-                </tr>
-              
-              </tbody>
-            </table>
-            
-          
-
-        
-      
-
-      
-
-      
-
-      
-        <h3 id="arangodb.cloud.ml.v1.MLService">MLService</h3>
-        <p>MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>GetAPIVersion</td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
-                <td><p>Get the current API version of this service.
-Required permissions:
-- None</p></td>
-              </tr>
-            
-              <tr>
-                <td>GetMLServices</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.ml.v1.MLServices">MLServices</a></td>
-                <td><p>Get an existing MLServices resource for a given deployment (specified by the id). 
-Required permissions:
-- ml.mlservices.get</p></td>
-              </tr>
-            
-              <tr>
-                <td>UpdateMLServices</td>
-                <td><a href="#arangodb.cloud.ml.v1.MLServices">MLServices</a></td>
-                <td><a href="#arangodb.cloud.ml.v1.MLServices">MLServices</a></td>
-                <td><p>Update an existing MLServices resource. If it does not exist, this will create a new one.
-Pass the desired updated state of MLServices to this call.
-Required permissions:
-- ml.mlservices.update</p></td>
-              </tr>
-            
-              <tr>
-                <td>ListMLServicesSizes</td>
-                <td><a href="#arangodb.cloud.ml.v1.ListMLServicesSizesRequest">ListMLServicesSizesRequest</a></td>
-                <td><a href="#arangodb.cloud.ml.v1.MLServicesSizeList">MLServicesSizeList</a></td>
-                <td><p>List the available size configurations for MLServices.
-Note that the returned size specifications are applied for ML Jobs.
-Required permissions:
-- ml.mlservicessize.list on the deployment (if deployment_id is provided)
-- None, authenticated only</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-
-        
-          
-          
-          <h4>Methods with HTTP bindings</h4>
-          <table>
-            <thead>
-              <tr>
-                <td>Method Name</td>
-                <td>Method</td>
-                <td>Pattern</td>
-                <td>Body</td>
-              </tr>
-            </thead>
-            <tbody>
-            
-              
-              
-              <tr>
-                <td>GetAPIVersion</td>
-                <td>GET</td>
-                <td>/api/ml/v1/api-version</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>GetMLServices</td>
-                <td>GET</td>
-                <td>/api/ml/v1/mlservices/{id}</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>UpdateMLServices</td>
-                <td>PUT</td>
-                <td>/api/ml/v1/mlservices/{deployment_id}</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>ListMLServicesSizes</td>
-                <td>GET</td>
-                <td>/api/ml/v1/sizes</td>
-                <td></td>
-              </tr>
-              
-            
-            </tbody>
-          </table>
-          
-        
-    
-      
-      <div class="file-heading">
         <h2 id="monitoring/v1/monitoring.proto">monitoring/v1/monitoring.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
@@ -18315,754 +17816,6 @@ Required permissions:
                 <td>PATCH</td>
                 <td>/api/network/v1/privateendpointservice/{id}</td>
                 <td>*</td>
-              </tr>
-              
-            
-            </tbody>
-          </table>
-          
-        
-    
-      
-      <div class="file-heading">
-        <h2 id="notebook/v1/notebook.proto">notebook/v1/notebook.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="arangodb.cloud.notebook.v1.ListNotebookModelsRequest">ListNotebookModelsRequest</h3>
-        <p>Requet for listing notebook models.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>deployment_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>ID of the deployment that the notebook belongs to. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.notebook.v1.ListNotebooksRequest">ListNotebooksRequest</h3>
-        <p>Request for listing notebooks.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>deployment_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>List notebooks for this deployment ID.
-This is a required field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>options</td>
-                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
-                  <td></td>
-                  <td><p>Optional common list options, the context_id is ignored </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.notebook.v1.ModelSpec">ModelSpec</h3>
-        <p>Model specification for the notebook.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>notebook_model_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Type of model being used.
-This should refer to the `id` of a `NotebookModel` object.
-This is a required field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>disk_size</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Disk size allocated to the notebook instance (in GiB).
-This is a required field. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.notebook.v1.Notebook">Notebook</h3>
-        <p>Contains the specification and status of a given notebook instance.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>ID of the Notebook.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>deployment_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>ID of the Deployment this notebook belongs to.
-After creation, this value cannot be changed.
-This is a required field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>url</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>URL of the Notebook.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Name of the notebook.
-This is a required field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Description of the notebook.
-This is an optional field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>is_paused</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Indicates that this notebook is paused. 
-Use the notebook.PauseNotebook method to pause, and notebook.ResumeNotebook to resume (unpause).
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_paused_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The last paused timestamp of the notebook.
-This is the timestamp that is_paused is transitioned from unset to set.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_resumed_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The last resumed timestamp of the notebook.
-This is the timestamp that is_paused is transitioned from set to unset.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>created_by_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Identifier of the user that created this notebook.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>created_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>Time at which this notebook was created.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>model</td>
-                  <td><a href="#arangodb.cloud.notebook.v1.ModelSpec">ModelSpec</a></td>
-                  <td></td>
-                  <td><p>Model specification for the notebook. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>is_deleted</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set when this notebook is deleted.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>deleted_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The deletion timestamp of the deployment
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ml_enabled</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>If set, the Notebook is created for use along with ArangoML.
-This field will be set to `true` if ML services are enabled at the time of creating the notebook.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>status</td>
-                  <td><a href="#arangodb.cloud.notebook.v1.Status">Status</a></td>
-                  <td></td>
-                  <td><p>Status of the notebook.
-This is a read-only value. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.notebook.v1.NotebookList">NotebookList</h3>
-        <p>List of Notebooks.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>items</td>
-                  <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>budget</td>
-                  <td><a href="#arangodb.cloud.common.v1.Budget">arangodb.cloud.common.v1.Budget</a></td>
-                  <td></td>
-                  <td><p>Budget for notebooks </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.notebook.v1.NotebookModel">NotebookModel</h3>
-        <p>Specifies the resource configuration for a notebook.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>System identifier of the model. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Human readable name of the model. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>cpu</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>CPU units allocated to the notebook.
-1 CPU unit equals 1 physical / virtual CPU. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>memory</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Memory allocated to the notebook in &#39;GiB&#39;. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>max_disk_size</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Maximum amount of disk space (in GiB) available to the notebook. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>min_disk_size</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Minimum amount of disk space (in GiB) available to the notebook. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>gpu</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>GPU units allocated to the notebook.
-1 GPU unit equals 1 physical / virtual GPU. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>initial_disk_size</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Initial amount of disk space (in GiB) available to the notebook. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.notebook.v1.NotebookModelList">NotebookModelList</h3>
-        <p>List of notebook models.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>items</td>
-                  <td><a href="#arangodb.cloud.notebook.v1.NotebookModel">NotebookModel</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.notebook.v1.Status">Status</h3>
-        <p>Status of the notebook.</p><p>Note: all fields in this block are read-only.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>phase</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Where the notebook is in its lifecycle at any given time.
-Should contain only one of the following values:
-&#34;Initialising&#34;   - Notebook is initialising.
-&#34;Running&#34;        - Notebook is running.
-&#34;Hibernating&#34;    - Notebook is moving to a hibernated state.
-&#34;Hibernated&#34;     - Notebook has moved to a hibernated state.
-&#34;Error&#34;          - Notebook is in an errored state. Additional information can be obtained from `message` field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>message</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Supporting information about the notebook phase - such as error messages in case of failures. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_updated_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The timestamp of when the status of the notebook was last updated. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>endpoint</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Endpoint URL used to reach the notebook
-This value will be empty during the creation of the notebook. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>endpoint_default</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Endpoint URL used to reach the notebook on default port 443
-This value will be empty during the creation of the notebook.
-This endpoint is recommended for human-to-notebook connections. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>endpoint_self_signed</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Endpoint URL used to reach the notebook with self signed certificate on port 18829
-This value will be empty during the creation of the notebook. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_active_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The timestamp of when this notebook was last reported to be active. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>usage</td>
-                  <td><a href="#arangodb.cloud.notebook.v1.Status.Usage">Status.Usage</a></td>
-                  <td></td>
-                  <td><p>Resource usage of the notebook. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-            
-            
-            <h4>Fields with deprecated option</h4>
-            <table>
-              <thead>
-                <tr>
-                  <td>Name</td>
-                  <td>Option</td>
-                </tr>
-              </thead>
-              <tbody>
-              
-                <tr>
-                  <td>usage</td>
-                  <td><p>true</p></td>
-                </tr>
-              
-              </tbody>
-            </table>
-            
-          
-
-        
-      
-        <h3 id="arangodb.cloud.notebook.v1.Status.Usage">Status.Usage</h3>
-        <p>Resource usage of the notebook.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>data_volume_info</td>
-                  <td><a href="#arangodb.cloud.data.v1.DataVolumeInfo">arangodb.cloud.data.v1.DataVolumeInfo</a></td>
-                  <td></td>
-                  <td><p>Information about the data volume used to store the data </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_memory_usage</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Last known memory usage in bytes </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_cpu_usage</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Last known CPU usage in vCPU units </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_memory_limit</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Last known memory limit in bytes </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_cpu_limit</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Last known CPU limit in vCPU units </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_gpu_usage</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Last known GPU usage in GPU units </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_gpu_limit</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Last known GPU limit in GPU units </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-
-      
-
-      
-
-      
-        <h3 id="arangodb.cloud.notebook.v1.NotebookService">NotebookService</h3>
-        <p>Notebook service is used to manage notebooks.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>GetAPIVersion</td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
-                <td><p>Get the current API version of this service.
-Required permissions:
-- None (authenticated only)</p></td>
-              </tr>
-            
-              <tr>
-                <td>GetNotebook</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
-                <td><p>Get a Notebook using its ID.
-Required permissions:
-- notebook.notebook.get on the notebook</p></td>
-              </tr>
-            
-              <tr>
-                <td>CreateNotebook</td>
-                <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
-                <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
-                <td><p>Create a new Notebook by specifying its configuration.
-Required permissions:
-- notebook.notebook.create on the deployment</p></td>
-              </tr>
-            
-              <tr>
-                <td>DeleteNotebook</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Delete an existing notebook using its ID.
-This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
-Required permissions:
-- notebook.notebook.delete on the notebook</p></td>
-              </tr>
-            
-              <tr>
-                <td>UpdateNotebook</td>
-                <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Update an existing notebook. Returns updated Notebook.
-Required permissions:
-- notebook.notebook.update on the notebook</p></td>
-              </tr>
-            
-              <tr>
-                <td>ListNotebooks</td>
-                <td><a href="#arangodb.cloud.notebook.v1.ListNotebooksRequest">ListNotebooksRequest</a></td>
-                <td><a href="#arangodb.cloud.notebook.v1.NotebookList">NotebookList</a></td>
-                <td><p>List all notebooks for the deployments identified by the given deployment identifier.
-Required permissions:
-- notebook.notebook.list on the deployment</p></td>
-              </tr>
-            
-              <tr>
-                <td>ListNotebookModels</td>
-                <td><a href="#arangodb.cloud.notebook.v1.ListNotebookModelsRequest">ListNotebookModelsRequest</a></td>
-                <td><a href="#arangodb.cloud.notebook.v1.NotebookModelList">NotebookModelList</a></td>
-                <td><p>List all notebook models available in the context of the given deployment.
-Required permissions:
-- notebook.model.list globally</p></td>
-              </tr>
-            
-              <tr>
-                <td>PauseNotebook</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Pauses a running notebook identified by the given id.
-Required permissions:
-- notebook.notebook.pause on the notebook</p></td>
-              </tr>
-            
-              <tr>
-                <td>ResumeNotebook</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Resumes a paused notebook identified by the given id.
-When ResumeNotebook is invoked on a notebook that has is_paused not set, an PreconditionFailed error is returned.
-Required permissions:
-- notebook.notebook.resume on the notebook</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-
-        
-          
-          
-          <h4>Methods with HTTP bindings</h4>
-          <table>
-            <thead>
-              <tr>
-                <td>Method Name</td>
-                <td>Method</td>
-                <td>Pattern</td>
-                <td>Body</td>
-              </tr>
-            </thead>
-            <tbody>
-            
-              
-              
-              <tr>
-                <td>GetAPIVersion</td>
-                <td>GET</td>
-                <td>/api/notebook/v1/api-version</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>GetNotebook</td>
-                <td>GET</td>
-                <td>/api/notebook/v1/notebook/{id}</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>CreateNotebook</td>
-                <td>PUT</td>
-                <td>/api/notebook/v1/notebook</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>DeleteNotebook</td>
-                <td>DELETE</td>
-                <td>/api/notebook/v1/notebook/{id}</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>UpdateNotebook</td>
-                <td>POST</td>
-                <td>/api/notebook/v1/notebook/{id}</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>ListNotebooks</td>
-                <td>POST</td>
-                <td>/api/notebook/v1/notebooks</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>ListNotebookModels</td>
-                <td>POST</td>
-                <td>/api/notebook/v1/models</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>PauseNotebook</td>
-                <td>POST</td>
-                <td>/api/notebook/v1/{id}/pause</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>ResumeNotebook</td>
-                <td>POST</td>
-                <td>/api/notebook/v1/{id}/resume</td>
-                <td></td>
               </tr>
               
             
