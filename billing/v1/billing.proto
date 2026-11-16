@@ -108,6 +108,18 @@ service BillingService {
         };
     }
 
+    // Get the prepaid credit balance of the organization identified by the given
+    // ID (new billing system). The balance is that of the organization's
+    // prepaid credit subscription and is refreshed periodically.
+    // Returns a not-found error when the organization has no such subscription.
+    // Required permissions:
+    // - credit.creditbundle.list on the organization identified by the given ID
+    rpc GetLensingCreditBalance(common.v1.IDOptions) returns (LensingCreditBalance) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{id}/lensing-credit-balance"
+        };
+    }
+
     // Fetch all payment providers that are usable for the organization identified
     // by the given context ID.
     // Required permissions:
@@ -477,6 +489,34 @@ message ListEverestInvoicesRequest {
     string organization_id = 1;
     // Standard list options
     common.v1.ListOptions options = 10;
+}
+
+// LensingCreditBalance is the prepaid credit balance of an organization in
+// the new (Lensing based) billing system.
+// Credit amounts are decimal strings, e.g. "1234.56".
+message LensingCreditBalance {
+    // Identifier of the organization owning the balance.
+    string organization_id = 1;
+    // Human readable number of the prepaid credit subscription.
+    string subscription_number = 2;
+
+    // Credits purchased for the subscription.
+    string credits_purchased = 10;
+    // Credits left. Can be negative when more credits were consumed than purchased.
+    string credits_remaining = 11;
+    // Credits consumed so far.
+    string credits_consumed = 12;
+
+    // First day of the subscription term.
+    google.protobuf.Timestamp starts_at = 20;
+    // Last day of the subscription term.
+    // Not set for a subscription without an end date.
+    google.protobuf.Timestamp ends_at = 21;
+    // If set, the subscription renews automatically at the end of its term.
+    bool auto_renew = 22;
+
+    // Time the balance was last refreshed from the billing system.
+    google.protobuf.Timestamp last_synced_at = 30;
 }
 
 // Request argument for GetPreliminaryInvoice
