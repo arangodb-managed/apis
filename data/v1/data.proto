@@ -867,6 +867,10 @@ message NodeSize {
     // If set, contains list of possible disk sizes (in GB) for the node.
     // In that case, this field overrides the min_disk_size & max_disk_size fields.
     repeated int32 disk_sizes = 7;
+    // Platform bundles (flavours, see Deployment.arangodb_platform_bundle) that can be used
+    // with this node size, for the organization and region of the request.
+    // A deployment without a platform bundle uses "coredb".
+    repeated string supported_arangodb_platform_bundles = 8;
 }
 
 // List of node sizes.
@@ -896,10 +900,6 @@ message NodeSizesRequest {
     // By default, the result is restricted based on the organization and project tiers/quotas.
     // Ignored when project_id is "all" and organization_id is not provided.
     bool include_restricted = 7;
-    // Optional platform bundle (flavour) of the deployment, e.g. "aisuite".
-    // If set, node sizes that cannot be used with this bundle are excluded.
-    // If not set, node sizes are not filtered by bundle.
-    string arangodb_platform_bundle = 8;
 }
 
 // DeploymentModel specifies the a specific model of deploying
