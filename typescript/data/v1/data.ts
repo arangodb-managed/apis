@@ -1485,6 +1485,12 @@ export interface NodeSize {
   // In that case, this field overrides the min_disk_size & max_disk_size fields.
   // number
   disk_sizes?: number[];
+  
+  // Platform bundles (flavours, see Deployment.arangodb_platform_bundle) that can be used
+  // with this node size, for the organization and region of the request.
+  // A deployment without a platform bundle uses "coredb".
+  // string
+  supported_arangodb_platform_bundles?: string[];
 }
 
 // List of node sizes.

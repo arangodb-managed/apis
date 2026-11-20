@@ -12357,6 +12357,15 @@ If not set, only versions are returned that are available to all organizations. 
 In that case, this field overrides the min_disk_size &amp; max_disk_size fields. </p></td>
                 </tr>
               
+                <tr>
+                  <td>supported_arangodb_platform_bundles</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Platform bundles (flavours, see Deployment.arangodb_platform_bundle) that can be used
+with this node size, for the organization and region of the request.
+A deployment without a platform bundle uses &#34;coredb&#34;. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
