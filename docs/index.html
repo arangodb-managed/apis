@@ -12448,6 +12448,15 @@ By default, the result is restricted based on the organization and project tiers
 Ignored when project_id is &#34;all&#34; and organization_id is not provided. </p></td>
                 </tr>
               
+                <tr>
+                  <td>arangodb_platform_bundle</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional platform bundle (flavour) of the deployment, e.g. &#34;aisuite&#34;.
+If set, node sizes that cannot be used with this bundle are excluded.
+If not set, node sizes are not filtered by bundle. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 

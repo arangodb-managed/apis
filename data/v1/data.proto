@@ -896,6 +896,10 @@ message NodeSizesRequest {
     // By default, the result is restricted based on the organization and project tiers/quotas.
     // Ignored when project_id is "all" and organization_id is not provided.
     bool include_restricted = 7;
+    // Optional platform bundle (flavour) of the deployment, e.g. "aisuite".
+    // If set, node sizes that cannot be used with this bundle are excluded.
+    // If not set, node sizes are not filtered by bundle.
+    string arangodb_platform_bundle = 8;
 }
 
 // DeploymentModel specifies the a specific model of deploying
