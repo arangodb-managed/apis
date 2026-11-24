@@ -554,6 +554,26 @@ export interface PDFDocument {
   filename?: string;
 }
 
+// Balance of the free credits of a PLG organization (new billing system).
+export interface PLGCreditBalance {
+  // Identifier of the organization owning the balance.
+  // string
+  organization_id?: string;
+  
+  // Credits granted to the organization so far.
+  // number
+  credits_granted?: number;
+  
+  // Credits used by the usage of the organization that is priced so far.
+  // number
+  credits_used?: number;
+  
+  // Credits left (granted minus used). Can be negative when more credits
+  // were used than granted.
+  // number
+  credits_remaining?: number;
+}
+
 // Payment methods are specific methods for paying at a specific payment provider
 // such as a specific credit card.
 export interface PaymentMethod {
@@ -818,6 +838,17 @@ export interface IBillingService {
   // - credit.creditbundle.list on the organization identified by the given ID
   GetLensingCreditBalance: (req: arangodb_cloud_common_v1_IDOptions) => Promise<LensingCreditBalance>;
   
+  // Get the balance of the free credits of the PLG organization identified by
+  // the given ID (new billing system). A PLG organization is created by a
+  // sign-up on arango.ai and gets its credits once, with no time limit.
+  // The used credits are those of the usage priced so far; usage is priced
+  // after its day (UTC) has ended, so the balance lags by about a day.
+  // Returns a not-found error when the organization has no such credits or
+  // is no longer in the PLG tier.
+  // Required permissions:
+  // - credit.creditbundle.list on the organization identified by the given ID
+  GetPLGCreditBalance: (req: arangodb_cloud_common_v1_IDOptions) => Promise<PLGCreditBalance>;
+  
   // Fetch all payment providers that are usable for the organization identified
   // by the given context ID.
   // Required permissions:
@@ -978,6 +1009,21 @@ export class BillingService implements IBillingService {
   // - credit.creditbundle.list on the organization identified by the given ID
   async GetLensingCreditBalance(req: arangodb_cloud_common_v1_IDOptions): Promise<LensingCreditBalance> {
     const path = `/api/billing/v1/organization/${encodeURIComponent(req.id || '')}/lensing-credit-balance`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Get the balance of the free credits of the PLG organization identified by
+  // the given ID (new billing system). A PLG organization is created by a
+  // sign-up on arango.ai and gets its credits once, with no time limit.
+  // The used credits are those of the usage priced so far; usage is priced
+  // after its day (UTC) has ended, so the balance lags by about a day.
+  // Returns a not-found error when the organization has no such credits or
+  // is no longer in the PLG tier.
+  // Required permissions:
+  // - credit.creditbundle.list on the organization identified by the given ID
+  async GetPLGCreditBalance(req: arangodb_cloud_common_v1_IDOptions): Promise<PLGCreditBalance> {
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.id || '')}/plg-credit-balance`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
