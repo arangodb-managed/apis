@@ -797,7 +797,9 @@ export interface IUsageService {
   // Fetch aggregated Billing 2.0 credit consumption for the organization
   // identified by the given organization ID.
   // Only Billing 2.0 usage components are included, and usage on non-billable
-  // tiers is excluded.
+  // tiers is excluded. Usage in the PLG tier is included: it is not invoiced,
+  // but it uses up the free credits of the organization (see
+  // BillingService.GetPLGCreditBalance).
   // Required permissions:
   // - usage.usageitem.list on the organization identified by the given organization ID
   GetCreditUsage: (req: GetCreditUsageRequest) => Promise<CreditUsage>;
@@ -827,7 +829,9 @@ export class UsageService implements IUsageService {
   // Fetch aggregated Billing 2.0 credit consumption for the organization
   // identified by the given organization ID.
   // Only Billing 2.0 usage components are included, and usage on non-billable
-  // tiers is excluded.
+  // tiers is excluded. Usage in the PLG tier is included: it is not invoiced,
+  // but it uses up the free credits of the organization (see
+  // BillingService.GetPLGCreditBalance).
   // Required permissions:
   // - usage.usageitem.list on the organization identified by the given organization ID
   async GetCreditUsage(req: GetCreditUsageRequest): Promise<CreditUsage> {

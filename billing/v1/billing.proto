@@ -120,6 +120,21 @@ service BillingService {
         };
     }
 
+    // Get the balance of the free credits of the PLG organization identified by
+    // the given ID (new billing system). A PLG organization is created by a
+    // sign-up on arango.ai and gets its credits once, with no time limit.
+    // The used credits are those of the usage priced so far; usage is priced
+    // after its day (UTC) has ended, so the balance lags by about a day.
+    // Returns a not-found error when the organization has no such credits or
+    // is no longer in the PLG tier.
+    // Required permissions:
+    // - credit.creditbundle.list on the organization identified by the given ID
+    rpc GetPLGCreditBalance(common.v1.IDOptions) returns (PLGCreditBalance) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{id}/plg-credit-balance"
+        };
+    }
+
     // Fetch all payment providers that are usable for the organization identified
     // by the given context ID.
     // Required permissions:
@@ -517,6 +532,19 @@ message LensingCreditBalance {
 
     // Time the balance was last refreshed from the billing system.
     google.protobuf.Timestamp last_synced_at = 30;
+}
+
+// Balance of the free credits of a PLG organization (new billing system).
+message PLGCreditBalance {
+    // Identifier of the organization owning the balance.
+    string organization_id = 1;
+    // Credits granted to the organization so far.
+    double credits_granted = 2;
+    // Credits used by the usage of the organization that is priced so far.
+    double credits_used = 3;
+    // Credits left (granted minus used). Can be negative when more credits
+    // were used than granted.
+    double credits_remaining = 4;
 }
 
 // Request argument for GetPreliminaryInvoice

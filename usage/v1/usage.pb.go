@@ -3617,7 +3617,9 @@ type UsageServiceClient interface {
 	// Fetch aggregated Billing 2.0 credit consumption for the organization
 	// identified by the given organization ID.
 	// Only Billing 2.0 usage components are included, and usage on non-billable
-	// tiers is excluded.
+	// tiers is excluded. Usage in the PLG tier is included: it is not invoiced,
+	// but it uses up the free credits of the organization (see
+	// BillingService.GetPLGCreditBalance).
 	// Required permissions:
 	// - usage.usageitem.list on the organization identified by the given organization ID
 	GetCreditUsage(ctx context.Context, in *GetCreditUsageRequest, opts ...grpc.CallOption) (*CreditUsage, error)
@@ -3672,7 +3674,9 @@ type UsageServiceServer interface {
 	// Fetch aggregated Billing 2.0 credit consumption for the organization
 	// identified by the given organization ID.
 	// Only Billing 2.0 usage components are included, and usage on non-billable
-	// tiers is excluded.
+	// tiers is excluded. Usage in the PLG tier is included: it is not invoiced,
+	// but it uses up the free credits of the organization (see
+	// BillingService.GetPLGCreditBalance).
 	// Required permissions:
 	// - usage.usageitem.list on the organization identified by the given organization ID
 	GetCreditUsage(context.Context, *GetCreditUsageRequest) (*CreditUsage, error)
